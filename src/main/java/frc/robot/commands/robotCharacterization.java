@@ -4,28 +4,45 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveDriveRev;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends Command {
+public class robotCharacterization extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
- 
+  private final SwerveDriveRev m_subsystem;
+  SysIdRoutine routine;
+
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return routine.quasistatic(direction);
+  }
+
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return routine.dynamic(direction);
+  }
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
+  public robotCharacterization(SwerveDriveRev subsystem) {
     m_subsystem = subsystem;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
-
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+ // Creates a SysIdRoutine
+   // routine = new SysIdRoutine(
+     // new SysIdRoutine.Config(),
+     // new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this)
+   // );
+   
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
