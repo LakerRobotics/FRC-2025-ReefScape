@@ -37,13 +37,14 @@ import frc.robot.commands.LauncherAutoPower;
 import frc.robot.commands.LauncherRun;
 import frc.robot.commands.SetSwerveDrive2023;
 import frc.robot.simulation.FieldSim;
-import frc.robot.subsystems.ArmLockSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveDriveSDS;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
-import frc.robot.subsystems.SwerveDriveRev;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Elevator;
+//import frc.robot.subsystems.SwerveDriveRev;
 import frc.robot.utils.GamepadUtils;
+import frc.robot.PositionTracker;
+import frc.robot.GlobalStates;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants2023.USB; 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -58,14 +59,14 @@ public class RobotContainer2023 {
 //  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
  
   // The robot's subsystems and commands are defined here...
-  private  SwerveDriveRev m_robotDriveSDS;
+  //private  SwerveDriveRev m_robotDriveSDS;
   private  SwerveDriveSDS  m_robotDriveREV;
   // Initialize Limelight NetworkTable
     private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-      private final ArmSubsystem m_arm = new ArmSubsystem();
-  private final IntakeSubsystem m_intake = new IntakeSubsystem();
-  private final LauncherSubsystem m_launcher = new LauncherSubsystem();
-  private final ArmLockSubsystem mArmLockSubsystem = new ArmLockSubsystem();
+      private final Arm m_arm = new Arm();
+  private final Intake m_intake = new Intake();
+  private final Elevator m_elevator = new Elevator(positionTracker, elevatorLigament);
+  //private final ArmLockSubsystem mArmLockSubsystem = new ArmLockSubsystem();
   private int ROBOT;
   private final int PROD = 1;
   private final int DEV = 0;
