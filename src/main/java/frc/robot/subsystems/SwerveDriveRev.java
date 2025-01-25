@@ -1,16 +1,16 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-/* 
-package frc.robot.subsystems;
+ 
+/*package frc.robot.subsystems;
 
-//import com.ctre.phoenix.sensors.CANCoder;
-//import com.ctre.phoenix.sensors.Pigeon2; 
-//import com.ctre.phoenix.unmanaged.Unmanaged;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.Pigeon2; 
+import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.unmanaged.Unmanaged;
-import com.revrobotics.CANSparkMax; 
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.spark.SparkMax; 
+import com.revrobotics.spark.CANSparkMaxLowLevel;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,29 +41,29 @@ public class SwerveDriveRev extends SubsystemBase {
                           ModulePosition.FRONT_LEFT,
                           new SwerveModuleRev(
                                   0,
-                                  new CANSparkMax(CAN.frontLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new CANSparkMax(CAN.frontLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANcoder(CAN.frontLeftCanCoder),
                                   0),
                           ModulePosition.FRONT_RIGHT,
                           new SwerveModuleRev(
                                   1,
-                                  new CANSparkMax(CAN.frontRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new CANSparkMax(CAN.frontRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANcoder(CAN.frontRightCanCoder),
                                   0),
                           ModulePosition.BACK_LEFT,
                           new SwerveModuleRev(
                                   2,
-                                  new CANSparkMax(CAN.backLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new CANSparkMax(CAN.backLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANcoder(CAN.backLeftCanCoder),
                                  0),
                           ModulePosition.BACK_RIGHT,
                           new SwerveModuleRev(
                                   3,
-                                  new CANSparkMax(CAN.backRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new CANSparkMax(CAN.backRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANcoder(CAN.backRightCanCoder),
                                   0)));
 

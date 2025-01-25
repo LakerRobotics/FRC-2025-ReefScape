@@ -231,14 +231,14 @@ public class Constants {
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-/*public final class Constants {
+//public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
-    public static final double kTriggerButtonThreshold = 0.5
+    public static final double kTriggerButtonThreshold = 0.5;
 //import frc.robot.Constants.NeoMotorConstants;;
   }
-
+/* 
   public static final class Arm {
     public static final int kArmCanId = 29;
     public static final boolean kArmInverted = true;
