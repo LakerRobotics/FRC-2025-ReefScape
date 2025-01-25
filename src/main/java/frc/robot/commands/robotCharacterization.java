@@ -4,14 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.SwerveDriveRev;
+import frc.robot.subsystems.SwerveDriveSDS;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /** An example command that uses an example subsystem. */
 public class robotCharacterization extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final SwerveDriveRev m_subsystem;
+  private final SwerveDriveSDS m_subsystem;
   SysIdRoutine routine;
 
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
@@ -26,7 +26,7 @@ public class robotCharacterization extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public robotCharacterization(SwerveDriveRev subsystem) {
+  public robotCharacterization(SwerveDriveSDS subsystem) {
     m_subsystem = subsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
