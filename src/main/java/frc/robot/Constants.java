@@ -222,7 +222,7 @@ public class Constants {
         public static final double JOYSTICK_ROT_CURVE_EXP = 3;
         public static final double JOYSTICK_ROT_LIMIT = 0.8;
     }
-}
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -409,3 +409,4 @@ public class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+}
