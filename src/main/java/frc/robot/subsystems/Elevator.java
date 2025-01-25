@@ -10,8 +10,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.techhounds.houndutil.houndlib.Utils;
 import com.techhounds.houndutil.houndlib.subsystems.BaseLinearMechanism;
-import com.techhounds.houndutil.houndlog.annotations.Log;
-import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
+//import com.techhounds.houndutil.houndlog.annotations.Log;
+//import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
@@ -42,17 +42,17 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 import static frc.robot.Constants.Elevator.*;
 
-@LoggedObject
+//@LoggedObject
 public class Elevator extends SubsystemBase implements BaseLinearMechanism<ElevatorPosition> {
-    @Log
+    //@Log
     private final SparkMax motor;
 
     private SparkMaxConfig motorConfig;
 
-    @Log(groups = "control")
+    //@Log(groups = "control")
     private final ProfiledPIDController pidController = new ProfiledPIDController(kP, kI, kD, MOVEMENT_CONSTRAINTS);
 
-    @Log(groups = "control")
+    //@Log(groups = "control")
     private final ElevatorFeedforward feedforwardController = new ElevatorFeedforward(kS,
             kG, kV, kA);
 
@@ -71,9 +71,9 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
             true,
             ElevatorPosition.BOTTOM.value);
 
-    @Log(groups = "control")
+    //@Log(groups = "control")
     private double feedbackVoltage = 0;
-    @Log(groups = "control")
+   // @Log(groups = "control")
     private double feedforwardVoltage = 0;
 
     private double simVelocity = 0.0;
@@ -87,7 +87,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
     private final PositionTracker positionTracker;
     private final MechanismLigament2d ligament;
 
-    @Log
+    //@Log
     private boolean initialized;
 
     public Elevator(PositionTracker positionTracker, MechanismLigament2d ligament) {
@@ -137,12 +137,12 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         return initialized;
     }
 
-    @Log(groups = "components")
+   // @Log(groups = "components")
     public Pose3d getFrameComponentPose() {
         return new Pose3d(0.14, 0, 0.13, new Rotation3d());
     }
 
-    @Log(groups = "components")
+    //@Log(groups = "components")
     public Pose3d getStageComponentPose() {
         Transform3d transform = new Transform3d();
         if (getPosition() > 0.706) {
@@ -151,7 +151,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         return new Pose3d(0.14, 0, 0.169, new Rotation3d()).plus(transform);
     }
 
-    @Log(groups = "components")
+    //@Log(groups = "components")
     public Pose3d getCarriageComponentPose() {
         return new Pose3d(0.14, 0, 0.247 + getPosition(), new Rotation3d());
     }

@@ -10,8 +10,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.techhounds.houndutil.houndlib.Utils;
 import com.techhounds.houndutil.houndlib.subsystems.BaseSingleJointedArm;
-import com.techhounds.houndutil.houndlog.annotations.Log;
-import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
+//import com.techhounds.houndutil.houndlog.annotations.Log;
+//import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -43,17 +43,17 @@ import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 import static frc.robot.Constants.Arm.*;
 
-@LoggedObject
+//@LoggedObject
 public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPosition> {
-    @Log
+   // @Log
     private final SparkMax motor;
 
     private SparkMaxConfig motorConfig;
 
-    @Log(groups = "control")
+   // @Log(groups = "control")
     private final ProfiledPIDController pidController = new ProfiledPIDController(kP, kI, kD, MOVEMENT_CONSTRAINTS);
 
-    @Log(groups = "control")
+   // @Log(groups = "control")
     private final ArmFeedforward feedforwardController = new ArmFeedforward(kS,
             kG, kV, kA);
 
@@ -72,9 +72,9 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
             true,
             ArmPosition.TOP.value);
 
-    @Log(groups = "control")
+    //@Log(groups = "control")
     private double feedbackVoltage = 0;
-    @Log(groups = "control")
+   // @Log(groups = "control")
     private double feedforwardVoltage = 0;
 
     private double simVelocity = 0.0;
@@ -89,7 +89,7 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
     private final MechanismLigament2d ligament;
     private final Supplier<Pose3d> carriagePoseSupplier;
 
-    @Log
+    //@Log
     private boolean initialized;
 
     public Arm(PositionTracker positionTracker, MechanismLigament2d ligament, Supplier<Pose3d> carriagePoseSupplier) {
@@ -143,25 +143,25 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
     // return new Pose3d(0.168, 0, 0.247, new Rotation3d());
     // -0.083
 
-    @Log(groups = "components")
+    //@Log(groups = "components")
     public Pose3d getArmComponentPose() {
         return carriagePoseSupplier.get()
                 .plus(new Transform3d(0.083, 0, 0, new Rotation3d()))
                 .plus(new Transform3d(0, 0, 0, new Rotation3d(0, -getPosition(), 0)));
     }
 
-    @Log(groups = "components")
+   // @Log(groups = "components")
     public Pose3d getClawComponentPose() {
         return getArmComponentPose().plus(new Transform3d(0.2585, 0, 0, new Rotation3d()));
     }
 
-    @Log
+   // @Log
     @Override
     public double getPosition() {
         return motor.getEncoder().getPosition();
     }
 
-    @Log
+    //@Log
     public double getVelocity() {
         if (RobotBase.isReal())
             return motor.getEncoder().getVelocity();

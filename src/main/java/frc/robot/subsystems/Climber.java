@@ -6,8 +6,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.techhounds.houndutil.houndlog.annotations.Log;
-import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
+//import com.techhounds.houndutil.houndlog.annotations.Log;
+//import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,22 +15,22 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Climber.*;
 
-@LoggedObject
+//@LoggedObject
 public class Climber extends SubsystemBase {
-    @Log
+   // @Log
     private final SparkMax motor;
 
     private SparkMaxConfig motorConfig;
 
-    @Log
+   // @Log
     private boolean initialized;
 
     public Climber() {
         motorConfig = new SparkMaxConfig();
         motorConfig
-                .inverted(MOTOR_INVERTED)
+                .inverted(false)
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(CURRENT_LIMIT);
+                .smartCurrentLimit(60);
         motorConfig.encoder
                 .positionConversionFactor(ENCODER_ROTATIONS_TO_METERS)
                 .velocityConversionFactor(ENCODER_ROTATIONS_TO_METERS / 60.0);

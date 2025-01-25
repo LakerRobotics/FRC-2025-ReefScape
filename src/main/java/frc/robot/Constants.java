@@ -197,11 +197,7 @@ public class Constants {
                 MAX_VELOCITY_METERS_PER_SECOND, MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
     }
 
-    public static final class Intake {
-        public static final int MOTOR_ID = 13;
-        public static final boolean MOTOR_INVERTED = true;
-        public static final int CURRENT_LIMIT = 60;
-    }
+    
 
     public static final class Climber {
         public static final int MOTOR_ID = 6;
@@ -235,7 +231,7 @@ public class Constants {
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {
+/*public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
@@ -413,4 +409,4 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
-}
+}*/

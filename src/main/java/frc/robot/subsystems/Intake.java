@@ -7,17 +7,16 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.techhounds.houndutil.houndlib.subsystems.BaseIntake;
-import com.techhounds.houndutil.houndlog.annotations.Log;
-import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
+//import com.techhounds.houndutil.houndlog.annotations.Log;
+//import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.Intake.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase; 
 
-@LoggedObject
+//@LoggedObject
 public class Intake extends SubsystemBase implements BaseIntake {
-    @Log
+    //@Log
     private final SparkFlex motor;
 
     private SparkMaxConfig motorConfig;
@@ -25,9 +24,9 @@ public class Intake extends SubsystemBase implements BaseIntake {
     public Intake() {
         motorConfig = new SparkMaxConfig();
         motorConfig
-                .inverted(MOTOR_INVERTED)
+                .inverted(true)
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(CURRENT_LIMIT);
+                .smartCurrentLimit(60);
 
         motor = new SparkFlex(MOTOR_ID, MotorType.kBrushless);
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
