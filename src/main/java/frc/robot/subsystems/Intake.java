@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase implements BaseIntake {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(60);
 
-        motor = new SparkFlex(MOTOR_ID, MotorType.kBrushless);
+        motor = new SparkFlex(20, MotorType.kBrushless);
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
