@@ -9,7 +9,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkAbsoluteEncoder.Type;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -155,9 +155,9 @@ public class SwerveModuleSDS {
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(
-        optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
+        optimizedDesiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity);
     m_turningPIDController.setReference(
-        optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+        optimizedDesiredState.angle.getRadians(), SparkMax.ControlType.kPosition);
 //SmartDashboard.putNumber("speedTarget", optimizedDesiredState.speedMetersPerSecond);
 //SmartDashboard.putNumber("speedCurrent", m_drivingEncoder.getVelocity());
 //SmartDashboard.putNumber("AngleTarget", optimizedDesiredState.angle.getRadians());
