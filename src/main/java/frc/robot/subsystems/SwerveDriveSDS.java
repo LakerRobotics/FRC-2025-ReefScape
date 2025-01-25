@@ -24,7 +24,10 @@ import edu.wpi.first.math.trajectory.Trajectory;
 //import com.pathplanner.lib.util.PIDConstants;
 //import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
 //import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 public class SwerveDriveSDS extends SubsystemBase {
   // Create MAXSwerveModules
@@ -82,20 +85,38 @@ private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 //m_frontRight.m_drivingSparkMax.setInverted(true);
 //m_rearLeft.m_turningSparkMax.setInverted(true);
 //m_rearRight.m_turningSparkMax.setInverted(false);
+ // All other subsystem initialization
+    // ...
 
+    // Load the RobotConfig from the GUI settings. You should probably
+    // store this in your Constants file
+     RobotConfig config;
+
+    //initialize config as a class field with proper error handling
+  
+
+    try {
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      DriverStation.reportError("Failed to load robot configuration", e.getStackTrace());
+      throw new RuntimeException("Failed to initialize SwerveDriveSDS: Configuration error", e);
+  
+  
+    }
           // Configure AutoBuilder last
      AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetPose /*resetPose*/, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                     new PIDConstants(0.5, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.5, 0.0, 0.0), // Rotation PID constants
-                    4.5, // Max module speed, in m/s
-                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-                    new ReplanningConfig() // Default path replanning config. See the API for the options here
-            ),
+                    new PIDConstants(0.5, 0.0, 0.0) // Rotation PID constants
+                  //  4.5, // Max module speed, in m/s
+                   // 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                   // new ReplanningConfig() // Default path replanning config. See the API for the options here
+                ),
+                config,
             () -> {
               // Boolean supplier that controls when the path will be mirrored for the red alliance
               // This will flip the path being followed to the red side of the field.
