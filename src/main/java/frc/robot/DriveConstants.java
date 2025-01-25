@@ -291,7 +291,7 @@ public class Constants {
 
     public static final double kTopPower = 1;
     public static final double kBottomPower = 1;
-  }
+  } */
 
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
@@ -409,4 +409,3 @@ public class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
-}*/
