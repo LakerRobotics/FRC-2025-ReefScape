@@ -23,28 +23,20 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmJoystickControl;
-import frc.robot.commands.ArmIntakePosition;
-import frc.robot.commands.ArmLockEngage;
 import frc.robot.commands.AutoLauncher;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.AutoRightShootSpeaker;
 import frc.robot.commands.AutoLeftShootSpeaker;
-import frc.robot.commands.AmpShoot;
 import frc.robot.commands.AutoShootSpeakerThenFollowPath;
-import frc.robot.commands.IntakeSetPower;
-import frc.robot.commands.LauncherAutoPower;
-import frc.robot.commands.LauncherRun;
 import frc.robot.commands.SetSwerveDrive2023;
 import frc.robot.simulation.FieldSim;
+//import frc.robot.subsystems.ArmLockSubsystem;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.SwerveDriveSDS;
+import frc.robot.subsystems.SwerveDriveREVReal;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
 //import frc.robot.subsystems.SwerveDriveRev;
 import frc.robot.utils.GamepadUtils;
-import frc.robot.PositionTracker;
-import frc.robot.GlobalStates;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants2023.USB; 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -60,12 +52,12 @@ public class RobotContainer2023 {
  
   // The robot's subsystems and commands are defined here...
   //private  SwerveDriveRev m_robotDriveSDS;
-  private  SwerveDriveSDS  m_robotDriveREV;
+  private  SwerveDriveREVReal  m_robotDriveREV;
   // Initialize Limelight NetworkTable
     private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-      private final Arm m_arm = new Arm();
+      private final Arm m_arm = new Arm(null, null, null);
   private final Intake m_intake = new Intake();
-  private final Elevator m_elevator = new Elevator(positionTracker, elevatorLigament);
+  private final Elevator m_launcher = new Elevator(null, null);
   //private final ArmLockSubsystem mArmLockSubsystem = new ArmLockSubsystem();
   private int ROBOT;
   private final int PROD = 1;
@@ -80,29 +72,25 @@ public class RobotContainer2023 {
 
    // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer2023() {
-    ROBOT = PROD;
-     if (ROBOT == DEV){
-       m_robotDriveSDS = new SwerveDriveRev();
-     }
-     else {
-       m_robotDriveREV = new SwerveDriveSDS();
-     }
-     NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
-     NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
+    private SwerveDriveREVReal m_robotDriveSDS;
+  
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    public RobotContainer2023() {
+     
+         m_robotDriveSDS = new SwerveDriveREVReal();
+    ////NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
+    // NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
 
      // Initialize Logitech camera
     CameraServer.startAutomaticCapture();  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
 
-    m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+    //m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
     // set the intake to stop (0 power) when no other command is running
-    m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
+    //m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
 
     // configure the launcher to stop when no other command is running
-    m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
+    //m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
 
    final NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -160,10 +148,10 @@ public class RobotContainer2023 {
   private void configureBindings() {
 
     // set up arm preset positions
-    new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+    /*new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
 
-    new Trigger(
+   // new Trigger(
             () ->
                 rightJoystick.getL2Axis()
                     > Constants.OIConstants.kTriggerButtonThreshold)
@@ -206,6 +194,7 @@ public class RobotContainer2023 {
 
     new JoystickButton(rightJoystick, PS4Controller.Button.kPS.value)
         .onTrue(new ArmLockEngage(mArmLockSubsystem));
+        */
 
     // DriveTrainReset 
     new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 
@@ -218,15 +207,15 @@ public class RobotContainer2023 {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+//  public Command getAutonomousCommand() {
 // Load the path you want to follow using its name in the GUI
-    PathPlannerPath path = PathPlannerPath.fromPathFile("seth path 2");
+   // PathPlannerPath path = PathPlannerPath.fromPathFile("seth path 2");
 
     // Create a path following command using AutoBuilder. This will also trigger event markers.
-    return AutoBuilder.followPath(path);
-
+   // return AutoBuilder.followPath(path);
+//TODO: Fix pathlanner
     
-  }
+
   public void periodic() {
  //   m_fieldSim.periodic();
   }
@@ -238,6 +227,7 @@ public class RobotContainer2023 {
   private void configureAutos() {
     SmartDashboard.putData("auton chooser",m_chooser);
     // Set the Defualt Auton
+     /* 
     m_chooser.setDefaultOption("Shoot Note", new AutoShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
     m_chooser.addOption("Launcher Test", new AutoLauncher(m_launcher));
     m_chooser.addOption("Shoot Note ", new AutoShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
@@ -248,7 +238,7 @@ public class RobotContainer2023 {
     //PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
     //m_chooser.addOption("Path: Example Path", AutoBuilder.followPath(path));
     //PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path 2");
-    //m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2));
+    //m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2)); */
 
   }
 

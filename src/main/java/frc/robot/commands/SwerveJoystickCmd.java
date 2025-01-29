@@ -7,18 +7,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants2023.Swerve;
 import frc.robot.Constants2023;
-import frc.robot.subsystems.SwerveDriveRev;
+import frc.robot.subsystems.SwerveDriveSDS;
   
 public class SwerveJoystickCmd extends Command {
 
-    private final SwerveDriveRev swerveSubsystem;
+    private final SwerveDriveSDS swerveSubsystem;
     private final java.util.function.Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
     private final Supplier<Boolean> fieldOrientedFunction;
     private SlewRateLimiter xLimiter;
     private SlewRateLimiter yLimiter;
     private SlewRateLimiter turningLimiter;
 
-    public SwerveJoystickCmd(SwerveDriveRev swervesubsystem2,
+    public SwerveJoystickCmd(SwerveDriveSDS swervesubsystem2,
             Supplier<Double> xSpdFunction, 
             Supplier<Double> ySpdFunction, 
             Supplier<Double> turningSpdFunction,

@@ -1,22 +1,22 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.subsystems.SwerveDriveSDS;
+import frc.robot.subsystems.SwerveDriveREVReal;
 import java.nio.file.Path;
 import java.io.IOException;
 import edu.wpi.first.wpilibj.Timer;
 
-public class DriveTrainFollowPath extends CommandBase {
-    private final SwerveDriveSDS driveSubsystem;
+public class DriveTrainFollowPath extends Command {
+    private final SwerveDriveREVReal driveSubsystem;
     private Trajectory trajectory;
     private final String trajectoryJSON;
     private final Timer timer = new Timer();
 
-    public DriveTrainFollowPath(SwerveDriveSDS subsystem, String trajectoryPath) {
+    public DriveTrainFollowPath(SwerveDriveREVReal subsystem, String trajectoryPath) {
         this.driveSubsystem = subsystem;
         this.trajectoryJSON = trajectoryPath;
         addRequirements(subsystem);

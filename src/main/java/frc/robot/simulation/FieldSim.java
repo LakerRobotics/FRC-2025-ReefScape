@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants2023.Swerve;
 import frc.robot.Constants2023.Swerve.ModulePosition;
-//import frc.robot.subsystems.SwerveDriveRev;
+import frc.robot.subsystems.SwerveDriveSDS;
 import frc.robot.utils.ModuleMap;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class FieldSim {
-  private final SwerveDriveRev m_swerveDrive;
+  private final SwerveDriveSDS m_swerveDrive;
 
   private final Field2d m_field2d = new Field2d();
 
@@ -31,7 +31,7 @@ public class FieldSim {
           new Pose2d()
   };
 
-  public FieldSim(SwerveDriveRev swerveDrive) {
+  public FieldSim(SwerveDriveSDS swerveDrive) {
     m_swerveDrive = swerveDrive;
   }
 
