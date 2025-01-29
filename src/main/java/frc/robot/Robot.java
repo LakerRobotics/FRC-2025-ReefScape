@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomousCommand = m_robotContainer.getAutonomousCommand();
+        //autonomousCommand = m_robotContainer.getAutonomousCommand();
         SmartDashboard.putData("auto test",autonomousCommand);
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.schedule();

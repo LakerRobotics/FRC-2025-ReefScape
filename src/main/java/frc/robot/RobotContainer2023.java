@@ -73,13 +73,11 @@ public class RobotContainer2023 {
    // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
     private SwerveDriveREVReal m_robotDriveSDS;
-  
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer2023() {
      
-         m_robotDriveSDS = new SwerveDriveREVReal();
-    ////NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
-    // NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
+       m_robotDriveSDS = new SwerveDriveSDS();
+      
+     //NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
+     //NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
 
      // Initialize Logitech camera
     CameraServer.startAutomaticCapture();  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
@@ -147,6 +145,7 @@ public class RobotContainer2023 {
    */
   private void configureBindings() {
 
+    /* 
     // set up arm preset positions
     /*new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
@@ -214,8 +213,6 @@ public class RobotContainer2023 {
     // Create a path following command using AutoBuilder. This will also trigger event markers.
    // return AutoBuilder.followPath(path);
 //TODO: Fix pathlanner
-    
-
   public void periodic() {
  //   m_fieldSim.periodic();
   }
@@ -233,6 +230,7 @@ public class RobotContainer2023 {
     m_chooser.addOption("Shoot Note ", new AutoShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
     m_chooser.addOption("Right Shoot Note ", new AutoRightShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
     m_chooser.addOption("Left Shoot Note ", new AutoLeftShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
+    */
    // m_chooser.addOption("Shoot Note then follow Path ", new AutoShootSpeakerThenFollowPath(m_arm,m_launcher,m_intake,m_robotDriveREV,"Seth Path"));
 
     //PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
