@@ -111,11 +111,11 @@ public class SwerveModuleRev {
     m_drivingEncoder.setPosition(0);
   }
 
-  /**
+  //
    * Returns the current state of the module.
    *
    * @return The current state of the module.
-   */
+   //
   public SwerveModuleState getState() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
@@ -172,4 +172,4 @@ public class SwerveModuleRev {
     m_drivingEncoder.setPosition(0);
   }
 }
-//COMMENT OUT THE WHOLE THING*
+COMMENT OUT THE WHOLE THING*/

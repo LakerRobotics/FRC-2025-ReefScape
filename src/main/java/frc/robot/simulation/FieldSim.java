@@ -46,17 +46,18 @@ public class FieldSim {
     m_field2d.setRobotPose(m_swerveDrive.getPoseMeters());
 
     for (int i = 0; i < Swerve.kModuleTranslations.length; i++) {
-      Translation2d updatedPositions =
-              Swerve.kModuleTranslations[i]
-                      .rotateBy(m_swerveDrive.getPoseMeters().getRotation())
-                      .plus(m_swerveDrive.getPoseMeters().getTranslation());
-      m_swerveModulePoses[i] =
-              new Pose2d(
-                      updatedPositions,
-                      m_swerveDrive
-                              .getSwerveModule(i)
-                              .getHeadingRotation2d()
-                              .plus(m_swerveDrive.getHeadingRotation2d()));
+//      Translation2d updatedPositions =
+//              Swerve.kModuleTranslations[i]
+//                      .rotateBy(m_swerveDrive.getPoseMeters().getRotation())
+//                      .plus(m_swerveDrive.getPoseMeters().getTranslation());
+//      m_swerveModulePoses[i] =
+//              new Pose2d(
+//                      updatedPositions,
+//                      m_swerveDrive.
+//                              .getSwerveModule(i)
+//                              .getHeadingRotation2d()
+//                              .plus(m_swerveDrive.getHeadingRotation2d())
+//                        );
     }
 
     m_field2d.getObject("Swerve Modules").setPoses(m_swerveModulePoses);

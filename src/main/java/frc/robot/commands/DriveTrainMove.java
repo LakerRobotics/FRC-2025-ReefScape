@@ -5,20 +5,20 @@
 package frc.robot.commands;
 
 //import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SwerveDriveREVReal;
+import frc.robot.subsystems.SwerveDriveSDS;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class DriveTrainMove extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final SwerveDriveREVReal m_driveTrain;
+  private final SwerveDriveSDS m_driveTrain;
  
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveTrainMove(SwerveDriveREVReal subsystem) {
+  public DriveTrainMove(SwerveDriveSDS subsystem) {
     m_driveTrain = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);

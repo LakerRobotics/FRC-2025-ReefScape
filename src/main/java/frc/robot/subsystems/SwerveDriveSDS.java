@@ -41,29 +41,29 @@ public class SwerveDriveSDS extends SubsystemBase {
                           ModulePosition.FRONT_LEFT,
                           new SwerveModuleSDS(
                                   0,
-                                  new SparkMax(CAN.frontLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new SparkMax(CAN.frontLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontLeftTurnMotor, SparkMax.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontLeftDriveMotor, SparkMax.MotorType.kBrushless),
                                   new CANcoder(CAN.frontLeftCanCoder),
                                   0),
                           ModulePosition.FRONT_RIGHT,
                           new SwerveModuleSDS(
                                   1,
-                                  new SparkMax(CAN.frontRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new SparkMax(CAN.frontRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontRightTurnMotor, SparkMax.MotorType.kBrushless),
+                                  new SparkMax(CAN.frontRightDriveMotor, SparkMax.MotorType.kBrushless),
                                   new CANcoder(CAN.frontRightCanCoder),
                                   0),
                           ModulePosition.BACK_LEFT,
                           new SwerveModuleSDS(
                                   2,
-                                  new SparkMax(CAN.backLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new SparkMax(CAN.backLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backLeftTurnMotor, SparkMax.MotorType.kBrushless),
+                                  new SparkMax(CAN.backLeftDriveMotor, SparkMax.MotorType.kBrushless),
                                   new CANcoder(CAN.backLeftCanCoder),
                                  0),
                           ModulePosition.BACK_RIGHT,
                           new SwerveModuleSDS(
                                   3,
-                                  new SparkMax(CAN.backRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
-                                  new SparkMax(CAN.backRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
+                                  new SparkMax(CAN.backRightTurnMotor, SparkMax.MotorType.kBrushless),
+                                  new SparkMax(CAN.backRightDriveMotor, SparkMax.MotorType.kBrushless),
                                   new CANcoder(CAN.backRightCanCoder),
                                   0)));
 
@@ -148,14 +148,14 @@ private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeedMetersPerSecond);
 
-    for (SwerveModuleRev module : m_swerveModules.values())
+    for (SwerveModuleSDS module : m_swerveModules.values())
       module.setDesiredState(moduleStates[module.getModuleNumber()], isOpenLoop);
   }
 
   public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, kMaxSpeedMetersPerSecond);
 
-    for (SwerveModuleRev module : m_swerveModules.values())
+    for (SwerveModuleSDS module : m_swerveModules.values())
       module.setDesiredState(states[module.getModuleNumber()], isOpenLoop);
   }
 
@@ -171,7 +171,7 @@ private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
     return m_odometry.getPoseMeters();
   }
 
-  public SwerveModuleRev getSwerveModule(int moduleNumber) {
+  public SwerveModuleSDS getSwerveModule(int moduleNumber) {
     return m_swerveModules.get(ModulePosition.values()[moduleNumber]);
   }
 
@@ -195,7 +195,7 @@ private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   public void updateOdometry() {
     m_odometry.update(getHeadingRotation2d(), getModulePositions());
 
-    for (SwerveModuleRev module : m_swerveModules.values()) {
+    for (SwerveModuleSDS module : m_swerveModules.values()) {
       var modulePositionFromChassis =
               kModuleTranslations[module.getModuleNumber()]
                       .rotateBy(getHeadingRotation2d())

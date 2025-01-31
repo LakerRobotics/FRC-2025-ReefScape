@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.SwerveDriveREVReal;
+import frc.robot.subsystems.SwerveDriveSDS;
 
 import java.util.function.DoubleSupplier;
  
@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
  */
 public class SetSwerveDrive2023 extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final SwerveDriveREVReal m_swerveDrive;
+  private final SwerveDriveSDS m_swerveDrive;
   private final DoubleSupplier m_throttleInput, m_strafeInput, m_rotationInput;
   private final boolean m_isFieldRelative;
 
@@ -26,7 +26,7 @@ public class SetSwerveDrive2023 extends Command {
    *
    * @param swerveDriveSubsystem The subsystem used by this command.
    */
-  public SetSwerveDrive2023(SwerveDriveREVReal swerveDriveSubsystem2023, DoubleSupplier throttleInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative) {
+  public SetSwerveDrive2023(SwerveDriveSDS swerveDriveSubsystem2023, DoubleSupplier throttleInput, DoubleSupplier strafeInput, DoubleSupplier rotationInput, boolean isFieldRelative) {
     m_swerveDrive = swerveDriveSubsystem2023;
     m_throttleInput = throttleInput;
     m_strafeInput = strafeInput;

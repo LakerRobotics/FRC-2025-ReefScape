@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+/* 
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -29,28 +29,28 @@ import com.pathplanner.lib.config.RobotConfig;
 //import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
-public class SwerveDriveREVReal extends SubsystemBase {
+public class SwerveDriveREV extends SubsystemBase {
   // Create MAXSwerveModules
   private final SwerveModuleSDS m_frontLeft =
-      new SwerveModuleSDS(
+      new SwerveModuleRev(
           DriveConstants.kFrontLeftDrivingCanId,
           DriveConstants.kFrontLeftTurningCanId,
           DriveConstants.kFrontLeftChassisAngularOffset);
 
   private final SwerveModuleSDS m_frontRight =
-      new SwerveModuleSDS(
+      new SwerveModuleRev(
           DriveConstants.kFrontRightDrivingCanId,
           DriveConstants.kFrontRightTurningCanId,
           DriveConstants.kFrontRightChassisAngularOffset);
 
   private final SwerveModuleSDS m_rearLeft =
-      new SwerveModuleSDS(
+      new SwerveModuleRev(
           DriveConstants.kRearLeftDrivingCanId,
           DriveConstants.kRearLeftTurningCanId,
           DriveConstants.kBackLeftChassisAngularOffset);
 
   private final SwerveModuleSDS m_rearRight =
-      new SwerveModuleSDS(
+      new SwerveModuleRev(
           DriveConstants.kRearRightDrivingCanId,
           DriveConstants.kRearRightTurningCanId,
           DriveConstants.kBackRightChassisAngularOffset);
@@ -79,7 +79,7 @@ private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
             m_rearRight.getPosition()
           });
    
-/** Creates a new DriveSubsystem. */
+// Creates a new DriveSubsystem. 
   public SwerveDriveREVReal() {
 //m_frontLeft.m_turningSparkMax.setInverted(false);
 //m_frontRight.m_drivingSparkMax.setInverted(true);
@@ -106,7 +106,7 @@ private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
           // Configure AutoBuilder last
      AutoBuilder.configure(
             this::getPose, // Robot pose supplier
-            this::resetPose /*resetPose*/, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::resetPose , // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
              (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -165,20 +165,20 @@ public void driveFieldRelative(ChassisSpeeds speeds){
 }
 
 
-  /**
-   * Returns the currently-estimated pose of the robot.
-   *
-   * @return The pose.
-   */
+  //
+   // Returns the currently-estimated pose of the robot.
+   //
+   // @return The pose.
+   //
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
 
-  /**
-   * Resets the odometry to the specified pose.
-   *
-   * @param pose The pose to which to set the odometry.
-   */
+  //
+   // Resets the odometry to the specified pose.
+   //
+   // @param pose The pose to which to set the odometry.
+   //
   public void resetPose(Pose2d pose) {
     m_odometry.resetPosition(
         Rotation2d.fromDegrees(m_gyro.getAngle()),
@@ -191,15 +191,15 @@ public void driveFieldRelative(ChassisSpeeds speeds){
         pose);
   }
 
-  /**
-   * Method to drive the robot using joystick info.
-   *
-   * @param xSpeed Speed of the robot in the x direction (forward).
-   * @param ySpeed Speed of the robot in the y direction (sideways).
-   * @param rot Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
-   * @param rateLimit Whether to enable rate limiting for smoother control.
-   */
+  //
+   // Method to drive the robot using joystick info.
+   //
+   // @param xSpeed Speed of the robot in the x direction (forward).
+   // @param ySpeed Speed of the robot in the y direction (sideways).
+   // @param rot Angular rate of the robot.
+   // @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   // @param rateLimit Whether to enable rate limiting for smoother control.
+   //
   public void drive(
       double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
 
@@ -310,7 +310,7 @@ SmartDashboard.putNumber("REV3rotDelivered", rotDelivered);
       }
 
 
-  /** Sets the wheels into an X formation to prevent movement. */
+  /// Sets the wheels into an X formation to prevent movement. 
   public void setX() {
     m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
@@ -318,11 +318,11 @@ SmartDashboard.putNumber("REV3rotDelivered", rotDelivered);
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
-  /**
-   * Sets the swerve ModuleStates.
-   *
-   * @param desiredStates The desired SwerveModule states.
-   */
+  //
+   // Sets the swerve ModuleStates.
+   //
+   // @param desiredStates The desired SwerveModule states.
+   //
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -332,7 +332,7 @@ SmartDashboard.putNumber("REV3rotDelivered", rotDelivered);
     m_rearRight.setDesiredState(desiredStates[3]);
   }
 
-  /** Resets the drive encoders to currently read a position of 0. */
+  // Resets the drive encoders to currently read a position of 0. 
   public void resetEncoders() {
     m_frontLeft.resetEncoders();
     m_rearLeft.resetEncoders();
@@ -340,25 +340,25 @@ SmartDashboard.putNumber("REV3rotDelivered", rotDelivered);
     m_rearRight.resetEncoders();
   }
 
-  /** Zeroes the heading of the robot. */
+  // Zeroes the heading of the robot. 
   public void zeroHeading() {
     m_gyro.reset();
   }
 
-  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
+  //
+   // Returns the heading of the robot.
+   //
+   // @return the robot's heading in degrees, from -180 to 180
+   //
   public double getHeading() {
     return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
   }
 
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
+  //
+// Returns the turn rate of the robot.
+   //
+   // @return The turn rate of the robot, in degrees per second
+   //
   public double getTurnRate() {
     return -m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
@@ -380,4 +380,4 @@ SmartDashboard.putNumber("REV3rotDelivered", rotDelivered);
     setModuleStates(swerveModuleStates);
   }
 }
-
+*/

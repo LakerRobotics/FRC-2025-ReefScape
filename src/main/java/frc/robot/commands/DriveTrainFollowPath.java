@@ -5,18 +5,18 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.subsystems.SwerveDriveREVReal;
+import frc.robot.subsystems.SwerveDriveSDS;
 import java.nio.file.Path;
 import java.io.IOException;
 import edu.wpi.first.wpilibj.Timer;
 
 public class DriveTrainFollowPath extends Command {
-    private final SwerveDriveREVReal driveSubsystem;
+    private final SwerveDriveSDS driveSubsystem;
     private Trajectory trajectory;
     private final String trajectoryJSON;
     private final Timer timer = new Timer();
 
-    public DriveTrainFollowPath(SwerveDriveREVReal subsystem, String trajectoryPath) {
+    public DriveTrainFollowPath(SwerveDriveSDS subsystem, String trajectoryPath) {
         this.driveSubsystem = subsystem;
         this.trajectoryJSON = trajectoryPath;
         addRequirements(subsystem);
@@ -32,7 +32,7 @@ public class DriveTrainFollowPath extends Command {
         } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
         }
-        driveSubsystem.resetPose(trajectory.getInitialPose());
+//        driveSubsystem.resetPose(trajectory.getInitialPose());
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DriveTrainFollowPath extends Command {
         var timeSinceInit = timer.get(); 
         if (timeSinceInit < trajectory.getTotalTimeSeconds()) {
             var desiredPose = trajectory.sample(timeSinceInit);
-            driveSubsystem.followTrajectory(desiredPose);
+//            driveSubsystem. followTrajectory(desiredPose);
         }
     }
 

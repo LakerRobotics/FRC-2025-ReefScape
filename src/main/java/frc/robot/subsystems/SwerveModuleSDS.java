@@ -20,6 +20,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.AngleUnit;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -114,10 +117,11 @@ public class SwerveModuleSDS extends SubsystemBase {
   }
 
   public void resetAngleToAbsolute() {
-    Angle angle = m_angleEncoder.getAbsolutePosition().getValue().minus(new Angle(m_angleOffset));
-    m_turnEncoder.setPosition(angle);
+    Angle angle = m_angleEncoder.getAbsolutePosition().getValue();
+    //TODO: .minus(Angle.ofRelativeUnits(angle,Units.angleUnit.degrees) .of ( m_angleOffset));
+    //TODO: m_turnEncoder.setPosition(angle);
     SmartDashboard.putString("CanCoder Units: ", m_angleEncoder.getAbsolutePosition().getUnits()); 
-    SmartDashboard.putNumber("CanCoder value", m_angleEncoder.getAbsolutePosition().getValue()); 
+//    SmartDashboard.putNumber("CanCoder value", m_angleEncoder.getAbsolutePosition().getValue().abs(AngleUnit.DEGREE)); 
   }
 
   public double getHeadingDegrees() {
@@ -145,7 +149,7 @@ public class SwerveModuleSDS extends SubsystemBase {
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-    desiredState = RevUtils.optimize(desiredState, getHeadingRotation2d());
+//    desiredState = RevUtils.optimize(desiredState, getHeadingRotation2d());
 
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
@@ -153,7 +157,7 @@ public class SwerveModuleSDS extends SubsystemBase {
       m_driveMotor.set(percentOutput);
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
-      m_driveController.setReference(desiredState.speedMetersPerSecond,CANSparkMax.ControlType.kVelocity);
+      m_driveController.setReference(desiredState.speedMetersPerSecond,SparkMax.ControlType.kVelocity);
       SmartDashboard.putNumber("SwerveM23ClosedLoop desired Speed",desiredState.speedMetersPerSecond);
       SmartDashboard.putNumber("SwerveM23ClosedLoop motor speed",m_driveMotor.getEncoder().getVelocity());
     }
@@ -162,7 +166,7 @@ public class SwerveModuleSDS extends SubsystemBase {
             (Math.abs(desiredState.speedMetersPerSecond) <= (kMaxSpeedMetersPerSecond * 0.01))
                     ? m_lastAngle
                     : desiredState.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
-    m_turnController.setReference(angle, CANSparkMax.ControlType.kPosition);
+    m_turnController.setReference(angle, SparkMax.ControlType.kPosition);
       SmartDashboard.putNumber("SwerveM23. desired angle",angle);
       SmartDashboard.putNumber("SwerveM23. actual angle",m_driveEncoder.getPosition());
 
@@ -218,6 +222,6 @@ public class SwerveModuleSDS extends SubsystemBase {
 
   @Override
   public void simulationPeriodic() {
-    REVPhysicsSim.getInstance().run();
+    //REVPhysicsSim.getInstance().run();
   }
 }

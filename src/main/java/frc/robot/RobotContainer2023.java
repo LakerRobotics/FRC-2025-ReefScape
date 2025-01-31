@@ -23,17 +23,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AutoLauncher;
-import frc.robot.commands.AutoShootSpeaker;
-import frc.robot.commands.AutoRightShootSpeaker;
-import frc.robot.commands.AutoLeftShootSpeaker;
-import frc.robot.commands.AutoShootSpeakerThenFollowPath;
 import frc.robot.commands.SetSwerveDrive2023;
 import frc.robot.simulation.FieldSim;
 //import frc.robot.subsystems.ArmLockSubsystem;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.SwerveDriveREVReal;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.SwerveDriveSDS;
 import frc.robot.subsystems.Elevator;
 //import frc.robot.subsystems.SwerveDriveRev;
 import frc.robot.utils.GamepadUtils;
@@ -48,13 +43,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer2023 {
-//  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
+
+  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
  
   // The robot's subsystems and commands are defined here...
   //private  SwerveDriveRev m_robotDriveSDS;
-  private  SwerveDriveREVReal  m_robotDriveREV;
+//  private  SwerveDriveREVReal  m_robotDriveREV;
   // Initialize Limelight NetworkTable
-    private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+  //  private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
       private final Arm m_arm = new Arm(null, null, null);
   private final Intake m_intake = new Intake();
   private final Elevator m_launcher = new Elevator(null, null);
@@ -72,15 +68,15 @@ public class RobotContainer2023 {
 
    // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-    private SwerveDriveREVReal m_robotDriveSDS;
-     
-       m_robotDriveSDS = new SwerveDriveSDS();
+  RobotContainer2023(){
+ 
+    SwerveDriveSDS m_robotDriveSDS = new SwerveDriveSDS();
       
      //NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
      //NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
 
      // Initialize Logitech camera
-    CameraServer.startAutomaticCapture();  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
+    //CameraServer.startAutomaticCapture();  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
 
     //m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
@@ -90,13 +86,13 @@ public class RobotContainer2023 {
     // configure the launcher to stop when no other command is running
     //m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
 
-   final NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+//   final NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
 
 
  
     // Configure the trigger bindings
-    configureBindings();
+//    configureBindings();
     if(ROBOT == DEV){
  //     m_robotDrive = m_robotDriveSDS;
   // m_fieldSim = new FieldSim(m_robotDriveSDS);
@@ -113,12 +109,12 @@ public class RobotContainer2023 {
                   true));
     }
     else{
-      m_robotDriveREV.setDefaultCommand(
+      m_robotDriveSDS.setDefaultCommand(
       // The left stick controls translation of the robot.
       // Turning is controlled by the X axis of the right stick.
       new RunCommand(
         () ->
-          m_robotDriveREV.drive(
+          m_robotDriveSDS.drive(
               -GamepadUtils.squareInput(
                   leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
               -GamepadUtils.squareInput(
@@ -127,7 +123,7 @@ public class RobotContainer2023 {
                   leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,
             true),
-      m_robotDriveREV));
+      m_robotDriveSDS));
     }
 
     //SETUP AUTONOMOUS CODE
@@ -196,8 +192,8 @@ public class RobotContainer2023 {
         */
 
     // DriveTrainReset 
-    new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 
-    .onTrue(new RunCommand(()-> m_robotDriveREV.zeroHeading()));
+//    new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 
+//    .onTrue(new RunCommand(()-> m_robotDriveSDS.zeroHeading()));
 
   }
 
