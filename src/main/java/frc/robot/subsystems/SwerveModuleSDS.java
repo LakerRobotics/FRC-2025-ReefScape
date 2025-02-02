@@ -11,7 +11,6 @@ import static frc.robot.Constants2023.Swerve.kMaxSpeedMetersPerSecond;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.*;
 import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,9 +19,12 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
+//import edu.wpi.first.math.util.Units;
+
 import edu.wpi.first.units.AngleUnit;
-import edu.wpi.first.units.Unit;
+//import edu.wpi.first.units.Units;  // Remove edu.wpi.first.math.util.Units
+//import edu.wpi.first.units.Unit;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -117,11 +119,11 @@ public class SwerveModuleSDS extends SubsystemBase {
   }
 
   public void resetAngleToAbsolute() {
-    Angle angle = m_angleEncoder.getAbsolutePosition().getValue();
-    //TODO: .minus(Angle.ofRelativeUnits(angle,Units.angleUnit.degrees) .of ( m_angleOffset));
-    //TODO: m_turnEncoder.setPosition(angle);
-    SmartDashboard.putString("CanCoder Units: ", m_angleEncoder.getAbsolutePosition().getUnits()); 
-//    SmartDashboard.putNumber("CanCoder value", m_angleEncoder.getAbsolutePosition().getValue().abs(AngleUnit.DEGREE)); 
+    Angle angle = m_angleEncoder.getAbsolutePosition().getValue()
+                 .minus(edu.wpi.first.units.Units.Degrees.of(m_angleOffset));
+    m_turnEncoder.setPosition(angle.in(Units.Degrees));
+    SmartDashboard.putString("CanCoder Units: ", m_angleEncoder.getAbsolutePosition().getUnits());
+    SmartDashboard.putNumber("CanCoder value", m_angleEncoder.getAbsolutePosition().getValue().in(Units.Degrees));
   }
 
   public double getHeadingDegrees() {
