@@ -4,6 +4,9 @@
 
 package frc.robot;
   
+import java.io.IOException;
+import java.util.function.Supplier;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -12,27 +15,43 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand; 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Autos;
 import frc.robot.commands.SetSwerveDrive2023;
 import frc.robot.simulation.FieldSim;
 //import frc.robot.subsystems.ArmLockSubsystem;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDriveSDS;
 import frc.robot.subsystems.Elevator;
 //import frc.robot.subsystems.SwerveDriveRev;
 import frc.robot.utils.GamepadUtils;
-import frc.robot.Constants.OIConstants;
+import frc.robot.RustConstants.Controls;
+import frc.robot.RustConstants.Drivetrain;
+import frc.robot.RustConstants.OIConstants;
 import frc.robot.Constants2023.USB; 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  
@@ -44,20 +63,81 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer2023 {
 
-  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
+//  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
  
   // The robot's subsystems and commands are defined here...
   //private  SwerveDriveRev m_robotDriveSDS;
 //  private  SwerveDriveREVReal  m_robotDriveREV;
   // Initialize Limelight NetworkTable
   //  private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-      private final Arm m_arm = new Arm(null, null, null);
-  private final Intake m_intake = new Intake();
-  private final Elevator m_launcher = new Elevator(null, null);
+//     @SuppressWarnings("unused")
+  private Mechanism2d mechanisms = new Mechanism2d(5, 3);
+private MechanismRoot2d root = mechanisms.getRoot("root", 2.5, 0.25);
+private MechanismLigament2d fromRobot = root
+            .append(new MechanismLigament2d("fromRobot", Units.inchesToMeters(5.5), 180, 0,
+                    new Color8Bit(Color.kWhite)));
+    @SuppressWarnings("unused")
+    private MechanismLigament2d elevatorBase = root
+            .append(new MechanismLigament2d("elevatorBase", Units.inchesToMeters(36), 90, 2,
+                    new Color8Bit(Color.kWhite)));
+    private MechanismLigament2d elevatorLigament = root
+            .append(new MechanismLigament2d("elevatorStage", Units.inchesToMeters(10), 90,
+                    4,
+                    new Color8Bit(Color.kOrange)));
+    private MechanismLigament2d armLigament = elevatorLigament
+            .append(new MechanismLigament2d("armLigament", Units.inchesToMeters(10), 270,
+                    5,
+                    new Color8Bit(Color.kRed)));
+
+    PositionTracker positionTracker = new PositionTracker();
+
+    //@Log
+    //Drivetrain drivetrain = new Drivetrain();
+    SwerveDriveSDS m_robotDriveSDS = new SwerveDriveSDS();
+    //@Log
+    Elevator elevator = new Elevator(positionTracker, elevatorLigament);
+    //@Log
+    Arm arm = new Arm(positionTracker, armLigament, elevator::getCarriageComponentPose);
+    //@Log
+    Intake intake = new Intake();
+    //@Log
+    Climber climber = new Climber();
+
+    //@Log
+//    CoralSim coralSim = new CoralSim(drivetrain::getPose, arm::getClawComponentPose);
+
+//    @Log
+//    LEDs leds = new LEDs();
+
+//    @Log
+//    HoundBrian houndbrian = new HoundBrian(drivetrain, elevator, arm, climber, leds);
+
+ //   @Log
+    private final Supplier<Boolean> initialized = GlobalStates.INITIALIZED::enabled;
+
+//    @SendableLog
+    CommandScheduler scheduler = CommandScheduler.getInstance();
+
+//    @Log(groups = "gamePieces")
+    public Pose3d getCoralPose() {
+        Pose3d relativeCoralPose = arm.getClawComponentPose().plus(new Transform3d(0.143, 0, 0, new Rotation3d()));
+        return new Pose3d(m_robotDriveSDS.getPose())
+                .plus(new Transform3d(relativeCoralPose.getTranslation(), relativeCoralPose.getRotation()))
+                .plus(new Transform3d(0, 0, 0, new Rotation3d(0, Math.PI / 2.0, 0)));
+    }
+          
+      
+
+    
+
+  //PositionTracker ArmPositionTracker = new PositionTracker();
+  //private final Arm m_arm = new Arm(ArmPositionTracker, null, null);
+  //private final Intake m_intake = new Intake();
+  //private final Elevator m_launcher = new Elevator(null, null);
   //private final ArmLockSubsystem mArmLockSubsystem = new ArmLockSubsystem();
-  private int ROBOT;
-  private final int PROD = 1;
-  private final int DEV = 0;
+//  private int ROBOT;
+//  private final int PROD = 1;
+//  private final int DEV = 0;
 
 
 
@@ -70,7 +150,7 @@ public class RobotContainer2023 {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   RobotContainer2023(){
  
-    SwerveDriveSDS m_robotDriveSDS = new SwerveDriveSDS();
+   
       
      //NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
      //NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
@@ -93,22 +173,22 @@ public class RobotContainer2023 {
  
     // Configure the trigger bindings
 //    configureBindings();
-    if(ROBOT == DEV){
+//    if(ROBOT == DEV){
  //     m_robotDrive = m_robotDriveSDS;
   // m_fieldSim = new FieldSim(m_robotDriveSDS);
   // m_fieldSim.initSim();
     // Configure default commands
-    m_robotDriveSDS.setDefaultCommand(
+//     m_robotDriveSDS.setDefaultCommand(
             // The left stick controls translation of the robot.
             // Turning is controlled by the X axis of the right stick.
-            new SetSwerveDrive2023(
-                    m_robotDriveSDS,
-                    ()-> leftJoystick.getLeftY(),// getY(),
-                    ()-> leftJoystick.getLeftX(), //getX(),
-                    ()-> leftJoystick.getRightX(),//getZ(),
-                  true));
-    }
-    else{
+//            new SetSwerveDrive2023(
+//                    m_robotDriveSDS,
+//                    ()-> leftJoystick.getLeftY(),// getY(),
+//                    ()-> leftJoystick.getLeftX(), //getX(),
+//                    ()-> leftJoystick.getRightX(),//getZ(),
+//                  true));
+ //   }
+//    else{
       m_robotDriveSDS.setDefaultCommand(
       // The left stick controls translation of the robot.
       // Turning is controlled by the X axis of the right stick.
@@ -124,7 +204,7 @@ public class RobotContainer2023 {
               true,
             true),
       m_robotDriveSDS));
-    }
+//    }
 
     //SETUP AUTONOMOUS CODE
     configureAutos();

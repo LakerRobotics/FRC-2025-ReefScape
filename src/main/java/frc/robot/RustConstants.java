@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
 
-public class Constants {
+public class RustConstants {
     public static final double LOOP_TIME = 0.020; // 20ms
 
     public static final class Drivetrain {
@@ -117,7 +117,7 @@ public class Constants {
 
         public static final double SCORING_MOVEMENT = -0.25;
 
-        public static final int MOTOR_ID = 5;
+        public static final int MOTOR_ID = 52;
         public static final boolean MOTOR_INVERTED = false;
 
         public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);
@@ -167,7 +167,7 @@ public class Constants {
         public static final double MOTION_LIMIT = -0.7;
         public static final double SCORING_MOVEMENT = -0.8;
 
-        public static final int MOTOR_ID = 12;
+        public static final int MOTOR_ID = 50;
         public static final boolean MOTOR_INVERTED = true;
 
         public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);

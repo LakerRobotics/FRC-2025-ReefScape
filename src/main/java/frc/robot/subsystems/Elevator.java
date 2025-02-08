@@ -32,15 +32,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.PositionTracker;
-import frc.robot.Constants;
+import frc.robot.RustConstants;
 import frc.robot.GlobalStates;
-import frc.robot.Constants.Elevator.ElevatorPosition;
+import frc.robot.RustConstants.Elevator.ElevatorPosition;
 
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
-import static frc.robot.Constants.Elevator.*;
+import static frc.robot.RustConstants.Elevator.*;
 
 //@LoggedObject
 public class Elevator extends SubsystemBase implements BaseLinearMechanism<ElevatorPosition> {
@@ -180,7 +180,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
         if (voltage < 0
-                && positionTracker.getElevatorPosition() < Constants.Elevator.MOTION_LIMIT
+                && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT
                 && positionTracker.getArmAngle() < 0) {
             voltage = 0;
         }

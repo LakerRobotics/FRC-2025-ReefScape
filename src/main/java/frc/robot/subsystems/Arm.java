@@ -32,16 +32,16 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
+import frc.robot.RustConstants;
 import frc.robot.PositionTracker;
-import frc.robot.Constants.Arm.ArmPosition;
+import frc.robot.RustConstants.Arm.ArmPosition;
 import frc.robot.GlobalStates;
 
 import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
-import static frc.robot.Constants.Arm.*;
+import static frc.robot.RustConstants.Arm.*;
 
 //@LoggedObject
 public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPosition> {
@@ -182,7 +182,7 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
 
         if (voltage < 0
                 && getPosition() < 0
-                && positionTracker.getElevatorPosition() < Constants.Elevator.MOTION_LIMIT) {
+                && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT) {
             voltage = 0;
         }
 

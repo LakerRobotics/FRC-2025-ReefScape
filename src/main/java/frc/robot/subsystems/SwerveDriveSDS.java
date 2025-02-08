@@ -9,7 +9,10 @@ package frc.robot.subsystems;
 //import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.unmanaged.Unmanaged;
-import com.revrobotics.spark.SparkMax; 
+import com.revrobotics.spark.SparkMax;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
+
 //import com.revrobotics.spark.CANSparkMaxLowLevel;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,6 +20,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -67,8 +71,9 @@ public class SwerveDriveSDS extends SubsystemBase {
                                   new CANcoder(CAN.backRightCanCoder),
                                   0)));
 
-private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-
+//private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+// navX MXP using SPI
+AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
   private SwerveDriveOdometry m_odometry =
           new SwerveDriveOdometry(
@@ -170,6 +175,11 @@ private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   public Pose2d getPoseMeters() {
     return m_odometry.getPoseMeters();
   }
+
+  public Pose2d getPose() {
+        return getPoseMeters();
+    }
+
 
   public SwerveModuleSDS getSwerveModule(int moduleNumber) {
     return m_swerveModules.get(ModulePosition.values()[moduleNumber]);

@@ -13,7 +13,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.Climber.*;
+import static frc.robot.RustConstants.Climber.*;
 
 //@LoggedObject
 public class Climber extends SubsystemBase {
