@@ -17,11 +17,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
+//import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 //import edu.wpi.first.math.util.Units;
 
-import edu.wpi.first.units.AngleUnit;
+//import edu.wpi.first.units.AngleUnit;
 //import edu.wpi.first.units.Units;  // Remove edu.wpi.first.math.util.Units
 //import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.Units;
@@ -34,10 +34,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 
-import frc.robot.utils.*;
+//import frc.robot.utils.*;
 
 public class SwerveModuleSDS extends SubsystemBase {
-  private final int POS_SLOT = 0;
+//  private final int POS_SLOT = 0;
   private final int VEL_SLOT = 1;
   private final int SIM_SLOT = 2;
 
@@ -110,6 +110,12 @@ public class SwerveModuleSDS extends SubsystemBase {
     turnConfig.encoder
         .positionConversionFactor(kTurnRotationsToDegrees)
         .velocityConversionFactor(kTurnRotationsToDegrees / 60);
+    // Add PID values for turning
+    turnConfig.closedLoop
+        .p(0.001)   // Using last year's proven value;
+        .i(0.0)
+        .d(0.0);
+//        .ff(0.0);
     
     m_turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -232,7 +238,6 @@ public class SwerveModuleSDS extends SubsystemBase {
     return m_pose;
   }
 
-  private void updateSmartDashboard() {}
 
   @Override
   public void periodic() {}
