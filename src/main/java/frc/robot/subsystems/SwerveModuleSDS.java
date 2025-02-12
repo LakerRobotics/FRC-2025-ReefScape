@@ -30,6 +30,9 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkBase.PersistMode;
 
 import frc.robot.utils.*;
 
@@ -50,10 +53,10 @@ public class SwerveModuleSDS extends SubsystemBase {
   double m_currentAngle;
   double m_lastAngle;
 
-  private double m_simDriveEncoderPosition;
-  private double m_simDriveEncoderVelocity;
-  private double m_simAngleDifference;
-  private double m_simTurnAngleIncrement;
+//  private double m_simDriveEncoderPosition;
+//  private double m_simDriveEncoderVelocity;
+//  private double m_simAngleDifference;
+//  private double m_simTurnAngleIncrement;
   Pose2d m_pose;
 
   SimpleMotorFeedforward feedforward =
@@ -63,7 +66,7 @@ public class SwerveModuleSDS extends SubsystemBase {
                   kvDriveVoltSecondsSquaredPerMeter);
 
   private final ProfiledPIDController m_turningPIDController
-          = new ProfiledPIDController(0.001, 0, 0,
+          = new ProfiledPIDController(1.0, 0.0, 0.1,  // Increased P gain and added D gain
           new TrapezoidProfile.Constraints(2 * Math.PI, 2 * Math.PI));
           //new TrapezoidProfile.Constraints(2 * Math.PI, 2 * Math.PI));
  
@@ -95,12 +98,20 @@ public class SwerveModuleSDS extends SubsystemBase {
 //m_angleEncoder.configAllSettings(convertPulseToDegree);
 
     m_driveEncoder = m_driveMotor.getEncoder();
-//    m_driveEncoder.setPositionConversionFactor(kDriveRevToMeters);
-//    m_driveEncoder.setVelocityConversionFactor(kDriveRpmToMetersPerSecond);
+    SparkMaxConfig driveConfig = new SparkMaxConfig();
+    driveConfig.encoder
+        .positionConversionFactor(kDriveRevToMeters)
+        .velocityConversionFactor(kDriveRpmToMetersPerSecond);
+    
+    m_driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     m_turnEncoder = m_turnMotor.getEncoder();
-//    m_turnEncoder.setPositionConversionFactor(kTurnRotationsToDegrees);
-//    m_turnEncoder.setVelocityConversionFactor(kTurnRotationsToDegrees / 60);
+    SparkMaxConfig turnConfig = new SparkMaxConfig();
+    turnConfig.encoder
+        .positionConversionFactor(kTurnRotationsToDegrees)
+        .velocityConversionFactor(kTurnRotationsToDegrees / 60);
+    
+    m_turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     m_driveController = m_driveMotor.getClosedLoopController();// getPIDController();
     m_turnController = m_turnMotor.getClosedLoopController(); //getPIDController();
@@ -119,18 +130,22 @@ public class SwerveModuleSDS extends SubsystemBase {
   }
 
   public void resetAngleToAbsolute() {
-    Angle angle = m_angleEncoder.getAbsolutePosition().getValue()
-                 .minus(edu.wpi.first.units.Units.Degrees.of(m_angleOffset));
-    m_turnEncoder.setPosition(angle.in(Units.Degrees));
-    SmartDashboard.putString("CanCoder Units: ", m_angleEncoder.getAbsolutePosition().getUnits());
-    SmartDashboard.putNumber("CanCoder value", m_angleEncoder.getAbsolutePosition().getValue().in(Units.Degrees));
+    // Convert CANcoder absolute position to module angle
+    Angle absolutePosition = m_angleEncoder.getAbsolutePosition().getValue();
+    Angle offsetPosition = absolutePosition.minus(Units.Degrees.of(m_angleOffset));
+    double positionDegrees = offsetPosition.in(Units.Degrees);
+    
+    m_turnEncoder.setPosition(positionDegrees);
+    
+    // Debug output
+    SmartDashboard.putNumber("Module " + m_moduleNumber + " Absolute Angle", 
+        absolutePosition.in(Units.Degrees));
+    SmartDashboard.putNumber("Module " + m_moduleNumber + " Offset Angle", 
+        positionDegrees);
   }
 
   public double getHeadingDegrees() {
-    if(RobotBase.isReal())
-      return m_turnEncoder.getPosition();
-    else
-      return m_currentAngle;
+    return m_turnEncoder.getPosition(); // The position will already be in degrees due to conversion factor
   }
 
   public Rotation2d getHeadingRotation2d() {
@@ -138,49 +153,49 @@ public class SwerveModuleSDS extends SubsystemBase {
   }
 
   public double getDriveMeters() {
-    if(RobotBase.isReal())
-      return m_driveEncoder.getPosition();
-    else
-      return m_simDriveEncoderPosition;
+    return m_driveEncoder.getPosition(); // The position will already be in meters due to conversion factor
   }
+
   public double getDriveMetersPerSecond() {
-    if(RobotBase.isReal())
-      return m_driveEncoder.getVelocity();
-    else
-      return m_simDriveEncoderVelocity;
+    return m_driveEncoder.getVelocity(); // The velocity will already be in meters per second due to conversion factor
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-//    desiredState = RevUtils.optimize(desiredState, getHeadingRotation2d());
+    // Optimize the desired state to avoid spinning more than 90 degrees
+    SwerveModuleState optimizedState = SwerveModuleState.optimize(desiredState, getHeadingRotation2d());
 
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
-      SmartDashboard.putNumber("SwerveMo2023 OpenLoop drive motor PercentOutupe",percentOutput);
+      double percentOutput = optimizedState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
       m_driveMotor.set(percentOutput);
+      SmartDashboard.putNumber("Module " + m_moduleNumber + " Drive %", percentOutput);
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
-      m_driveController.setReference(desiredState.speedMetersPerSecond,SparkMax.ControlType.kVelocity);
-      SmartDashboard.putNumber("SwerveM23ClosedLoop desired Speed",desiredState.speedMetersPerSecond);
-      SmartDashboard.putNumber("SwerveM23ClosedLoop motor speed",m_driveMotor.getEncoder().getVelocity());
+      double velocity = optimizedState.speedMetersPerSecond;
+      m_driveController.setReference(velocity, SparkMax.ControlType.kVelocity);
+      
+      // Add feedforward to improve velocity control
+      double feedforwardVolts = feedforward.calculate(velocity);
+      m_driveMotor.setVoltage(feedforwardVolts);
     }
 
     double angle =
-            (Math.abs(desiredState.speedMetersPerSecond) <= (kMaxSpeedMetersPerSecond * 0.01))
+            (Math.abs(optimizedState.speedMetersPerSecond) <= (kMaxSpeedMetersPerSecond * 0.01))
                     ? m_lastAngle
-                    : desiredState.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
+                    : optimizedState.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
     m_turnController.setReference(angle, SparkMax.ControlType.kPosition);
       SmartDashboard.putNumber("SwerveM23. desired angle",angle);
       SmartDashboard.putNumber("SwerveM23. actual angle",m_driveEncoder.getPosition());
 
-
+/* 
     if (RobotBase.isSimulation()) {
-      simUpdateDrivePosition(desiredState);
+      simUpdateDrivePosition(optimizedState);
 //      simTurnPosition(angle);
       m_currentAngle = angle;
 
     }
+    */
   }
-  private void simUpdateDrivePosition(SwerveModuleState state) {
+  /*private void simUpdateDrivePosition(SwerveModuleState state) {
     m_simDriveEncoderVelocity = state.speedMetersPerSecond;
     double distancePer20Ms = m_simDriveEncoderVelocity / 50.0;
 
@@ -201,7 +216,7 @@ public class SwerveModuleSDS extends SubsystemBase {
       }
     }
   }
-
+*/
   public SwerveModuleState getState() {
     return new SwerveModuleState(getDriveMetersPerSecond(), getHeadingRotation2d());
   }
