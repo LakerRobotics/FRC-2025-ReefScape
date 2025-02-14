@@ -119,6 +119,7 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
     } catch (Exception e) {
       // Handle exception as needed
       e.printStackTrace();
+      throw new RuntimeException("Failed to load robot configuration", e);
     }
 
     // Configure AutoBuilder last
@@ -319,6 +320,16 @@ public Command moveVoltageTimeCommand(double voltage, double time) {
         .withTimeout(time)
         .andThen(() -> drive(0, 0, 0, false, true))
     ).withName("drivetrain.moveVoltageTime");
+}
+
+public void driveRobotRelative(ChassisSpeeds speeds) {
+    drive(
+        speeds.vxMetersPerSecond,
+        speeds.vyMetersPerSecond,
+        speeds.omegaRadiansPerSecond,
+        false,  // Not field relative
+        false   // Closed loop
+    );
 }
 
 }
