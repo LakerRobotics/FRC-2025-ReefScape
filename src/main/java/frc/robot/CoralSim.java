@@ -55,8 +55,8 @@ public class CoralSim extends SubsystemBase {
         this.drivetrainPoseSupplier = drivetrainPoseSupplier;
         this.relativeClawPoseSupplier = relativeClawPoseSupplier;
 
-        LoggingManager.getInstance()
-                .addLogger(new StructArrayLogItem<>("coralSim/scorePoses", Pose3d.struct, () -> scorePoses));
+        //LoggingManager.getInstance()
+        //        .addLogger(new StructArrayLogItem<>("coralSim/scorePoses", Pose3d.struct, () -> scorePoses));
     }
 
     @Override

@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants2023.CAN;
@@ -310,6 +311,11 @@ public ChassisSpeeds getRobotRelativeSpeeds(){
   //m_currentTranslationMag * Math.sin(m_currentTranslationDir), 
   //m_currentRotation);
   return new ChassisSpeeds(throttle, strafe, rotation);
+}
+
+public Command moveVoltageTimeCommand(int i, double d) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'moveVoltageTimeCommand'");
 }
 
 }

@@ -89,24 +89,24 @@ public class RobotCommands {
                 Map.entry(
                         ScoreLevel.L1, Commands.parallel(
                                 drivetrain.moveVoltageTimeCommand(4, 0.5),
-                                elevator.movePositionDeltaCommand(() -> Constants.Elevator.SCORING_MOVEMENT)
+                                elevator.movePositionDeltaCommand(() -> RustConstants.Elevator.SCORING_MOVEMENT)
                                         .asProxy())),
                 Map.entry(
                         ScoreLevel.L2,
                         Commands.parallel(
-                                arm.movePositionDeltaCommand(() -> Constants.Arm.SCORING_MOVEMENT).asProxy())),
+                                arm.movePositionDeltaCommand(() -> RustConstants.Arm.SCORING_MOVEMENT).asProxy())),
                 Map.entry(
                         ScoreLevel.L3,
                         Commands.parallel(
-                                arm.movePositionDeltaCommand(() -> Constants.Arm.SCORING_MOVEMENT).asProxy())),
+                                arm.movePositionDeltaCommand(() -> RustConstants.Arm.SCORING_MOVEMENT).asProxy())),
                 Map.entry(
                         ScoreLevel.L4,
                         Commands.parallel(
-                                arm.movePositionDeltaCommand(() -> Constants.Arm.SCORING_MOVEMENT).asProxy(),
+                                arm.movePositionDeltaCommand(() -> RustConstants.Arm.SCORING_MOVEMENT).asProxy(),
                                 Commands.waitSeconds(0.5)
                                         .andThen(
                                                 elevator.movePositionDeltaCommand(
-                                                        () -> Constants.Elevator.SCORING_MOVEMENT))
+                                                        () -> RustConstants.Elevator.SCORING_MOVEMENT))
                                         .asProxy())),
                 Map.entry(
                         ScoreLevel.None,
