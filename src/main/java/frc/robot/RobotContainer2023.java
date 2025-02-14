@@ -7,11 +7,14 @@ package frc.robot;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import org.json.simple.parser.ParseException;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -155,7 +158,7 @@ private MechanismLigament2d fromRobot = root
      //NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
      //NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
 
-     // Initialize Logitech camera
+    // Initialize Logitech camera
     //CameraServer.startAutomaticCapture();  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
 
     //m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
@@ -282,15 +285,22 @@ private MechanismLigament2d fromRobot = root
    *
    * @return the command to run in autonomous
    */
-//  public Command getAutonomousCommand() {
-// Load the path you want to follow using its name in the GUI
-   // PathPlannerPath path = PathPlannerPath.fromPathFile("seth path 2");
-
-    // Create a path following command using AutoBuilder. This will also trigger event markers.
-   // return AutoBuilder.followPath(path);
-//TODO: Fix pathlanner
-  public void periodic() {
- //   m_fieldSim.periodic();
+  public Command getAutonomousCommand() {
+    // Load and follow the RichExample path
+    PathPlannerPath path = null;
+    try {
+      path = PathPlannerPath.fromPathFile("RichExample");
+    } catch (FileVersionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return AutoBuilder.followPath(path);
   }
 
 //  public static RobotContainer2023 getInstance() {
@@ -313,7 +323,24 @@ private MechanismLigament2d fromRobot = root
     //m_chooser.addOption("Path: Example Path", AutoBuilder.followPath(path));
     //PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path 2");
     //m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2)); */
-
+    // Remove references to old m_chooser since we're using PathPlanner's autoChooser
+    
+    // If you want to add the RichExample path specifically:
+    PathPlannerPath richPath = null;
+    try {
+      richPath = PathPlannerPath.fromPathFile("RichExample");
+    } catch (FileVersionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    Command richCommand = AutoBuilder.followPath(richPath);
+    m_chooser.addOption("Rich Example Path", richCommand);
   }
 
   
