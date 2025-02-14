@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants2023.CAN;
 import frc.robot.Constants2023.Swerve;
 import frc.robot.Constants2023.Swerve.ModulePosition;
@@ -97,6 +98,8 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
   private double m_simYaw;
 
+  private ChassisSpeeds m_lastCommandedSpeeds = new ChassisSpeeds();
+
   public SwerveDriveSDS() {
     gyro.reset();
 ((SwerveModuleSDS) m_swerveModules.get(ModulePosition.FRONT_RIGHT)).m_driveMotor.setInverted(true);
@@ -156,50 +159,46 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
           double rotation,
           boolean isFieldRelative,
           boolean isOpenLoop) {
+    // Scale inputs to actual speeds
     throttle *= kMaxSpeedMetersPerSecond;
     strafe *= kMaxSpeedMetersPerSecond;
     rotation *= kMaxRotationRadiansPerSecond;
 
-
-
+    // Create chassis speeds based on whether we want field or robot relative motion
     ChassisSpeeds chassisSpeeds;
-//    if (isFieldRelative) {
-        ChassisSpeeds chassisSpeedsField = ChassisSpeeds.fromFieldRelativeSpeeds(throttle, strafe, rotation, getHeadingRotation2d());
-        SmartDashboard.putNumber("chassis.FieldRelative.vx",chassisSpeedsField.vxMetersPerSecond);
-        SmartDashboard.putNumber("chassis.FieldRelative.vy",chassisSpeedsField.vyMetersPerSecond);
-        SmartDashboard.putNumber("chassis.FieldRelative.Vr",chassisSpeedsField.omegaRadiansPerSecond);
-        SmartDashboard.putNumber("chassis.FieldRelative.Heading",getHeadingDegrees());
-        SmartDashboard.putNumber("chassis.FieldRelative.HeadingRot2D",getHeadingRotation2d().getDegrees());
-//    } else {
-        ChassisSpeeds chassisSpeedsRobot = new ChassisSpeeds(throttle, strafe, rotation);
-        SmartDashboard.putNumber("chassis.RobotRelative.vx",chassisSpeedsRobot.vxMetersPerSecond);
-        SmartDashboard.putNumber("chassis.RobotRelative.vy",chassisSpeedsRobot.vyMetersPerSecond);
-        SmartDashboard.putNumber("chassis.RobotRelative.Vr",chassisSpeedsRobot.omegaRadiansPerSecond);
-        SmartDashboard.putNumber("chassis.RobotRelative.Heading",getHeadingDegrees());
-//    }
     if (isFieldRelative) {
-        chassisSpeeds = chassisSpeedsField;
-    }
-    else{
-        chassisSpeeds = chassisSpeedsRobot;
+        // In field relative mode, forward is always toward the opponent's wall
+        // regardless of robot orientation
+        chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            throttle,  // Forward/backward speed
+            strafe,    // Left/right speed
+            rotation,  // Rotation speed
+            getHeadingRotation2d()  // Current robot angle
+        );
+    } else {
+        // In robot relative mode, forward is the robot's forward
+        chassisSpeeds = new ChassisSpeeds(
+            throttle,  // Robot's forward/backward
+            strafe,    // Robot's left/right
+            rotation   // Robot's rotation
+        );
     }
 
-//    ChassisSpeeds chassisSpeeds =
-//            isFieldRelative
-//                    ? ChassisSpeeds.fromFieldRelativeSpeeds(
-//                    throttle, strafe, rotation, getHeadingRotation2d())
-//                    : new ChassisSpeeds(throttle, strafe, rotation);
-//Temp    SmartDashboard.putNumber("chassis.vx",chassisSpeeds.vxMetersPerSecond);
-//Temp    SmartDashboard.putNumber("chassis.vy",chassisSpeeds.vyMetersPerSecond);
-//Temp    SmartDashboard.putNumber("chassis.Vr",chassisSpeeds.omegaRadiansPerSecond);
-//Temp    SmartDashboard.putNumber("chassis.Heading",getHeadingDegrees());
+    // Log data to SmartDashboard
+    SmartDashboard.putNumber("chassis.vx", chassisSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("chassis.vy", chassisSpeeds.vyMetersPerSecond);
+    SmartDashboard.putNumber("chassis.vr", chassisSpeeds.omegaRadiansPerSecond);
+    SmartDashboard.putNumber("chassis.heading", getHeadingDegrees());
 
+    // Convert chassis speeds to individual module states
     SwerveModuleState[] moduleStates = kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
-
+    
+    // Make sure no module tries to go faster than the max speed
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeedMetersPerSecond);
 
+    // Command each swerve module to its desired state
     for (SwerveModuleSDS module : m_swerveModules.values())
-      module.setDesiredState(moduleStates[module.getModuleNumber()], isOpenLoop);
+        module.setDesiredState(moduleStates[module.getModuleNumber()], isOpenLoop);
   }
 
   public void setSwerveModuleStates(SwerveModuleState[] states, boolean isOpenLoop) {
@@ -303,19 +302,23 @@ public void resetPose(Pose2d pose) {
       },
       pose);
 }
-public ChassisSpeeds getRobotRelativeSpeeds(){
-  //TODO:
-  //return new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
- //return new ChassisSpeeds(0,0,0);
- // return new ChassisSpeeds(m_currentTranslationMag * Math.cos(m_currentTranslationDir), 
-  //m_currentTranslationMag * Math.sin(m_currentTranslationDir), 
-  //m_currentRotation);
-  return new ChassisSpeeds(throttle, strafe, rotation);
+public ChassisSpeeds getRobotRelativeSpeeds() {
+    // Get actual robot-relative speeds from current module states
+    return kSwerveKinematics.toChassisSpeeds(getModuleStates());
 }
 
-public Command moveVoltageTimeCommand(int i, double d) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'moveVoltageTimeCommand'");
+public Command moveVoltageTimeCommand(double voltage, double time) {
+    // Convert voltage to percentage (-1 to 1)
+    double speedPercentage = voltage / 12.0;
+    
+    return Commands.sequence(
+        Commands.run(() -> 
+            // Use existing drive method: (forward, strafe, rotation, fieldRelative, isOpenLoop)
+            drive(speedPercentage, 0, 0, false, true)
+        )
+        .withTimeout(time)
+        .andThen(() -> drive(0, 0, 0, false, true))
+    ).withName("drivetrain.moveVoltageTime");
 }
 
 }
