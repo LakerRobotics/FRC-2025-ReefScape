@@ -200,7 +200,7 @@ public class RustConstants {
     
 
     public static final class Climber {
-        public static final int MOTOR_ID = 6;
+        public static final int MOTOR_ID = 56;
         public static final boolean MOTOR_INVERTED = false;
         public static final int CURRENT_LIMIT = 60;
 

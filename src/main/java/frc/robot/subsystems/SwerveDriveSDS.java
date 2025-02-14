@@ -9,6 +9,10 @@ package frc.robot.subsystems;
 //import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.unmanaged.Unmanaged;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.revrobotics.spark.SparkMax;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
@@ -20,6 +24,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
@@ -98,12 +103,51 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 ((SwerveModuleSDS) m_swerveModules.get(ModulePosition.FRONT_LEFT)).m_driveMotor.setInverted(true);
 ((SwerveModuleSDS) m_swerveModules.get(ModulePosition.BACK_LEFT)).m_driveMotor.setInverted(true); 
 
-  
+
+    // All other subsystem initialization
+    // ...
+
+    // Load the RobotConfig from the GUI settings. You should probably
+    // store this in your Constants file
+    RobotConfig config;
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+
+    // Configure AutoBuilder last
+    AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
+            config, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
+  }
+
 //((SwerveModule2023) m_swerveModules.get(ModulePosition.FRONT_RIGHT)).m_turnMotor.setInverted(true);
 //((SwerveModule2023) m_swerveModules.get(ModulePosition.BACK_RIGHT)).m_turnMotor.setInverted(true);
 //((SwerveModule2023) m_swerveModules.get(ModulePosition.FRONT_LEFT)).m_turnMotor.setInverted(true);
 //((SwerveModule2023) m_swerveModules.get(ModulePosition.BACK_LEFT)).m_turnMotor.setInverted(true); 
- }
+ 
 
   public void drive(
           double throttle,
@@ -247,4 +291,25 @@ test = test +0.01;
   }
   public void setVoltage(double voltageForMotors){
 }
+public void resetPose(Pose2d pose) {
+  m_odometry.resetPosition(
+      Rotation2d.fromDegrees(gyro.getAngle()),
+      new SwerveModulePosition[] {
+        m_swerveModules.get(ModulePosition.FRONT_LEFT).getPosition(),
+        m_swerveModules.get(ModulePosition.FRONT_RIGHT).getPosition(),
+        m_swerveModules.get(ModulePosition.BACK_LEFT).getPosition(),
+        m_swerveModules.get(ModulePosition.BACK_RIGHT).getPosition()
+      },
+      pose);
+}
+public ChassisSpeeds getRobotRelativeSpeeds(){
+  //TODO:
+  //return new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
+ //return new ChassisSpeeds(0,0,0);
+ // return new ChassisSpeeds(m_currentTranslationMag * Math.cos(m_currentTranslationDir), 
+  //m_currentTranslationMag * Math.sin(m_currentTranslationDir), 
+  //m_currentRotation);
+  return new ChassisSpeeds(throttle, strafe, rotation);
+}
+
 }
