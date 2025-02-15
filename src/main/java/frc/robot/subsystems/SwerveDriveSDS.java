@@ -39,6 +39,8 @@ import frc.robot.Constants2023.Swerve.ModulePosition;
 import java.util.HashMap;
 import java.util.Map;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
 import static frc.robot.Constants2023.Swerve.*;
 
 
@@ -113,13 +115,13 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
-    RobotConfig config;
+    RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       // Handle exception as needed
       e.printStackTrace();
-      throw new RuntimeException("Failed to load robot configuration", e);
+     // throw new RuntimeException("Failed to load robot configuration", e);
     }
 
     // Configure AutoBuilder last
@@ -129,8 +131,8 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(10.0, 1.0, 0.0), // Translation PID constants
+                    new PIDConstants(10.0, 1.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -218,6 +220,8 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
   }
 
   public Pose2d getPoseMeters() {
+   SmartDashboard.putNumber("Robot X Position", m_odometry.getPoseMeters().getMeasureX().in(Meters));
+   SmartDashboard.putNumber("Robot Y Position", m_odometry.getPoseMeters().getMeasureY().in(Meters));
     return m_odometry.getPoseMeters();
   }
 

@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.       
         CommandScheduler.getInstance().run();
-        m_robotContainer.periodic();
+        //m_robotContainer.periodic();
     }
     /**
      * This function is called when the disabled button is hit.
@@ -89,10 +89,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        //autonomousCommand = m_robotContainer.getAutonomousCommand();
-        SmartDashboard.putData("auto test",autonomousCommand);
+        autonomousCommand = m_robotContainer.getAutonomousCommand();
+       
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.schedule();
+        if (autonomousCommand != null){
+            autonomousCommand.schedule();
+            SmartDashboard.putData("auto test",autonomousCommand);
+          } 
     }
 
     /**
