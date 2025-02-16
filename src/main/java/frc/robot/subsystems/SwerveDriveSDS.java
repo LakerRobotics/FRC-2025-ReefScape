@@ -332,7 +332,7 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
         speeds.vyMetersPerSecond,
         speeds.omegaRadiansPerSecond,
         false,  // Not field relative
-        false   // Closed loop
+        true   // Closed loop
     );
 }
 

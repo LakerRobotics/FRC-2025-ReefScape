@@ -289,7 +289,7 @@ private MechanismLigament2d fromRobot = root
     // Load and follow the RichExample path
     PathPlannerPath path = null;
     try {
-      path = PathPlannerPath.fromPathFile("RichExample");
+      path = PathPlannerPath.fromPathFile("Seth Path");
     } catch (FileVersionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -328,7 +328,7 @@ private MechanismLigament2d fromRobot = root
     // If you want to add the RichExample path specifically:
     PathPlannerPath richPath = null;
     try {
-      richPath = PathPlannerPath.fromPathFile("RichExample");
+      richPath = PathPlannerPath.fromPathFile("Seth Path");
     } catch (FileVersionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

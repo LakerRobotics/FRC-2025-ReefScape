@@ -173,7 +173,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     if (isOpenLoop) {
       double percentOutput = optimizedState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
       m_driveMotor.set(percentOutput);
-      SmartDashboard.putNumber("Module " + m_moduleNumber + " Drive %", percentOutput);
+      SmartDashboard.putNumber("Module OpenLoop" + m_moduleNumber + " Drive %", percentOutput);
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
       double velocity = optimizedState.speedMetersPerSecond;
@@ -182,6 +182,7 @@ public class SwerveModuleSDS extends SubsystemBase {
       // Add feedforward to improve velocity control
       double feedforwardVolts = feedforward.calculate(velocity);
       m_driveMotor.setVoltage(feedforwardVolts);
+      SmartDashboard.putNumber("Module NotOpenLoop" + m_moduleNumber + " feedForwardVolts %", feedforwardVolts);
     }
 
     double angle =
@@ -189,8 +190,8 @@ public class SwerveModuleSDS extends SubsystemBase {
                     ? m_lastAngle
                     : optimizedState.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
     m_turnController.setReference(angle, SparkMax.ControlType.kPosition);
-      SmartDashboard.putNumber("SwerveM23. desired angle",angle);
-      SmartDashboard.putNumber("SwerveM23. actual angle",m_driveEncoder.getPosition());
+      SmartDashboard.putNumber("Module" + m_moduleNumber + " desired angle",angle);
+      SmartDashboard.putNumber("Module" + m_moduleNumber + " actual angle",m_driveEncoder.getPosition());
 
 /* 
     if (RobotBase.isSimulation()) {
