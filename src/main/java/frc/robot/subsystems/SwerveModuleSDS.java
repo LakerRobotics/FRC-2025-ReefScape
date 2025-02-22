@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.PersistMode;
 
 //import frc.robot.utils.*;
@@ -62,8 +63,8 @@ public class SwerveModuleSDS extends SubsystemBase {
   SimpleMotorFeedforward feedforward =
           new SimpleMotorFeedforward(
                   ksDriveVoltSecondsPerMeter,
-                  kaDriveVoltSecondsSquaredPerMeter,
-                  kvDriveVoltSecondsSquaredPerMeter);
+                  ksDriveVoltSecondsSquaredPerMeter,
+                  kaDriveVoltSecondsSquaredPerMeter);
 
   private final ProfiledPIDController m_turningPIDController
           = new ProfiledPIDController(1.0, 0.0, 0.1,  // Increased P gain and added D gain
@@ -177,12 +178,19 @@ public class SwerveModuleSDS extends SubsystemBase {
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
       double velocity = optimizedState.speedMetersPerSecond;
-      m_driveController.setReference(velocity, SparkMax.ControlType.kVelocity);
       
-      // Add feedforward to improve velocity control
+      // Use both feedback and feedforward for better control
       double feedforwardVolts = feedforward.calculate(velocity);
-      m_driveMotor.setVoltage(feedforwardVolts);
-      SmartDashboard.putNumber("Module NotOpenLoop" + m_moduleNumber + " feedForwardVolts %", feedforwardVolts);
+//      m_driveMotor.setVoltage(feedforwardVolts);
+//      SmartDashboard.putNumber("Module NotOpenLoop" + m_moduleNumber + " feedForwardVolts %", feedforwardVolts);
+      // The new API requires using a ClosedLoopSlot object
+      ClosedLoopSlot slot = new ClosedLoopSlot(ClosedLoopSlot.kSlot0);
+      m_driveController.setReference(
+        velocity, 
+        SparkMax.ControlType.kVelocity,
+        slot,
+        feedforwardVolts  // Add feedforward voltage
+      );
     }
 
     double angle =

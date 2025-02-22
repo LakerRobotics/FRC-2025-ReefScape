@@ -91,8 +91,18 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
                   getModulePositions(),
                   new Pose2d());
 
-  private ProfiledPIDController m_xController =
-          new ProfiledPIDController(kP_X, 0, kD_X, kThetaControllerConstraints);
+  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
+    kS,  // Static friction constant from SysId
+    kV,  // Velocity constant from SysId 
+    kA   // Acceleration constant from SysId
+);
+
+  private final ProfiledPIDController m_xController = new ProfiledPIDController(
+    kP_X,  // Proportional gain from SysId
+    0,     // Integral gain (usually left at 0)
+    kD_X,  // Derivative gain from SysId
+    kThetaControllerConstraints
+);
   private ProfiledPIDController m_yController =
           new ProfiledPIDController(kP_Y, 0, kD_Y, kThetaControllerConstraints);
   private ProfiledPIDController m_turnController =
