@@ -19,6 +19,7 @@ import com.studica.frc.AHRS.NavXComType;
 
 //import com.revrobotics.spark.CANSparkMaxLowLevel;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
@@ -90,6 +91,9 @@ AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
                   getHeadingRotation2d(),
                   getModulePositions(),
                   new Pose2d());
+double kS = 0.00;
+double kV = 0.00;
+double kA = 0.00;
 
   private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
     kS,  // Static friction constant from SysId

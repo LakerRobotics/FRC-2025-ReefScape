@@ -63,7 +63,7 @@ public class SwerveModuleSDS extends SubsystemBase {
   SimpleMotorFeedforward feedforward =
           new SimpleMotorFeedforward(
                   ksDriveVoltSecondsPerMeter,
-                  ksDriveVoltSecondsSquaredPerMeter,
+                  kvDriveVoltSecondsSquaredPerMeter,
                   kaDriveVoltSecondsSquaredPerMeter);
 
   private final ProfiledPIDController m_turningPIDController
@@ -184,7 +184,7 @@ public class SwerveModuleSDS extends SubsystemBase {
 //      m_driveMotor.setVoltage(feedforwardVolts);
 //      SmartDashboard.putNumber("Module NotOpenLoop" + m_moduleNumber + " feedForwardVolts %", feedforwardVolts);
       // The new API requires using a ClosedLoopSlot object
-      ClosedLoopSlot slot = new ClosedLoopSlot(ClosedLoopSlot.kSlot0);
+      ClosedLoopSlot slot = ClosedLoopSlot.kSlot0;
       m_driveController.setReference(
         velocity, 
         SparkMax.ControlType.kVelocity,
