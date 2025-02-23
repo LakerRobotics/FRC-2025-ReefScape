@@ -44,6 +44,13 @@ import java.util.Map;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
 import static frc.robot.Constants2023.Swerve.*;
+//import edu.wpi.first.units.Voltage;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
+
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 
 
 public class SwerveDriveSDS extends SubsystemBase {
@@ -356,33 +363,34 @@ private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
     new SysIdRoutine.Config(),
     new SysIdRoutine.Mechanism(
         voltage -> {
-            // Convert voltage to velocity for drive method
-            double percentOutput = voltage.magnitude() / 12.0; 
-            double velocity = percentOutput * kMaxSpeedMetersPerSecond;
-            
-            // Use drive method with closed loop control
-            drive(velocity, 0, 0, false, false); // false = robot relative, false = not open loop
+            // Directly apply the test voltage to all drive motors
+            for (SwerveModuleSDS module : m_swerveModules.values()) {
+                module.m_driveMotor.setVoltage(voltage.magnitude());
+                // Keep modules pointed forward during test
+                module.m_turnMotor.setVoltage(0);
+            }
         },
         log -> {
-            // Log average data from all modules
-            double avgVoltage = 0;
+            // Calculate averages from all modules
             double avgVelocity = 0;
             double avgPosition = 0;
             
             for (SwerveModuleSDS module : m_swerveModules.values()) {
-                avgVoltage += module.m_driveMotor.getAppliedOutput() * 12.0;
                 avgVelocity += module.getDriveMetersPerSecond();
                 avgPosition += module.getDriveMeters();
             }
             
-            avgVoltage /= 4.0;
             avgVelocity /= 4.0;
             avgPosition /= 4.0;
             
+            
+            edu.wpi.first.units.measure.Voltage avgVolts = Volts.of(avgVelocity);  // Create a Voltage measure using the static factory method
+            Distance avgPos = Meters.of(avgPosition);
+            LinearVelocity avgVel = MetersPerSecond.of(avgVelocity);  // Create a Velocity measure
             log.motor("swerve-drive")
-                .voltage(avgVoltage)
-                .linearPosition(avgPosition)
-                .linearVelocity(avgVelocity);
+                .voltage(avgVolts)
+                .linearPosition(avgPos)
+                .linearVelocity(avgVel);
         },
         this
     )

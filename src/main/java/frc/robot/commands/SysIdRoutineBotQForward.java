@@ -32,7 +32,7 @@ public class SysIdRoutineBotQForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
+    m_driveTrain.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
   }
 
   // Called once the command ends or is interrupted.
