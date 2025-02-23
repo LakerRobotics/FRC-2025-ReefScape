@@ -56,6 +56,7 @@ import frc.robot.RustConstants.Controls;
 import frc.robot.RustConstants.Drivetrain;
 import frc.robot.RustConstants.OIConstants;
 import frc.robot.Constants2023.USB; 
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  
 /**
@@ -175,7 +176,7 @@ private MechanismLigament2d fromRobot = root
 
  
     // Configure the trigger bindings
-//    configureBindings();
+   configureBindings();
 //    if(ROBOT == DEV){
  //     m_robotDrive = m_robotDriveSDS;
   // m_fieldSim = new FieldSim(m_robotDriveSDS);
@@ -223,6 +224,11 @@ private MechanismLigament2d fromRobot = root
    * joysticks}.
    */
   private void configureBindings() {
+
+    new Trigger( 
+      () -> 
+           Math.abs(rightJoystick.getLeftY()) > 0.03 )
+           .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));
 
     /* 
     // set up arm preset positions
