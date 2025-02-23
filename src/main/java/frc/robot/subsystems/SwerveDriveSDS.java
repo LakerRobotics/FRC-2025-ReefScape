@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants2023.CAN;
 import frc.robot.Constants2023.Swerve;
 import frc.robot.Constants2023.Swerve.ModulePosition;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -349,5 +350,60 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
         true   // Closed loop
     );
 }
+
+// Create a new SysId routine for characterizing the drive.
+private final SysIdRoutine m_sysIdRoutine =
+new SysIdRoutine(
+    // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+    new SysIdRoutine.Config(),
+    new SysIdRoutine.Mechanism(
+        // Tell SysId how to plumb the driving voltage to the motors.
+        voltage -> {
+          m_leftMotor.setVoltage(voltage);
+          m_rightMotor.setVoltage(voltage);
+        },
+        // Tell SysId how to record a frame of data for each motor on the mechanism being
+        // characterized.
+        log -> {
+          // Record a frame for the left motors.  Since these share an encoder, we consider
+          // the entire group to be one motor.
+          log.motor("drive-left")
+              .voltage(
+                  m_appliedVoltage.mut_replace(
+                      m_leftMotor.get() * RobotController.getBatteryVoltage(), Volts))
+              .linearPosition(m_distance.mut_replace(m_leftEncoder.getDistance(), Meters))
+              .linearVelocity(
+                  m_velocity.mut_replace(m_leftEncoder.getRate(), MetersPerSecond));
+          // Record a frame for the right motors.  Since these share an encoder, we consider
+          // the entire group to be one motor.
+          log.motor("drive-right")
+              .voltage(
+                  m_appliedVoltage.mut_replace(
+                      m_rightMotor.get() * RobotController.getBatteryVoltage(), Volts))
+              .linearPosition(m_distance.mut_replace(m_rightEncoder.getDistance(), Meters))
+              .linearVelocity(
+                  m_velocity.mut_replace(m_rightEncoder.getRate(), MetersPerSecond));
+        },
+        // Tell SysId to make generated commands require this subsystem, suffix test state in
+        // WPILog with this subsystem's name ("drive")
+        this));
+
+  /**
+   * Returns a command that will execute a quasistatic test in the given direction.
+   *
+   * @param direction The direction (forward or reverse) to run the test in
+   */
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return m_sysIdRoutine.quasistatic(direction);
+  }
+
+  /**
+   * Returns a command that will execute a dynamic test in the given direction.
+   *
+   * @param direction The direction (forward or reverse) to run the test in
+   */
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return m_sysIdRoutine.dynamic(direction);
+  }
 
 }
