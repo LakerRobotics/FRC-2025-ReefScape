@@ -352,41 +352,41 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
 }
 
 // Create a new SysId routine for characterizing the drive.
-private final SysIdRoutine m_sysIdRoutine =
-new SysIdRoutine(
-    // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
     new SysIdRoutine.Config(),
     new SysIdRoutine.Mechanism(
-        // Tell SysId how to plumb the driving voltage to the motors.
         voltage -> {
-          m_leftMotor.setVoltage(voltage);
-          m_rightMotor.setVoltage(voltage);
+            // Convert voltage to velocity for drive method
+            double percentOutput = voltage.magnitude() / 12.0; 
+            double velocity = percentOutput * kMaxSpeedMetersPerSecond;
+            
+            // Use drive method with closed loop control
+            drive(velocity, 0, 0, false, false); // false = robot relative, false = not open loop
         },
-        // Tell SysId how to record a frame of data for each motor on the mechanism being
-        // characterized.
         log -> {
-          // Record a frame for the left motors.  Since these share an encoder, we consider
-          // the entire group to be one motor.
-          log.motor("drive-left")
-              .voltage(
-                  m_appliedVoltage.mut_replace(
-                      m_leftMotor.get() * RobotController.getBatteryVoltage(), Volts))
-              .linearPosition(m_distance.mut_replace(m_leftEncoder.getDistance(), Meters))
-              .linearVelocity(
-                  m_velocity.mut_replace(m_leftEncoder.getRate(), MetersPerSecond));
-          // Record a frame for the right motors.  Since these share an encoder, we consider
-          // the entire group to be one motor.
-          log.motor("drive-right")
-              .voltage(
-                  m_appliedVoltage.mut_replace(
-                      m_rightMotor.get() * RobotController.getBatteryVoltage(), Volts))
-              .linearPosition(m_distance.mut_replace(m_rightEncoder.getDistance(), Meters))
-              .linearVelocity(
-                  m_velocity.mut_replace(m_rightEncoder.getRate(), MetersPerSecond));
+            // Log average data from all modules
+            double avgVoltage = 0;
+            double avgVelocity = 0;
+            double avgPosition = 0;
+            
+            for (SwerveModuleSDS module : m_swerveModules.values()) {
+                avgVoltage += module.m_driveMotor.getAppliedOutput() * 12.0;
+                avgVelocity += module.getDriveMetersPerSecond();
+                avgPosition += module.getDriveMeters();
+            }
+            
+            avgVoltage /= 4.0;
+            avgVelocity /= 4.0;
+            avgPosition /= 4.0;
+            
+            log.motor("swerve-drive")
+                .voltage(avgVoltage)
+                .linearPosition(avgPosition)
+                .linearVelocity(avgVelocity);
         },
-        // Tell SysId to make generated commands require this subsystem, suffix test state in
-        // WPILog with this subsystem's name ("drive")
-        this));
+        this
+    )
+);
 
   /**
    * Returns a command that will execute a quasistatic test in the given direction.
