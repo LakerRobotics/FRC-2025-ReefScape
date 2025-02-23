@@ -81,7 +81,6 @@ public class SwerveModuleSDS extends SubsystemBase {
 //    driveMotor.setSecondaryCurrentLimit(1);
     m_moduleNumber = moduleNumber;
     m_turnMotor = turnMotor;
-    m_turnMotor.setInverted(true);
     m_driveMotor = driveMotor;
     m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
@@ -109,6 +108,7 @@ public class SwerveModuleSDS extends SubsystemBase {
 
     m_turnEncoder = m_turnMotor.getEncoder();
     SparkMaxConfig turnConfig = new SparkMaxConfig();
+    turnConfig.inverted(true);
     turnConfig.encoder
         .positionConversionFactor(kTurnRotationsToDegrees)
         .velocityConversionFactor(kTurnRotationsToDegrees / 60);
