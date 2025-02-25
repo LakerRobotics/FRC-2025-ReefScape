@@ -58,6 +58,11 @@ import frc.robot.RustConstants.OIConstants;
 import frc.robot.Constants.USB; 
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.commands.SysIdRoutineBotDForward;
+import frc.robot.commands.SysIdRoutineBotDReverse;
+import frc.robot.commands.SysIdRoutineBotQForward;
+import frc.robot.commands.SysIdRoutineBotQReverse;
  
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -175,6 +180,21 @@ private MechanismLigament2d fromRobot = root
 
 
  
+    // Create and add SysId commands to Shuffleboard
+    var commandsTab = Shuffleboard.getTab("Commands");
+    
+    SysIdRoutineBotDForward sysIdDForward = new SysIdRoutineBotDForward(m_robotDriveSDS);
+    commandsTab.add("SysId Dynamic Forward", sysIdDForward);
+    
+    SysIdRoutineBotDReverse sysIdDReverse = new SysIdRoutineBotDReverse(m_robotDriveSDS);
+    commandsTab.add("SysId Dynamic Reverse", sysIdDReverse);
+    
+    SysIdRoutineBotQForward sysIdQForward = new SysIdRoutineBotQForward(m_robotDriveSDS);
+    commandsTab.add("SysId Quasistatic Forward", sysIdQForward);
+    
+    SysIdRoutineBotQReverse sysIdQBackward = new SysIdRoutineBotQReverse(m_robotDriveSDS);
+    commandsTab.add("SysId Quasistatic Backward", sysIdQBackward);
+
     // Configure the trigger bindings
    configureBindings();
 //    if(ROBOT == DEV){
