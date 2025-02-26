@@ -182,25 +182,17 @@ private MechanismLigament2d fromRobot = root
     var commandsTab = Shuffleboard.getTab("Commands");
     
     // Create SysId commands directly from the subsystem methods
-    commandsTab
-        .add("SysId Dynamic Forward", 
-            m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward))
-        .withWidget(BuiltInWidgets.kCommand);
+    commandsTab.add("SysId Dynamic Forward", 
+        m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward));
         
-    commandsTab
-        .add("SysId Dynamic Reverse", 
-            m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse))
-        .withWidget(BuiltInWidgets.kCommand);
+    commandsTab.add("SysId Dynamic Reverse", 
+        m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse));
         
-    commandsTab
-        .add("SysId Quasistatic Forward", 
-            m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward))
-        .withWidget(BuiltInWidgets.kCommand);
+    commandsTab.add("SysId Quasistatic Forward", 
+        m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
         
-    commandsTab
-        .add("SysId Quasistatic Reverse", 
-            m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse))
-        .withWidget(BuiltInWidgets.kCommand);
+    commandsTab.add("SysId Quasistatic Reverse", 
+        m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
     // Configure the trigger bindings
    configureBindings();
