@@ -33,6 +33,7 @@ public class Intake extends SubsystemBase implements BaseIntake {
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    
     public void setRollerVoltage(double voltage) {
         motor.setVoltage(voltage);
     }

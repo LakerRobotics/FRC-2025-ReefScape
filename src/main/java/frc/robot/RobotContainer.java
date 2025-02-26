@@ -235,6 +235,9 @@ private MechanismLigament2d fromRobot = root
               true,
             true),
       m_robotDriveSDS));
+
+   
+
 //    }
 
     //SETUP AUTONOMOUS CODE
@@ -256,6 +259,11 @@ private MechanismLigament2d fromRobot = root
       () -> 
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
            .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));
+           
+    new Trigger( 
+            () -> 
+                 Math.abs(rightJoystick.getRightY()) > 0.03 )
+                 .onTrue(new RunCommand(() -> intake.setRollerVoltage(rightJoystick.getRightY()),intake));      
 
     /* 
     // set up arm preset positions
