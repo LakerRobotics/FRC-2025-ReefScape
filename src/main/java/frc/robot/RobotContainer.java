@@ -37,7 +37,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand; 
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -50,6 +51,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDriveSDS;
 import frc.robot.subsystems.Elevator;
+import frc.robot.CoralSim;
 //import frc.robot.subsystems.SwerveDriveRev;
 import frc.robot.utils.GamepadUtils;
 import frc.robot.RustConstants.Controls;
@@ -111,7 +113,7 @@ private MechanismLigament2d fromRobot = root
     Climber climber = new Climber();
 
     //@Log
-//    CoralSim coralSim = new CoralSim(drivetrain::getPose, arm::getClawComponentPose);
+    CoralSim coralSim = new CoralSim(m_robotDriveSDS::getPose, arm::getClawComponentPose);
 
 //    @Log
 //    LEDs leds = new LEDs();
@@ -255,7 +257,23 @@ private MechanismLigament2d fromRobot = root
     new Trigger( 
             () -> 
                  Math.abs(rightJoystick.getRightY()) > 0.03 )
-                 .onTrue(new RunCommand(() -> intake.setRollerVoltage(rightJoystick.getRightY()),intake));      
+                 .onTrue(new RunCommand(() -> intake.setRollerVoltage(rightJoystick.getRightY()),intake));
+
+  
+    new Trigger(
+      () -> 
+                 Math.abs(rightJoystick.getRightX()) > 0.03 )
+                 .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
+  
+  //elevtor preset position buttons borrowed from Rust Hounds
+    new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
+     
+    new JoystickButton(rightJoystick, PS4Controller.Button.kCircle.value)
+      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
+                
+    new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
+      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
 
     /* 
     // set up arm preset positions
