@@ -176,6 +176,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
 
     @Override
     public void setVoltage(double voltage) {
+        //System.out.println("In elevator set voltage");
         voltage = MathUtil.clamp(voltage, -12, 12);
         voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
@@ -185,9 +186,9 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
             voltage = 0;
         }
 
-        if (!GlobalStates.INITIALIZED.enabled()) {
-            voltage = 0.0;
-        }
+       // if (!GlobalStates.INITIALIZED.enabled()) {
+          //  voltage = 0.0;
+      //  }
 
         motor.setVoltage(voltage);
 

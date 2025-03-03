@@ -186,9 +186,9 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
             voltage = 0;
         }
 
-        if (!GlobalStates.INITIALIZED.enabled()) {
-            voltage = 0.0;
-        }
+       // if (!GlobalStates.INITIALIZED.enabled()) {
+           // voltage = 0.0;
+        //}
 
         motor.setVoltage(voltage);
     }

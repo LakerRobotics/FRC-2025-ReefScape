@@ -43,6 +43,7 @@ import java.util.Map;
 
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
+//import static edu.wpi.first.units.Units.VoltagePerSecond;
 import static frc.robot.Constants.Swerve.*;
 //import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.units.measure.Distance;
@@ -360,7 +361,7 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
 
 // Create a new SysId routine for characterizing the drive.
 private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
-    new SysIdRoutine.Config(),
+    new SysIdRoutine.Config(/*VoltagePerSecond.of(0.5), null, null, null*/),
     new SysIdRoutine.Mechanism(
         voltage -> {
             // Directly apply the test voltage to all drive motors

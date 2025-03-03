@@ -253,7 +253,12 @@ private MechanismLigament2d fromRobot = root
       () -> 
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
            .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));
-           
+    
+    new Trigger( 
+      () -> 
+            Math.abs(rightJoystick.getLeftX()) > 0.03 )
+            .onTrue(new RunCommand(() -> elevator.setVoltage(rightJoystick.getLeftX()),elevator));
+
     new Trigger( 
             () -> 
                  Math.abs(rightJoystick.getRightY()) > 0.03 )
@@ -266,64 +271,19 @@ private MechanismLigament2d fromRobot = root
                  .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
   
   //elevtor preset position buttons borrowed from Rust Hounds
-    new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+     new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
       .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
      
     new JoystickButton(rightJoystick, PS4Controller.Button.kCircle.value)
       .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
                 
     new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
-      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim)); 
 
-    /* 
-    // set up arm preset positions
-    /*new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
-        .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
-
-   // new Trigger(
-            () ->
-                rightJoystick.getL2Axis()
-                    > Constants.OIConstants.kTriggerButtonThreshold)
-        .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
-
-    new JoystickButton(rightJoystick, PS4Controller.Button.kL1.value)
-        .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kHomePosition)));
-     
-    new Trigger( 
-      () -> 
-           Math.abs(rightJoystick.getLeftY()) > 0.03 )
-           .onTrue(new RunCommand(() -> m_arm.runManual(rightJoystick.getLeftY()),m_arm));
-
-    // intake controls (run while button is held down, run retract command once when the button is released)
-    new Trigger(
-            () ->
-                rightJoystick.getR2Axis()
-                    > Constants.OIConstants.kTriggerButtonThreshold)
-        .whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)))
-        .onFalse(m_intake.retract());
-     
-    new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
-        .whileTrue(new RunCommand(() -> m_intake.setPower(-1.0)));
-
-    new Trigger( 
-      () -> 
-           Math.abs(rightJoystick.getRightX()) > 0.03 )
-           .onTrue(new RunCommand(() -> m_intake.runManual(rightJoystick.getRightX()),m_intake));
-
-    // launcher controls (button to pre-spin the launcher and button to launch)
-    new JoystickButton(rightJoystick, PS4Controller.Button.kCircle.value)
-        //.whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
-        .whileTrue(new LauncherAutoPower(m_launcher,0.9,1));
-
-    new JoystickButton(rightJoystick, PS4Controller.Button.kR1.value)
-        .onTrue(m_intake.feedLauncher(m_launcher));
   
-    new JoystickButton(rightJoystick, PS4Controller.Button.kCross.value)
-        .onTrue(new AmpShoot(m_arm, m_launcher, m_intake, m_robotDriveREV));
+ 
 
-    new JoystickButton(rightJoystick, PS4Controller.Button.kPS.value)
-        .onTrue(new ArmLockEngage(mArmLockSubsystem));
-        */
+ 
 
     // DriveTrainReset 
 //    new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 

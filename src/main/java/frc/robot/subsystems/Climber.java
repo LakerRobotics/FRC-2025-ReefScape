@@ -19,6 +19,9 @@ import static frc.robot.RustConstants.Climber.*;
 public class Climber extends SubsystemBase {
    // @Log
     private final SparkMax motor;
+    private final SparkMax motor2;
+    private final SparkMax motor3;
+
 
     private SparkMaxConfig motorConfig;
 
@@ -36,7 +39,11 @@ public class Climber extends SubsystemBase {
                 .velocityConversionFactor(ENCODER_ROTATIONS_TO_METERS / 60.0);
 
         motor = new SparkMax(MOTOR_ID, MotorType.kBrushless);
+        motor2 = new SparkMax(MOTOR_ID2, MotorType.kBrushless);
+        motor3 = new SparkMax(MOTOR_ID3, MotorType.kBrushless);
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        motor2.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        motor3.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         motor.getEncoder().setPosition(0);
     }
@@ -51,7 +58,10 @@ public class Climber extends SubsystemBase {
 
     public void setVoltage(double voltage) {
         voltage = MathUtil.clamp(voltage, -4, 4);
+        System.out.print("reached climber voltage"+voltage);
         motor.setVoltage(voltage);
+        motor2.setVoltage(voltage);
+        motor3.setVoltage(voltage);
     }
 
     public Command winchUpCommand() {
