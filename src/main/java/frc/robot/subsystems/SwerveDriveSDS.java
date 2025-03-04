@@ -45,13 +45,18 @@ import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
 //import static edu.wpi.first.units.Units.VoltagePerSecond;
 import static frc.robot.Constants.Swerve.*;
+
+import edu.wpi.first.units.VoltageUnit;
 //import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Velocity;
 
+
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.VoltagePerSecond;
 
 
 public class SwerveDriveSDS extends SubsystemBase {
@@ -360,8 +365,41 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
 }
 
 // Create a new SysId routine for characterizing the drive.
-private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
-    new SysIdRoutine.Config(/*VoltagePerSecond.of(0.5), null, null, null*/),
+/*
+ *  /** The voltage ramp rate used for quasistatic test routines. */
+ //public final Velocity<VoltageUnit> m_rampRate;
+
+ /** The step voltage output used for dynamic test routines. */
+ //public final Voltage m_stepVoltage;
+
+ /** Safety timeout for the test routine commands. */
+ //public final Time m_timeout;
+
+ /** Optional handle for recording test state in a third-party logging solution. */
+ //public final Consumer<State> m_recordState;
+
+ /**
+  * Create a new configuration for a SysId test routine.
+  *
+  * @param rampRate The voltage ramp rate used for quasistatic test routines. Defaults to 1 volt
+  *     per second if left null.
+  * @param stepVoltage The step voltage output used for dynamic test routines. Defaults to 7
+  *     volts if left null.
+  * @param timeout Safety timeout for the test routine commands. Defaults to 10 seconds if left
+  *     null.
+  * @param recordState Optional handle for recording test state in a third-party logging
+  *     solution. If provided, the test routine state will be passed to this callback instead of
+  *     logged in WPILog.
+  */
+//TODO 
+  //private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
+
+    //new SysIdRoutine.Config(
+      //  Volts.of(0.5).per(Seconds.of(1),
+        //Volts.of(0.7),               // stepVoltage: 0.7 volts (DYNAMIC)
+        //Seconds.of(7.0),// timeout: 10 seconds is default
+        //null           
+    //),
     new SysIdRoutine.Mechanism(
         voltage -> {
             // Directly apply the test voltage to all drive motors
