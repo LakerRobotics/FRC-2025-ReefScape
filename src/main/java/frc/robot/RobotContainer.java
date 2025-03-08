@@ -72,95 +72,78 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
  */
 public class RobotContainer {
 
-//  private static RobotContainer2023 m_robotContainer = new RobotContainer2023();
- 
   // The robot's subsystems and commands are defined here...
-  //private  SwerveDriveRev m_robotDriveSDS;
-//  private  SwerveDriveREVReal  m_robotDriveREV;
+  // private  SwerveDriveRev m_robotDriveSDS;
   // Initialize Limelight NetworkTable
-  //  private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-//     @SuppressWarnings("unused")
+  // private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+  //     @SuppressWarnings("unused")
   private Mechanism2d mechanisms = new Mechanism2d(5, 3);
-private MechanismRoot2d root = mechanisms.getRoot("root", 2.5, 0.25);
-private MechanismLigament2d fromRobot = root
+  private MechanismRoot2d root = mechanisms.getRoot("root", 2.5, 0.25);
+  private MechanismLigament2d fromRobot = root
             .append(new MechanismLigament2d("fromRobot", Units.inchesToMeters(5.5), 180, 0,
                     new Color8Bit(Color.kWhite)));
-    @SuppressWarnings("unused")
-    private MechanismLigament2d elevatorBase = root
+  @SuppressWarnings("unused")
+  private MechanismLigament2d elevatorBase = root
             .append(new MechanismLigament2d("elevatorBase", Units.inchesToMeters(36), 90, 2,
                     new Color8Bit(Color.kWhite)));
-    private MechanismLigament2d elevatorLigament = root
-            .append(new MechanismLigament2d("elevatorStage", Units.inchesToMeters(10), 90,
-                    4,
+  private MechanismLigament2d elevatorLigament = root
+            .append(new MechanismLigament2d("elevatorStage", Units.inchesToMeters(10), 90, 4,
                     new Color8Bit(Color.kOrange)));
-    private MechanismLigament2d armLigament = elevatorLigament
-            .append(new MechanismLigament2d("armLigament", Units.inchesToMeters(10), 270,
-                    5,
+  private MechanismLigament2d armLigament = elevatorLigament
+            .append(new MechanismLigament2d("armLigament", Units.inchesToMeters(10), 270, 5,
                     new Color8Bit(Color.kRed)));
 
-    PositionTracker positionTracker = new PositionTracker();
+  PositionTracker positionTracker = new PositionTracker();
 
-    //@Log
-    //Drivetrain drivetrain = new Drivetrain();
-    SwerveDriveSDS m_robotDriveSDS = new SwerveDriveSDS();
-    //@Log
-    Elevator elevator = new Elevator(positionTracker, elevatorLigament);
-    //@Log
-    Arm arm = new Arm(positionTracker, armLigament, elevator::getCarriageComponentPose);
-    //@Log
-    Intake intake = new Intake();
-    //@Log
-    Climber climber = new Climber();
+  //@Log
+  //Drivetrain drivetrain = new Drivetrain();
+  SwerveDriveSDS m_robotDriveSDS = new SwerveDriveSDS();
+  //@Log
+  Elevator elevator = new Elevator(positionTracker, elevatorLigament);
+  //@Log
+  Arm arm = new Arm(positionTracker, armLigament, elevator::getCarriageComponentPose);
+  //@Log
+  Intake intake = new Intake();
+  //@Log
+  Climber climber = new Climber();
 
-    //@Log
-    CoralSim coralSim = new CoralSim(m_robotDriveSDS::getPose, arm::getClawComponentPose);
+  //@Log
+  CoralSim coralSim = new CoralSim(m_robotDriveSDS::getPose, arm::getClawComponentPose);
 
-//    @Log
-//    LEDs leds = new LEDs();
+  //    @Log
+  //    LEDs leds = new LEDs();
 
-//    @Log
-//    HoundBrian houndbrian = new HoundBrian(drivetrain, elevator, arm, climber, leds);
+  //    @Log
+  //  HoundBrian houndbrian = new HoundBrian(drivetrain, elevator, arm, climber, leds);
 
- //   @Log
-    private final Supplier<Boolean> initialized = GlobalStates.INITIALIZED::enabled;
+  //   @Log
+  private final Supplier<Boolean> initialized = GlobalStates.INITIALIZED::enabled;
 
-//    @SendableLog
-    CommandScheduler scheduler = CommandScheduler.getInstance();
+//   @SendableLog
+  CommandScheduler scheduler = CommandScheduler.getInstance();
 
-//    @Log(groups = "gamePieces")
-    public Pose3d getCoralPose() {
-        Pose3d relativeCoralPose = arm.getClawComponentPose().plus(new Transform3d(0.143, 0, 0, new Rotation3d()));
-        return new Pose3d(m_robotDriveSDS.getPose())
-                .plus(new Transform3d(relativeCoralPose.getTranslation(), relativeCoralPose.getRotation()))
-                .plus(new Transform3d(0, 0, 0, new Rotation3d(0, Math.PI / 2.0, 0)));
+//   @Log(groups = "gamePieces")
+  public Pose3d getCoralPose() {
+      Pose3d relativeCoralPose = arm.getClawComponentPose().plus(new Transform3d(0.143, 0, 0, new Rotation3d()));
+      return new Pose3d(m_robotDriveSDS.getPose())
+              .plus(new Transform3d(relativeCoralPose.getTranslation(), relativeCoralPose.getRotation()))
+              .plus(new Transform3d(0, 0, 0, new Rotation3d(0, Math.PI / 2.0, 0)));
     }
           
-      
-
-    
-
   //PositionTracker ArmPositionTracker = new PositionTracker();
   //private final Arm m_arm = new Arm(ArmPositionTracker, null, null);
   //private final Intake m_intake = new Intake();
   //private final Elevator m_launcher = new Elevator(null, null);
-  //private final ArmLockSubsystem mArmLockSubsystem = new ArmLockSubsystem();
-//  private int ROBOT;
-//  private final int PROD = 1;
-//  private final int DEV = 0;
-
-
 
 //  private final FieldSim m_fieldSim;// = new FieldSim(m_robotDrive);
-
   static PS4Controller leftJoystick  = new PS4Controller(USB.leftJoystick);
   static PS4Controller rightJoystick = new PS4Controller(USB.rightJoystick);
 
    // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  private SendableChooser<Command> autoChooser;
+
   RobotContainer(){
- 
-   
-      
      //NamedCommands.registerCommand("ArmJoystickControl", new ArmJoystickControl(m_arm).withTimeout(3));
      //NamedCommands.registerCommand("IntakeSetPower", new IntakeSetPower(m_intake,1).withTimeout(2));
 
@@ -175,66 +158,39 @@ private MechanismLigament2d fromRobot = root
     // configure the launcher to stop when no other command is running
     //m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
 
-//   final NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-
-
-
+    //final NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
  
     // Create and add SysId commands to Shuffleboard
     var commandsTab = Shuffleboard.getTab("Commands");
     
     // Create SysId commands directly from the subsystem methods
-    commandsTab.add("SysId Dynamic Forward", 
-        m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward));
-        
-    commandsTab.add("SysId Dynamic Reverse", 
-        m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-        
-    commandsTab.add("SysId Quasistatic Forward", 
-        m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-        
-    commandsTab.add("SysId Quasistatic Reverse", 
-        m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("SysId Dynamic Forward",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward));     
+    commandsTab.add("SysId Dynamic Reverse",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("SysId Quasistatic Forward", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    commandsTab.add("SysId Quasistatic Reverse", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
     // Configure the trigger bindings
-   configureBindings();
-//    if(ROBOT == DEV){
- //     m_robotDrive = m_robotDriveSDS;
+    configureBindings();
   // m_fieldSim = new FieldSim(m_robotDriveSDS);
   // m_fieldSim.initSim();
-    // Configure default commands
-//     m_robotDriveSDS.setDefaultCommand(
-            // The left stick controls translation of the robot.
-            // Turning is controlled by the X axis of the right stick.
-//            new SetSwerveDrive2023(
-//                    m_robotDriveSDS,
-//                    ()-> leftJoystick.getLeftY(),// getY(),
-//                    ()-> leftJoystick.getLeftX(), //getX(),
-//                    ()-> leftJoystick.getRightX(),//getZ(),
-//                  true));
- //   }
-//    else{
-      m_robotDriveSDS.setDefaultCommand(
+
+  // Configure default commands
+    m_robotDriveSDS.setDefaultCommand(
       // The left stick controls translation of the robot.
       // Turning is controlled by the X axis of the right stick.
       new RunCommand(
         () ->
-          m_robotDriveSDS.drive(
-              -GamepadUtils.squareInput(
-                  leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(
-                  leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(
-                  leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+         m_robotDriveSDS.drive(
+             -GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
+              -GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
+              -GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,
-            false),
-      m_robotDriveSDS));
+              false
+          ),
+        m_robotDriveSDS
+      )
+    );
 
-   
-
-//    }
-
-    //SETUP AUTONOMOUS CODE
     configureAutos();
   }
 
@@ -248,12 +204,10 @@ private MechanismLigament2d fromRobot = root
    * joysticks}.
    */
   private void configureBindings() {
-
     new Trigger( 
       () -> 
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
-           .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));
-    
+           .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));  
      new Trigger( 
       () -> 
             Math.abs(rightJoystick.getLeftX()) > 0.03 )
@@ -263,8 +217,6 @@ private MechanismLigament2d fromRobot = root
             () -> 
                  Math.abs(rightJoystick.getRightY()) > 0.03 )
                  .onTrue(new RunCommand(() -> intake.setRollerVoltage(rightJoystick.getRightY()),intake));
-
-  
     new Trigger(
       () -> 
                  Math.abs(rightJoystick.getRightX()) > 0.03 )
@@ -281,16 +233,11 @@ private MechanismLigament2d fromRobot = root
     new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
       .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim)); */
 
-  
- 
-
- 
-
     // DriveTrainReset 
 //    new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 
 //    .onTrue(new RunCommand(()-> m_robotDriveSDS.zeroHeading()));
-
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -298,77 +245,28 @@ private MechanismLigament2d fromRobot = root
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Load and follow the RichExample path
-    PathPlannerPath path = null;
-    try {
-      path = PathPlannerPath.fromPathFile("Seth Path");
-    } catch (FileVersionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return AutoBuilder.followPath(path);
+    return autoChooser.getSelected();
   }
 
-//  public static RobotContainer2023 getInstance() {
-//     return m_robotContainer;
-//  }
-
+  
   private void configureAutos() {
-    SmartDashboard.putData("auton chooser",m_chooser);
-    // Set the Defualt Auton
-     /* 
-    m_chooser.setDefaultOption("Shoot Note", new AutoShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
-    m_chooser.addOption("Launcher Test", new AutoLauncher(m_launcher));
-    m_chooser.addOption("Shoot Note ", new AutoShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
-    m_chooser.addOption("Right Shoot Note ", new AutoRightShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
-    m_chooser.addOption("Left Shoot Note ", new AutoLeftShootSpeaker(m_arm,m_launcher,m_intake,m_robotDriveREV));
-    */
-   // m_chooser.addOption("Shoot Note then follow Path ", new AutoShootSpeakerThenFollowPath(m_arm,m_launcher,m_intake,m_robotDriveREV,"Seth Path"));
+    // Initialize the autoChooser
+    this.autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
-  
-     //Remove references to old m_chooser since we're using PathPlanner's autoChooser
-    
-    // If you want to add the RichExample path specifically:
-  //  PathPlannerPath richPath = null;
+    // Can keep individual paths as additional options, for now for debugging
     try {
-      //richPath = PathPlannerPath.fromPathFile("New New Path");
-     
-      PathPlannerPath path = PathPlannerPath.fromPathFile("New New Path");
-      m_chooser.addOption("Path: Example Path", AutoBuilder.followPath(path));
-      m_chooser.setDefaultOption("Path: Example Path", AutoBuilder.followPath(path));
-  
-      PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path");
-      m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2)); 
+        PathPlannerPath path = PathPlannerPath.fromPathFile("New New Path");
+        m_chooser.addOption("Path Only: New Path", AutoBuilder.followPath(path));
+        
+        PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path");
+        m_chooser.addOption("Path Only: Seth Path", AutoBuilder.followPath(path2));
+        
+        PathPlannerPath path3 = PathPlannerPath.fromPathFile("RichExample");
+        m_chooser.addOption("Path: Rich Path", AutoBuilder.followPath(path3));
 
-      PathPlannerPath path3 = PathPlannerPath.fromPathFile("RichExample");
-      m_chooser.addOption("Path: Rich Path", AutoBuilder.followPath(path3)); 
-
-      PathPlannerPath path4 = PathPlannerPath.fromPathFile("RichExampleAuton");
-      m_chooser.addOption("Auton: RichExamplAuton", AutoBuilder.followPath(path4)); 
-
-    } catch (FileVersionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-//    Command richCommand = AutoBuilder.followPath(richPath);
-//    m_chooser.addOption("Rich Example Path", richCommand);
   }
-
-  
-
-  
-
-
 }
