@@ -111,20 +111,20 @@ public class SwerveDriveSDS extends SubsystemBase {
 //    kA   // Acceleration constant from SysId
 //);
 
-  private final ProfiledPIDController m_xController = new ProfiledPIDController(
-    kP_X,  // Proportional gain from SysId
-    0,     // Integral gain (usually left at 0)
-    kD_X,  // Derivative gain from SysId
-    kThetaControllerConstraints
-);
-  private ProfiledPIDController m_yController =
-          new ProfiledPIDController(kP_Y, 0, kD_Y, kThetaControllerConstraints);
-  private ProfiledPIDController m_turnController =
-          new ProfiledPIDController(kP_Theta, 0, kD_Theta, kThetaControllerConstraints);
+//  private final ProfiledPIDController m_xController = new ProfiledPIDController(
+//    kP_X,  // Proportional gain from SysId
+//    0,     // Integral gain (usually left at 0)
+//    kD_X,  // Derivative gain from SysId
+//    kThetaControllerConstraints
+//);
+//  private ProfiledPIDController m_yController =
+//          new ProfiledPIDController(kP_Y, 0, kD_Y, kThetaControllerConstraints);
+//  private ProfiledPIDController m_turnController =
+//          new ProfiledPIDController(kP_Theta, 0, kD_Theta, kThetaControllerConstraints);
 
   private double m_simYaw;
 
-  private ChassisSpeeds m_lastCommandedSpeeds = new ChassisSpeeds();
+//  private ChassisSpeeds m_lastCommandedSpeeds = new ChassisSpeeds();
 
   public SwerveDriveSDS() {
     gyro.reset();
@@ -183,9 +183,9 @@ public class SwerveDriveSDS extends SubsystemBase {
           boolean isFieldRelative,
           boolean isOpenLoop) {
     // Scale inputs to actual speeds
-    throttle *= kMaxSpeedMetersPerSecond;
-    strafe *= kMaxSpeedMetersPerSecond;
-    rotation *= kMaxRotationRadiansPerSecond;
+    throttle = throttle * kMaxSpeedMetersPerSecond;
+    strafe   = strafe   * kMaxSpeedMetersPerSecond;
+    rotation = rotation * kMaxRotationRadiansPerSecond;
 
     // Create chassis speeds based on whether we want field or robot relative motion
     ChassisSpeeds chassisSpeeds;
@@ -240,15 +240,14 @@ public class SwerveDriveSDS extends SubsystemBase {
   }
 
   public Pose2d getPoseMeters() {
-   SmartDashboard.putNumber("Robot X Position", m_odometry.getPoseMeters().getMeasureX().in(Meters));
-   SmartDashboard.putNumber("Robot Y Position", m_odometry.getPoseMeters().getMeasureY().in(Meters));
+    SmartDashboard.putNumber("Robot X Position", m_odometry.getPoseMeters().getMeasureX().in(Meters));
+    SmartDashboard.putNumber("Robot Y Position", m_odometry.getPoseMeters().getMeasureY().in(Meters));
     return m_odometry.getPoseMeters();
   }
 
   public Pose2d getPose() {
-        return getPoseMeters();
-    }
-
+    return getPoseMeters();
+  }
 
   public SwerveModuleSDS getSwerveModule(int moduleNumber) {
     return m_swerveModules.get(ModulePosition.values()[moduleNumber]);
@@ -285,6 +284,7 @@ public class SwerveDriveSDS extends SubsystemBase {
                       module.getHeadingRotation2d().plus(getHeadingRotation2d())));
     }
   }
+
   private void updateSmartDashboard() {
         SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
         SmartDashboard.putNumber("Get Rotation", getHeadingRotation2d().getRotations());
@@ -292,7 +292,7 @@ public class SwerveDriveSDS extends SubsystemBase {
         SmartDashboard.putNumber("Left Front Module Drive Output current",m_swerveModules.get( ModulePosition.FRONT_LEFT).m_driveMotor.getOutputCurrent());
         SmartDashboard.putNumber("Left Front Module Drive position",m_swerveModules.get( ModulePosition.FRONT_LEFT).m_driveMotor.getEncoder().getPosition());
         SmartDashboard.putNumber("Left Front Module Drive velocity",m_swerveModules.get( ModulePosition.FRONT_LEFT).m_driveMotor.getEncoder().getVelocity());
-}
+  }
 
   @Override
   public void periodic() {
@@ -311,10 +311,9 @@ public class SwerveDriveSDS extends SubsystemBase {
 //    gyro.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));s
 //    pigeon.getSimCollection().setRawHeading(-Units.radiansToDegrees(m_simYaw));
   }
-  public void setVoltage(double voltageForMotors){
-}
-public void resetPose(Pose2d pose) {
-  m_odometry.resetPosition(
+
+  public void resetPose(Pose2d pose) {
+    m_odometry.resetPosition(
       Rotation2d.fromDegrees(gyro.getAngle()),
       new SwerveModulePosition[] {
         m_swerveModules.get(ModulePosition.FRONT_LEFT).getPosition(),
@@ -322,14 +321,15 @@ public void resetPose(Pose2d pose) {
         m_swerveModules.get(ModulePosition.BACK_LEFT).getPosition(),
         m_swerveModules.get(ModulePosition.BACK_RIGHT).getPosition()
       },
-      pose);
+      pose
+    );
 }
-public ChassisSpeeds getRobotRelativeSpeeds() {
+  public ChassisSpeeds getRobotRelativeSpeeds() {
     // Get actual robot-relative speeds from current module states
     return kSwerveKinematics.toChassisSpeeds(getModuleStates());
-}
+  }
 
-public Command moveVoltageTimeCommand(double voltage, double time) {
+  public Command moveVoltageTimeCommand(double voltage, double time) {
     // Convert voltage to percentage (-1 to 1)
     double speedPercentage = voltage / 12.0;
     
@@ -341,9 +341,9 @@ public Command moveVoltageTimeCommand(double voltage, double time) {
         .withTimeout(time)
         .andThen(() -> drive(0, 0, 0, false, true))
     ).withName("drivetrain.moveVoltageTime");
-}
+  }
 
-public void driveRobotRelative(ChassisSpeeds speeds) {
+  public void driveRobotRelative(ChassisSpeeds speeds) {
     drive(
         speeds.vxMetersPerSecond,
         speeds.vyMetersPerSecond,
@@ -351,7 +351,7 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
         false,  // Not field relative
         false   // Closed loop
     );
-}
+  }
 
 // Create a new SysId routine for characterizing the drive.
 /*
@@ -389,52 +389,48 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
         null           
     ),
     new SysIdRoutine.Mechanism(
-        voltage -> {
-            // Directly apply the test voltage to all drive motors
-            for (SwerveModuleSDS module : m_swerveModules.values()) {
-                module.m_driveMotor.setVoltage(voltage.magnitude());
-                // Keep modules pointed forward during test
-                module.m_turnMotor.setVoltage(0);
-            }
-        },
-        log -> {
-            // Calculate averages from all modules
-            double avgVelocity = 0;
-            double avgPosition = 0;
+      voltage -> {
+          // Directly apply the test voltage to all drive motors
+          for (SwerveModuleSDS module : m_swerveModules.values()) {
+              module.m_driveMotor.setVoltage(voltage.magnitude());
+              // Keep modules pointed forward during test
+              module.m_turnMotor.setVoltage(0);
+          }
+      },
+      log -> {
+          // Calculate averages from all modules
+          double avgVelocity = 0;
+          double avgPosition = 0;
+          
+           for (SwerveModuleSDS module : m_swerveModules.values()) {
+              avgVelocity += module.getDriveMetersPerSecond();
+              avgPosition += module.getDriveMeters();
+          }
             
-            for (SwerveModuleSDS module : m_swerveModules.values()) {
-                avgVelocity += module.getDriveMetersPerSecond();
-                avgPosition += module.getDriveMeters();
-            }
-            
-            avgVelocity /= 4.0;
-            avgPosition /= 4.0;
+           avgVelocity /= 4.0;
+          avgPosition /= 4.0;
             
             
-            edu.wpi.first.units.measure.Voltage avgVolts = Volts.of(avgVelocity);  // Create a Voltage measure using the static factory method
-            Distance avgPos = Meters.of(avgPosition);
-            LinearVelocity avgVel = MetersPerSecond.of(avgVelocity);  // Create a Velocity measure
-            log.motor("swerve-drive")
-                .voltage(avgVolts)
-                .linearPosition(avgPos)
-                .linearVelocity(avgVel);
-        },
-        this
+          edu.wpi.first.units.measure.Voltage avgVolts = Volts.of(avgVelocity);  // Create a Voltage measure using the static factory method
+          Distance avgPos = Meters.of(avgPosition);
+          LinearVelocity avgVel = MetersPerSecond.of(avgVelocity);  // Create a Velocity measure
+          log.motor("swerve-drive")
+              .voltage(avgVolts)
+              .linearPosition(avgPos)
+              .linearVelocity(avgVel);
+      },
+      this
     )
-);
+  );
 
-  /**
-   * Returns a command that will execute a quasistatic test in the given direction.
-   *
+  /** Returns a command that will execute a quasistatic test in the given direction.
    * @param direction The direction (forward or reverse) to run the test in
    */
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return m_sysIdRoutine.quasistatic(direction);
   }
 
-  /**
-   * Returns a command that will execute a dynamic test in the given direction.
-   *
+  /**Returns a command that will execute a dynamic test in the given direction.
    * @param direction The direction (forward or reverse) to run the test in
    */
   public Command sysIdDynamic(SysIdRoutine.Direction direction) {
