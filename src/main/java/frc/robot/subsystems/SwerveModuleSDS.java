@@ -35,8 +35,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.PersistMode;
 
-//import frc.robot.utils.*;
-
 public class SwerveModuleSDS extends SubsystemBase {
 //  private final int POS_SLOT = 0;
   private final int VEL_SLOT = 1;
@@ -85,6 +83,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
 
+    m_driveMotor.setInverted(true);
     //m_driveMotor.restoreFactoryDefaults();
     //RevUtils.setDriveMotorConfig(m_driveMotor);
     //m_driveMotor.  setIdleMode();   (SparkMax.IdleMode.kBrake);
@@ -98,26 +97,25 @@ public class SwerveModuleSDS extends SubsystemBase {
 //TODO RGT fix    
 //m_angleEncoder.configAllSettings(convertPulseToDegree);
 
-    m_driveEncoder = m_driveMotor.getEncoder();
+//    m_driveEncoder = m_driveMotor.getEncoder();
+    // Setup the Drive Motor Config Object
     SparkMaxConfig driveConfig = new SparkMaxConfig();
-    driveConfig.encoder
-        .positionConversionFactor(kDriveRevToMeters)
-        .velocityConversionFactor(kDriveRpmToMetersPerSecond);
-        driveConfig.inverted(true);
-    
+    driveConfig.inverted(true);
+    driveConfig.encoder.positionConversionFactor(kDriveRevToMeters);
+    driveConfig.encoder.velocityConversionFactor(kDriveRpmToMetersPerSecond);
+    // Apply the config to the motor
     m_driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_turnEncoder = m_turnMotor.getEncoder();
+//    m_turnEncoder = m_turnMotor.getEncoder();
+    //  Setup the Turn Motor Config Object
     SparkMaxConfig turnConfig = new SparkMaxConfig();
-//    turnConfig.inverted(true);
-    turnConfig.encoder
-        .positionConversionFactor(kTurnRotationsToDegrees)
-        .velocityConversionFactor(kTurnRotationsToDegrees / 60);
+    turnConfig.inverted(true);
+    turnConfig.encoder.positionConversionFactor(kTurnRotationsToDegrees);
+    turnConfig.encoder.velocityConversionFactor(kTurnRotationsToDegrees / 60);
     // Add PID values for turning
-    turnConfig.closedLoop
-        .p(0.02)   
-        .i(0.00)
-        .d(0.0);
+    turnConfig.closedLoop.p(0.02);   // Using last year's proven value;
+    turnConfig.closedLoop.i(0.0);
+    turnConfig.closedLoop.d(0.0);
 //        .ff(0.0);
     
     m_turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -177,8 +175,8 @@ public class SwerveModuleSDS extends SubsystemBase {
       double percentOutput = optimizedState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
       m_driveMotor.set(percentOutput);
       SmartDashboard.putNumber("Module OpenLoop" + m_moduleNumber + " Drive %", percentOutput);
-      SmartDashboard.putNumber("Swerve OpenLoop"+ m_moduleNumber + " speed", optimizedState.speedMetersPerSecond);
-      
+      SmartDashboard.putNumber("Swerve OpenLoop" + m_moduleNumber + " speed"  , optimizedState.speedMetersPerSecond);
+
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
       double velocity = optimizedState.speedMetersPerSecond;

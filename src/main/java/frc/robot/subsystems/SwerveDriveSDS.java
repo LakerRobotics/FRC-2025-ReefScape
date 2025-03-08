@@ -58,10 +58,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 //import static edu.wpi.first.units.Units.VoltagePerSecond;
 
-
 public class SwerveDriveSDS extends SubsystemBase {
-
-
 
   private final HashMap<ModulePosition, SwerveModuleSDS> m_swerveModules =
                 new HashMap<>(
@@ -95,25 +92,24 @@ public class SwerveDriveSDS extends SubsystemBase {
                                   new CANcoder(CAN.backRightCanCoder),
                                   0)));
 
-//private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-// navX MXP using SPI
-AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+  AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
   private SwerveDriveOdometry m_odometry =
           new SwerveDriveOdometry(
                   Swerve.kSwerveKinematics,
                   getHeadingRotation2d(),
                   getModulePositions(),
-                  new Pose2d());
-double kS = 0.00;
-double kV = 0.00;
-double kA = 0.00;
+                  new Pose2d()
+              );
+//double kS = 0.00;
+//double kV = 0.00;
+//double kA = 0.00;
 
-  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
-    kS,  // Static friction constant from SysId
-    kV,  // Velocity constant from SysId 
-    kA   // Acceleration constant from SysId
-);
+//  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
+//    kS,  // Static friction constant from SysId
+//    kV,  // Velocity constant from SysId 
+//    kA   // Acceleration constant from SysId
+//);
 
   private final ProfiledPIDController m_xController = new ProfiledPIDController(
     kP_X,  // Proportional gain from SysId
@@ -132,10 +128,6 @@ double kA = 0.00;
 
   public SwerveDriveSDS() {
     gyro.reset();
-((SwerveModuleSDS) m_swerveModules.get(ModulePosition.FRONT_RIGHT)).m_driveMotor.setInverted(true);
-((SwerveModuleSDS) m_swerveModules.get(ModulePosition.BACK_RIGHT)).m_driveMotor.setInverted(true);
-((SwerveModuleSDS) m_swerveModules.get(ModulePosition.FRONT_LEFT)).m_driveMotor.setInverted(true);
-((SwerveModuleSDS) m_swerveModules.get(ModulePosition.BACK_LEFT)).m_driveMotor.setInverted(true); 
 
 
     // All other subsystem initialization
@@ -293,11 +285,8 @@ double kA = 0.00;
                       module.getHeadingRotation2d().plus(getHeadingRotation2d())));
     }
   }
-double test=  0;
   private void updateSmartDashboard() {
         SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
-test = test +0.01;  
-        SmartDashboard.putNumber("test", test);
         SmartDashboard.putNumber("Get Rotation", getHeadingRotation2d().getRotations());
         SmartDashboard.putNumber("Left Front Module. Drive GetAppliedOutput",m_swerveModules.get( ModulePosition.FRONT_LEFT).m_driveMotor.getAppliedOutput());
         SmartDashboard.putNumber("Left Front Module Drive Output current",m_swerveModules.get( ModulePosition.FRONT_LEFT).m_driveMotor.getOutputCurrent());
