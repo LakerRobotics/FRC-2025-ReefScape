@@ -103,19 +103,20 @@ public class SwerveModuleSDS extends SubsystemBase {
     driveConfig.encoder
         .positionConversionFactor(kDriveRevToMeters)
         .velocityConversionFactor(kDriveRpmToMetersPerSecond);
+        driveConfig.inverted(true);
     
     m_driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     m_turnEncoder = m_turnMotor.getEncoder();
     SparkMaxConfig turnConfig = new SparkMaxConfig();
-    turnConfig.inverted(true);
+//    turnConfig.inverted(true);
     turnConfig.encoder
         .positionConversionFactor(kTurnRotationsToDegrees)
         .velocityConversionFactor(kTurnRotationsToDegrees / 60);
     // Add PID values for turning
     turnConfig.closedLoop
-        .p(0.02)   // Using last year's proven value;
-        .i(0.0)
+        .p(0.02)   
+        .i(0.00)
         .d(0.0);
 //        .ff(0.0);
     
@@ -176,12 +177,17 @@ public class SwerveModuleSDS extends SubsystemBase {
       double percentOutput = optimizedState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
       m_driveMotor.set(percentOutput);
       SmartDashboard.putNumber("Module OpenLoop" + m_moduleNumber + " Drive %", percentOutput);
+      SmartDashboard.putNumber("Swerve OpenLoop"+ m_moduleNumber + " speed", optimizedState.speedMetersPerSecond);
+      
     } else {
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
       double velocity = optimizedState.speedMetersPerSecond;
       
       // Use both feedback and feedforward for better control
       double feedforwardVolts = feedforward.calculate(velocity);
+      SmartDashboard.putNumber("Swerve Velocity", velocity);
+      SmartDashboard.putNumber("Swerve Feed forward voltage",feedforwardVolts);
+      SmartDashboard.putNumber("Encoder Position",m_driveEncoder.getPosition());
 //      m_driveMotor.setVoltage(feedforwardVolts);
 //      SmartDashboard.putNumber("Module NotOpenLoop" + m_moduleNumber + " feedForwardVolts %", feedforwardVolts);
       // The new API requires using a ClosedLoopSlot object

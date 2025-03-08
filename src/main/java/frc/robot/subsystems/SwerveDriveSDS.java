@@ -56,7 +56,7 @@ import edu.wpi.first.units.measure.Velocity;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
-import static edu.wpi.first.units.Units.VoltagePerSecond;
+//import static edu.wpi.first.units.Units.VoltagePerSecond;
 
 
 public class SwerveDriveSDS extends SubsystemBase {
@@ -159,8 +159,8 @@ double kA = 0.00;
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(10.0, 1.0, 0.0), // Translation PID constants
-                    new PIDConstants(10.0, 1.0, 0.0) // Rotation PID constants
+                    new PIDConstants(0.2, 0.02, 0.0), // Translation PID constants
+                    new PIDConstants(0.01, 0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -360,7 +360,7 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
         speeds.vyMetersPerSecond,
         speeds.omegaRadiansPerSecond,
         false,  // Not field relative
-        true   // Closed loop
+        false   // Closed loop
     );
 }
 
@@ -389,17 +389,16 @@ public void driveRobotRelative(ChassisSpeeds speeds) {
   *     null.
   * @param recordState Optional handle for recording test state in a third-party logging
   *     solution. If provided, the test routine state will be passed to this callback instead of
-  *     logged in WPILog.
-  */
-//TODO 
-  //private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
+  *     logged in WPILog.*/
+   
+  private final SysIdRoutine m_sysIdRoutine = new SysIdRoutine(
 
-    //new SysIdRoutine.Config(
-      //  Volts.of(0.5).per(Seconds.of(1),
-        //Volts.of(0.7),               // stepVoltage: 0.7 volts (DYNAMIC)
-        //Seconds.of(7.0),// timeout: 10 seconds is default
-        //null           
-    //),
+    new SysIdRoutine.Config(
+        /*Volts.of(0.5).per(Seconds.of(1)) */null,
+        Volts.of(0.7),               // stepVoltage: 0.7 volts (DYNAMIC)
+        Seconds.of(7.0),// timeout: 10 seconds is default
+        null           
+    ),
     new SysIdRoutine.Mechanism(
         voltage -> {
             // Directly apply the test voltage to all drive motors

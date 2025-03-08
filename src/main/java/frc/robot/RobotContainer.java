@@ -227,7 +227,7 @@ private MechanismLigament2d fromRobot = root
               -GamepadUtils.squareInput(
                   leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,
-            true),
+            false),
       m_robotDriveSDS));
 
    
@@ -254,10 +254,10 @@ private MechanismLigament2d fromRobot = root
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
            .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));
     
-    new Trigger( 
+     new Trigger( 
       () -> 
             Math.abs(rightJoystick.getLeftX()) > 0.03 )
-            .onTrue(new RunCommand(() -> elevator.setVoltage(rightJoystick.getLeftX()),elevator));
+            .onTrue(new RunCommand(() -> elevator.setVoltage(rightJoystick.getLeftX()),elevator)); 
 
     new Trigger( 
             () -> 
@@ -271,14 +271,15 @@ private MechanismLigament2d fromRobot = root
                  .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
   
   //elevtor preset position buttons borrowed from Rust Hounds
-     new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+  //TODO make our own elevator preset buttons for our robot
+   /*   new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
       .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
      
     new JoystickButton(rightJoystick, PS4Controller.Button.kCircle.value)
       .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
                 
     new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
-      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim)); 
+      .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim)); */
 
   
  
@@ -330,16 +331,27 @@ private MechanismLigament2d fromRobot = root
     */
    // m_chooser.addOption("Shoot Note then follow Path ", new AutoShootSpeakerThenFollowPath(m_arm,m_launcher,m_intake,m_robotDriveREV,"Seth Path"));
 
-    //PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
-    //m_chooser.addOption("Path: Example Path", AutoBuilder.followPath(path));
-    //PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path 2");
-    //m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2)); */
-    // Remove references to old m_chooser since we're using PathPlanner's autoChooser
+  
+     //Remove references to old m_chooser since we're using PathPlanner's autoChooser
     
     // If you want to add the RichExample path specifically:
-    PathPlannerPath richPath = null;
+  //  PathPlannerPath richPath = null;
     try {
-      richPath = PathPlannerPath.fromPathFile("Seth Path");
+      //richPath = PathPlannerPath.fromPathFile("New New Path");
+     
+      PathPlannerPath path = PathPlannerPath.fromPathFile("New New Path");
+      m_chooser.addOption("Path: Example Path", AutoBuilder.followPath(path));
+      m_chooser.setDefaultOption("Path: Example Path", AutoBuilder.followPath(path));
+  
+      PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path");
+      m_chooser.addOption("Path: Seth Path 2", AutoBuilder.followPath(path2)); 
+
+      PathPlannerPath path3 = PathPlannerPath.fromPathFile("RichExample");
+      m_chooser.addOption("Path: Rich Path", AutoBuilder.followPath(path3)); 
+
+      PathPlannerPath path4 = PathPlannerPath.fromPathFile("RichExampleAuton");
+      m_chooser.addOption("Auton: RichExamplAuton", AutoBuilder.followPath(path4)); 
+
     } catch (FileVersionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -350,9 +362,11 @@ private MechanismLigament2d fromRobot = root
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    Command richCommand = AutoBuilder.followPath(richPath);
-    m_chooser.addOption("Rich Example Path", richCommand);
+//    Command richCommand = AutoBuilder.followPath(richPath);
+//    m_chooser.addOption("Rich Example Path", richCommand);
   }
+
+  
 
   
 

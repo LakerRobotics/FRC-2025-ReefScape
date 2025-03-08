@@ -75,7 +75,7 @@ public final class Constants {
     public static final SwerveDriveKinematics kSwerveKinematics =
         new SwerveDriveKinematics(kModuleTranslations);
 
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(40);
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(15);
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
     public static final double kTeleDriveAccelerationUnitsPerSecond = 0;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1;
@@ -104,17 +104,17 @@ public final class Constants {
       public static final DCMotor kDriveGearbox = DCMotor.getNEO(1);
       public static final DCMotor kTurnGearbox = DCMotor.getNEO(1);
 
-      public static final double kDriveRevToMeters =
+      public static final double kDriveRevToMeters = 
               ((kWheelDiameterMeters * Math.PI) / kDriveMotorGearRatio);
-      public static final double kDriveRpmToMetersPerSecond =
+      public static final double kDriveRpmToMetersPerSecond = 
               kDriveRevToMeters / 60.0;
       public static final double kTurnRotationsToDegrees =
               360.0 / kTurningMotorGearRatio;
       public static final double kTurningEncoderDistancePerPulse = 360.0 / kCANCoderCPR;
 
-      public static final double ksDriveVoltSecondsPerMeter = (0.667 / 12);
-      public static final double kvDriveVoltSecondsSquaredPerMeter = (2.44 / 12);
-      public static final double kaDriveVoltSecondsSquaredPerMeter =  (0.27 / 12);
+      public static final double ksDriveVoltSecondsPerMeter = 0.02;//(0.667 / 12);
+      public static final double kvDriveVoltSecondsSquaredPerMeter = 0.4;//(2.44 / 12);
+      public static final double kaDriveVoltSecondsSquaredPerMeter =  0.02;//(0.27 / 12);
 
       public static final double kvTurnVoltSecondsPerRadian = 0.01;//1.47; // originally 1.5
       public static final double kaTurnVoltSecondsSquaredPerRadian = 0.348; // originally 0.3

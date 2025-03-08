@@ -10,6 +10,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 //import com.techhounds.houndutil.houndlog.annotations.LoggedObject;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,8 +58,10 @@ public class Climber extends SubsystemBase {
     }
 
     public void setVoltage(double voltage) {
-        voltage = MathUtil.clamp(voltage, -4, 4);
+        voltage= voltage*4;
+        voltage = MathUtil.clamp(voltage, -12, 12);
         System.out.print("reached climber voltage"+voltage);
+        SmartDashboard.putNumber("Climber voltage", voltage);
         motor.setVoltage(voltage);
         motor2.setVoltage(voltage);
         motor3.setVoltage(voltage);
