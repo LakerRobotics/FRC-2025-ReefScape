@@ -253,20 +253,5 @@ public class RobotContainer {
     // Initialize the autoChooser
     this.autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-
-    // Can keep individual paths as additional options, for now for debugging
-    try {
-        PathPlannerPath path = PathPlannerPath.fromPathFile("New New Path");
-        m_chooser.addOption("Path Only: New Path", AutoBuilder.followPath(path));
-        
-        PathPlannerPath path2 = PathPlannerPath.fromPathFile("Seth Path");
-        m_chooser.addOption("Path Only: Seth Path", AutoBuilder.followPath(path2));
-        
-        PathPlannerPath path3 = PathPlannerPath.fromPathFile("RichExample");
-        m_chooser.addOption("Path: Rich Path", AutoBuilder.followPath(path3));
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
   }
 }
