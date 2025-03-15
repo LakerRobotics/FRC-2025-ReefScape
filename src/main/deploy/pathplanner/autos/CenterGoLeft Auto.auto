@@ -7,13 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Start"
+            "pathName": "Center Start L"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GoLeftFeeder"
+            "pathName": "GoLeftFeederL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftFeederSide5L"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftFeederSide5LBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftFeederSide5R"
           }
         }
       ]

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.185979729732533,
-        "y": 4.04476351350729
+        "x": 5.838012295081967,
+        "y": 3.857172131147541
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.935050675678484,
-        "y": 1.3766891891829642
+        "x": 7.264225188300254,
+        "y": 5.3358717323943505
       },
       "isLocked": false,
-      "linkedName": "CenterBargeCoralLoad"
+      "linkedName": "CenterStartL"
     },
     {
       "anchor": {
-        "x": 1.6008445945973984,
-        "y": 0.7837837837775601
+        "x": 1.282684426229508,
+        "y": 7.045901639344263
       },
       "prevControl": {
-        "x": 2.2530405405433442,
-        "y": 1.7225506756694517
+        "x": 5.3105532786885234,
+        "y": 5.115881147540984
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 46.90915243299637
+    "rotation": -53.13010235415592
   },
   "reversed": false,
   "folder": null,

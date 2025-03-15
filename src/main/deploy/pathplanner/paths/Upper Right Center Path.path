@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.829849954752466,
+        "x": 6.529,
         "y": 4.0
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 6.185979729732533,
-        "y": 4.04476351350729
+        "x": 3.6322745901639335,
+        "y": 5.283709016393443
       },
       "prevControl": {
-        "x": 6.935509137233795,
-        "y": 4.04476351350729
+        "x": 5.622233606557376,
+        "y": 7.1178278688524586
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CenterBargeCoralLoad"
+      "linkedName": "UpperRightBargeCoralLoad"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.1457628381752147
+    "rotation": -53.74616226255519
   },
   "reversed": false,
   "folder": null,
