@@ -95,7 +95,7 @@ public final class Constants {
             kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
 
     public static final class Module {
-      public static final double kDriveMotorGearRatio = 6.75;
+      public static final double kDriveMotorGearRatio = 8.14;
       public static final double kTurningMotorGearRatio = 12.8;
       public static final double kWheelDiameterMeters = Units.inchesToMeters(3.94);
       public static final int kNeoCPR = 42;

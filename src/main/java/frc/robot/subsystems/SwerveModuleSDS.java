@@ -103,13 +103,15 @@ public class SwerveModuleSDS extends SubsystemBase {
     driveConfig.inverted(true);
     driveConfig.encoder.positionConversionFactor(kDriveRevToMeters);
     driveConfig.encoder.velocityConversionFactor(kDriveRpmToMetersPerSecond);
+    System.out.print("kDriveRevToMeters="+kDriveRevToMeters);
+    System.out.print("kDriveRpmToMetersPerSecond="+kDriveRpmToMetersPerSecond);
     // Apply the config to the motor
     m_driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 //    m_turnEncoder = m_turnMotor.getEncoder();
     //  Setup the Turn Motor Config Object
     SparkMaxConfig turnConfig = new SparkMaxConfig();
-    turnConfig.inverted(true);
+    turnConfig.inverted(false);
     turnConfig.encoder.positionConversionFactor(kTurnRotationsToDegrees);
     turnConfig.encoder.velocityConversionFactor(kTurnRotationsToDegrees / 60);
     // Add PID values for turning
@@ -119,6 +121,9 @@ public class SwerveModuleSDS extends SubsystemBase {
 //        .ff(0.0);
     
     m_turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    m_driveEncoder = m_driveMotor.getEncoder();
+    m_turnEncoder = m_turnMotor.getEncoder();
 
     m_driveController = m_driveMotor.getClosedLoopController();// getPIDController();
     m_turnController = m_turnMotor.getClosedLoopController(); //getPIDController();
