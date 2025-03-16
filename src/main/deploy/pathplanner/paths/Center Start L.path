@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.529,
+        "x": 7.25,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.829849954752466,
-        "y": 4.0
+        "x": 6.062210566378675,
+        "y": 3.8633203856258684
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StartPositionCenter"
     },
     {
       "anchor": {
-        "x": 5.838012295081967,
-        "y": 3.857172131147541
+        "x": 5.7073170731707314,
+        "y": 3.8313588850174214
       },
       "prevControl": {
-        "x": 6.587541702583229,
-        "y": 3.857172131147541
+        "x": 6.400351304994283,
+        "y": 3.9010649127632835
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CenterStartL"
+      "linkedName": "CoralLoad1L"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.1457628381752147
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
