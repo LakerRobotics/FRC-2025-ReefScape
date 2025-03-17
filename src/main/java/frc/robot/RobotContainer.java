@@ -169,6 +169,17 @@ public class RobotContainer {
     commandsTab.add("SysId Quasistatic Forward", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     commandsTab.add("SysId Quasistatic Reverse", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
+    // Register named commands for PathPlanner
+    NamedCommands.registerCommand("PrepareScoreL1", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
+    NamedCommands.registerCommand("PrepareScoreL2", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
+    NamedCommands.registerCommand("PrepareScoreL3", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
+    NamedCommands.registerCommand("PrepareScoreL4", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+    
+    NamedCommands.registerCommand("ScoreCoral", RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));
+    NamedCommands.registerCommand("PrepareIntakeCoral", RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
+    NamedCommands.registerCommand("IntakeCoral", RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
+    
+
     // Configure the trigger bindings
     configureBindings();
   // m_fieldSim = new FieldSim(m_robotDriveSDS);
