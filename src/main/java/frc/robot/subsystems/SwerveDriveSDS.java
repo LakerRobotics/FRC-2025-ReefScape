@@ -350,7 +350,7 @@ public class SwerveDriveSDS extends SubsystemBase {
         speeds.vyMetersPerSecond,
         speeds.omegaRadiansPerSecond,
         false,  // Not field relative
-        false   // Closed loop
+        true   // Closed loop
     );
   }
 

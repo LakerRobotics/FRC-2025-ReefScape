@@ -35,6 +35,7 @@ public class Intake extends SubsystemBase implements BaseIntake {
 
     
     public void setRollerVoltage(double voltage) {
+        voltage = voltage*3;
         motor.setVoltage(voltage);
     }
 

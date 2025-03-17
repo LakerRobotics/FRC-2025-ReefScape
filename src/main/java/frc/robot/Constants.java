@@ -98,7 +98,7 @@ public final class Constants {
       public static final double kDriveMotorGearRatio = 8.14;
       public static final double kTurningMotorGearRatio = 12.8;
       public static final boolean isDriveInverted=true;
-      public static final boolean isTurnMotorInverted=false;
+      public static final boolean isTurnMotorInverted=true;
       public static final double kWheelDiameterMeters = Units.inchesToMeters(3.94);
       public static final int kNeoCPR = 42;
       public static final int kCANCoderCPR = 4096; // Figure this out for Neo Motors.

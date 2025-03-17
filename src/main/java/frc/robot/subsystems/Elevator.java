@@ -26,6 +26,7 @@ import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -120,7 +121,8 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         this.ligament = ligament;
 
         positionTracker.setElevatorPositionSupplier(this::getPosition);
-        setDefaultCommand(moveToCurrentGoalCommand());
+        //setDefaultCommand(moveToCurrentGoalCommand());
+       
     }
 
     @Override
@@ -177,6 +179,9 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
     @Override
     public void setVoltage(double voltage) {
         //System.out.println("In elevator set voltage");
+        voltage= voltage*4;
+        SmartDashboard.putNumber("Elevator set voltage", voltage);
+        SmartDashboard.putNumber("Elevator position", getPosition());
         voltage = MathUtil.clamp(voltage, -12, 12);
         voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
@@ -191,6 +196,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
       //  }
 
         motor.setVoltage(voltage);
+        SmartDashboard.putNumber("Elevator applied voltage", voltage);
 
     }
 
