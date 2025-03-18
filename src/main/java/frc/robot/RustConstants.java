@@ -127,8 +127,8 @@ public class RustConstants {
         public static final double DRUM_CIRCUMFERENCE = 2.0 * Math.PI * DRUM_RADIUS_METERS;
         public static final double ENCODER_ROTATIONS_TO_METERS = DRUM_CIRCUMFERENCE / GEARING;
 
-        public static final double MIN_HEIGHT_METERS = 0.005; // TODO
-        public static final double MAX_HEIGHT_METERS = 1.57; // TODO
+        public static final double MIN_HEIGHT_METERS = 0.002; // TODO
+        public static final double MAX_HEIGHT_METERS = 0.82; // TODO
 
         public static final int CURRENT_LIMIT = 60;
 
