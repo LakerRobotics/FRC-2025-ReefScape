@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.814036885245901,
-        "y": 4.156864754098361
+        "x": 5.262602459016393,
+        "y": 5.079918032786885
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.563107831191853,
-        "y": 1.4887904297740358
+        "x": 7.011673404962345,
+        "y": 2.41184370846256
       },
       "isLocked": false,
       "linkedName": "CenterBargeCoralLoad"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -1.1457628381752147
+    "rotation": 59.03624346792648
   },
   "useDefaultConstraints": true
 }

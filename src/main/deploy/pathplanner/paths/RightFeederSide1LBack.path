@@ -8,42 +8,28 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.491316390434386,
-        "y": 4.967414159073018
+        "x": 4.371098034270396,
+        "y": 4.6867852047646
       },
       "isLocked": false,
       "linkedName": "CoralLoad1L"
     },
     {
       "anchor": {
-        "x": 1.7020034843205576,
-        "y": 0.5598432055749128
+        "x": 0.9110655737704917,
+        "y": 6.794159836065574
       },
       "prevControl": {
-        "x": 2.3300686314542105,
-        "y": 0.9925345820414392
+        "x": 0.6415130108238314,
+        "y": 6.966656007329889
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftFeeder"
+      "linkedName": "RightFeeder"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.10446054136484972,
-      "maxWaypointRelativePos": 0,
-      "constraints": {
-        "maxVelocity": 3.0,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -56,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 127.30394827798344
   },
   "reversed": false,
   "folder": null,
