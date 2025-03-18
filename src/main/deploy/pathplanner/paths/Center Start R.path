@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.529,
-        "y": 4.0
+        "x": 7.240573770491803,
+        "y": 5.079918032786885
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.829849954752466,
-        "y": 4.0
+        "x": 6.379698326534934,
+        "y": 5.248027189284679
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CenterStartR"
     },
     {
       "anchor": {
-        "x": 5.814036885245901,
-        "y": 4.156864754098361
+        "x": 5.262602459016393,
+        "y": 5.079918032786885
       },
       "prevControl": {
-        "x": 6.563566292747163,
-        "y": 4.156864754098361
+        "x": 5.497720841706125,
+        "y": 4.994951297405535
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.1457628381752147
+    "rotation": 59.03624346792648
   },
   "reversed": false,
   "folder": null,
