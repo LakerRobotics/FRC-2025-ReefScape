@@ -196,7 +196,7 @@ public class RobotContainer {
               -GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
               -GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,
-              false
+              true
           ),
         m_robotDriveSDS
       )
@@ -215,10 +215,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger( 
+    /*new Trigger( 
       () -> 
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
-           .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber));  
+           .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber)); */
+          
+    /*new Trigger( 
+      () -> 
+    Math.abs(rightJoystick.getLeftY()) > 0.03 )
+    .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getR2Axis()),climber));*/
+
      new Trigger( 
       () -> 
             Math.abs(rightJoystick.getLeftX()) > 0.03 )
