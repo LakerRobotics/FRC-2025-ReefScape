@@ -58,6 +58,7 @@ import frc.robot.RustConstants.Controls;
 import frc.robot.RustConstants.Drivetrain;
 import frc.robot.RustConstants.OIConstants;
 import frc.robot.Constants.USB; 
+import frc.robot.Constants.Swerve.*;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -189,13 +190,15 @@ public class RobotContainer {
     m_robotDriveSDS.setDefaultCommand(
       // The left stick controls translation of the robot.
       // Turning is controlled by the X axis of the right stick.
+          // Scale inputs to actual speeds
+
       new RunCommand(
         () ->
          m_robotDriveSDS.drive(
-             -GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
-              true,
+          frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
+          frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
+          frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+              false,
               true
           ),
         m_robotDriveSDS

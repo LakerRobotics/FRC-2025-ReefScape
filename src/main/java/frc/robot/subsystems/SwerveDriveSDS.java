@@ -151,8 +151,8 @@ public class SwerveDriveSDS extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(0.2, 0.02, 0.0), // Translation PID constants
-                    new PIDConstants(0.015, 0.001, 0.0) // Rotation PID constants
+                    new PIDConstants(5, 0.02, 0.0), // Translation PID constants
+                    new PIDConstants(5, 0.001, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -182,12 +182,7 @@ public class SwerveDriveSDS extends SubsystemBase {
           double rotation,
           boolean isFieldRelative,
           boolean isOpenLoop) {
-    
-    // Scale inputs to actual speeds
-    throttle = throttle * kMaxSpeedMetersPerSecond;
-    strafe   = strafe   * kMaxSpeedMetersPerSecond;
-    rotation = rotation * kMaxRotationRadiansPerSecond;
-    
+        
     // Create chassis speeds based on whether we want field or robot relative motion
     ChassisSpeeds chassisSpeeds;
     if (isFieldRelative) {
@@ -233,7 +228,7 @@ public class SwerveDriveSDS extends SubsystemBase {
   }
 
   public double getHeadingDegrees() {
-    return -Math.IEEEremainder(gyro.getAngle(), 360);
+    return Math.IEEEremainder(gyro.getAngle(), 360);
   }
 
   public Rotation2d getHeadingRotation2d() {
