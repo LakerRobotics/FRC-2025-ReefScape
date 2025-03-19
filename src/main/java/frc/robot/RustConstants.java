@@ -94,17 +94,18 @@ public class RustConstants {
 
     public static final class Elevator {
         public static enum ElevatorPosition {
-            BOTTOM(0.0698),
-            INTAKE_PREP(0.55),
-            INTAKE(0.355),
-            ALGAE_L2(0.884),
-            ALGAE_L3(1.234),
+          
+            BOTTOM(     0.02),//(0.0698),
+            INTAKE_PREP(0.276),//(0.55),
+            INTAKE(     0.172),//(0.355),
+            ALGAE_L2(   0.454),//(0.884),
+            ALGAE_L3(   0.64),//(1.234),
 
-            L1(0.323),
-            L2(0.31),
-            L3(0.70),
-            L4(1.27),
-            TOP(1.57);
+            L1( 0.155),//(0.323),
+            L2( 0.148),//(0.31),
+            L3( 0.356),//(0.70),
+            L4( 0.66),//(1.27),
+            TOP(0.82);//(1.57);
 
             public final double value;
 
@@ -115,7 +116,7 @@ public class RustConstants {
 
         public static final double MOTION_LIMIT = 0.3;
 
-        public static final double SCORING_MOVEMENT = -0.25;
+        public static final double SCORING_MOVEMENT = -0.125;//-0.25;
 
         public static final int MOTOR_ID = 52;
         public static final boolean MOTOR_INVERTED = false;
