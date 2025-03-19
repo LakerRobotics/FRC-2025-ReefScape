@@ -4,6 +4,9 @@
 
 package frc.robot;
   
+import static frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond;
+import static frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond;
+
 import java.io.IOException;
 import java.util.function.Supplier;
 
@@ -178,12 +181,13 @@ public class RobotContainer {
     m_robotDriveSDS.setDefaultCommand(
       // The left stick controls translation of the robot.
       // Turning is controlled by the X axis of the right stick.
+          // Scale inputs to actual speeds
       new RunCommand(
         () ->
          m_robotDriveSDS.drive(
-             -GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
-              -GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+          kMaxSpeedMetersPerSecond    *GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
+          kMaxSpeedMetersPerSecond    *GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
+          kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,
               false
           ),

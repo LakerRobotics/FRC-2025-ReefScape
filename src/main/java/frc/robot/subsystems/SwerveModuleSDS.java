@@ -83,7 +83,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
 
-    m_driveMotor.setInverted(true);
+    m_driveMotor.setInverted(false);
     //m_driveMotor.restoreFactoryDefaults();
     //RevUtils.setDriveMotorConfig(m_driveMotor);
     //m_driveMotor.  setIdleMode();   (SparkMax.IdleMode.kBrake);
@@ -100,7 +100,7 @@ public class SwerveModuleSDS extends SubsystemBase {
 //    m_driveEncoder = m_driveMotor.getEncoder();
     // Setup the Drive Motor Config Object
     SparkMaxConfig driveConfig = new SparkMaxConfig();
-    driveConfig.inverted(true);
+    driveConfig.inverted(false);
     driveConfig.encoder.positionConversionFactor(kDriveRevToMeters);
     driveConfig.encoder.velocityConversionFactor(kDriveRpmToMetersPerSecond);
     System.out.print("kDriveRevToMeters="+kDriveRevToMeters);
