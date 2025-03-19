@@ -170,6 +170,27 @@ public class RobotContainer {
     commandsTab.add("SysId Quasistatic Forward", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     commandsTab.add("SysId Quasistatic Reverse", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
+    // Create and add Robot commands to Shuffleboard
+    var robotCommandsTab = Shuffleboard.getTab("Robot Commands");
+    
+    // Score preparation commands
+    robotCommandsTab.add("Prepare Score L1", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
+    robotCommandsTab.add("Prepare Score L2", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
+    robotCommandsTab.add("Prepare Score L3", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
+    robotCommandsTab.add("Prepare Score L4", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+    
+    // Score command
+    robotCommandsTab.add("Score Coral", RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));
+    
+    // Intake commands
+    robotCommandsTab.add("Prepare Intake", RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
+    robotCommandsTab.add("Intake Coral", RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
+    
+    // Algae removal commands
+    robotCommandsTab.add("Prepare Algae L2", RobotCommands.prepareAlgaeL2RemoveCommand(elevator, arm));
+    robotCommandsTab.add("Prepare Algae L3", RobotCommands.prepareAlgaeL3RemoveCommand(elevator, arm));
+    robotCommandsTab.add("Remove Algae", RobotCommands.algaeRemoveCommand(m_robotDriveSDS, elevator, arm));
+
     // Register named commands for PathPlanner
     NamedCommands.registerCommand("PrepareScoreL1", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
     NamedCommands.registerCommand("PrepareScoreL2", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
