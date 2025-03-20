@@ -6,6 +6,7 @@ package frc.robot;
   
 import java.io.IOException;
 import java.util.function.Supplier;
+import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 
@@ -165,13 +166,58 @@ public class RobotContainer {
     var commandsTab = Shuffleboard.getTab("Commands");
     
     // Create SysId commands directly from the subsystem methods
-    commandsTab.add("SysId Dynamic Forward",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward));     
-    commandsTab.add("SysId Dynamic Reverse",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-    commandsTab.add("SysId Quasistatic Forward", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    commandsTab.add("SysId Quasistatic Reverse", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("Swerve SysId Dynamic Forward",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kForward));     
+    commandsTab.add("Swerve SysId Dynamic Reverse",     m_robotDriveSDS.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("Swerve SysId Quasistatic Forward", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    commandsTab.add("Swerve SysId Quasistatic Reverse", m_robotDriveSDS.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+
+    // Add Elevator SysId commands
+    commandsTab.add("Elevator SysId Dynamic Forward",     elevator.sysIdDynamicCommand(SysIdRoutine.Direction.kForward));
+    commandsTab.add("Elevator SysId Dynamic Reverse",     elevator.sysIdDynamicCommand(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("Elevator SysId Quasistatic Forward", elevator.sysIdQuasistaticCommand(SysIdRoutine.Direction.kForward));
+    commandsTab.add("Elevator SysId Quasistatic Reverse", elevator.sysIdQuasistaticCommand(SysIdRoutine.Direction.kReverse));
+
+    // Add Arm SysId commands
+    commandsTab.add("Arm SysId Dynamic Forward",     arm.sysIdDynamicCommand(SysIdRoutine.Direction.kForward));
+    commandsTab.add("Arm SysId Dynamic Reverse",     arm.sysIdDynamicCommand(SysIdRoutine.Direction.kReverse));
+    commandsTab.add("Arm SysId Quasistatic Forward", arm.sysIdQuasistaticCommand(SysIdRoutine.Direction.kForward));
+    commandsTab.add("Arm SysId Quasistatic Reverse", arm.sysIdQuasistaticCommand(SysIdRoutine.Direction.kReverse));
 
     // Create and add Robot commands to Shuffleboard
     var robotCommandsTab = Shuffleboard.getTab("Robot Commands");
+    
+    // Add position control widgets with min/max from RustConstants
+    var armPositionWidget = robotCommandsTab.add("Arm Position", 0.0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(2, 1)
+        .withPosition(0, 0)
+        .withProperties(Map.of(
+            "min", RustConstants.Arm.MIN_ANGLE_RADIANS,
+            "max", RustConstants.Arm.MAX_ANGLE_RADIANS,
+            "block increment", 0.01
+        ))
+        .getEntry();
+    
+    var elevatorPositionWidget = robotCommandsTab.add("Elevator Height", 
+        (RustConstants.Elevator.ElevatorPosition.BOTTOM.value + RustConstants.Elevator.ElevatorPosition.TOP.value) / 2.0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(2, 1)
+        .withPosition(2, 0)
+        .withProperties(Map.of(
+            "min", RustConstants.Elevator.ElevatorPosition.BOTTOM.value,
+            "max", RustConstants.Elevator.ElevatorPosition.TOP.value,
+            "block increment", 0.01
+        ))
+        .getEntry();
+
+    // Add commands to hold positions
+    robotCommandsTab.add("Hold Arm Position", 
+        arm.moveToArbitraryPositionCommand(() -> armPositionWidget.getDouble(0.0))
+            .withName("Hold Arm Position"));
+    
+    robotCommandsTab.add("Hold Elevator Position", 
+        elevator.moveToArbitraryPositionCommand(() -> elevatorPositionWidget.getDouble(0.0))
+            .withName("Hold Elevator Position"));
     
     // Score preparation commands
     robotCommandsTab.add("Prepare Score L1", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));

@@ -133,9 +133,9 @@ public class RustConstants {
 
         public static final int CURRENT_LIMIT = 60;
 
-        public static final double kP = 50; // TODO
-        public static final double kI = 10; // TODO
-        public static final double kD = 5; // TODO
+        public static final double kP = 0;//50; // TODO
+        public static final double kI = 0;//10; // TODO
+        public static final double kD = 0;//5; // TODO
         public static final double kS = 0.095388; // TODO
         public static final double kG = 0.54402; // TODO
         public static final double kV = 7.43; // TODO
@@ -150,13 +150,13 @@ public class RustConstants {
 
     public static final class Arm {
         public static enum ArmPosition {
-            BOTTOM(-Math.PI / 2.0 + Units.degreesToRadians(5)),
-            HORIZONTAL(0),
-            L1(0),
-            L2(Units.degreesToRadians(55)), // reef angle
-            L3(Units.degreesToRadians(55)),
-            L4(1.033),
-            TOP(Math.PI / 2.0);
+            BOTTOM(0),      //(-Math.PI / 2.0 + Units.degreesToRadians(5)),
+            HORIZONTAL(Math.PI/2),//(0),
+            L1(Math.PI/2),        //(0),
+            L2(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)), // reef angle
+            L3(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)),
+            L4(Math.PI/2+1.033),  //1.033),
+            TOP(Math.PI);         //(Math.PI / 2.0);
 
             public final double value;
 
@@ -178,12 +178,12 @@ public class RustConstants {
         public static final double MOI = SingleJointedArmSim.estimateMOI(COM_DISTANCE_METERS, MASS_KG);
         public static final double ENCODER_ROTATIONS_TO_METERS = 2 * Math.PI / GEARING;
 
-        public static final double MIN_ANGLE_RADIANS = -Math.PI / 2.0;
-        public static final double MAX_ANGLE_RADIANS = Math.PI / 2.0;
+        public static final double MIN_ANGLE_RADIANS = 0;//-Math.PI / 2.0;
+        public static final double MAX_ANGLE_RADIANS = Math.PI;//Math.PI / 2.0;
 
         public static final int CURRENT_LIMIT = 50;
 
-        public static final double kP = 10; // TODO
+        public static final double kP = 0;//10; // TODO
         public static final double kI = 0; // TODO
         public static final double kD = 0; // TODO
         public static final double kS = 0.017964; // TODO
