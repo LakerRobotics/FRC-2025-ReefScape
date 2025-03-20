@@ -261,9 +261,99 @@ public class RobotContainer {
       () -> 
                  Math.abs(rightJoystick.getRightX()) > 0.03 )
                  .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
+// From Rust Hounds
+/* 
+controller.a().whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
+controller.x().whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
+controller.b().whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
+controller.y().whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+controller.start().whileTrue(RobotCommands.scoreCoralCommand(drivetrain, elevator, arm, coralSim));
 
-     new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
-        .whileTrue(RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
+controller.povUp().whileTrue(RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
+controller.povDown().whileTrue(RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
+
+controller.povLeft().whileTrue(RobotCommands.prepareAlgaeL2RemoveCommand(elevator, arm));
+controller.povRight().whileTrue(RobotCommands.prepareAlgaeL3RemoveCommand(elevator, arm));
+controller.leftStick().whileTrue(RobotCommands.algaeRemoveCommand(drivetrain, elevator, arm));
+
+controller.rightBumper().whileTrue(intake.runRollersCommand());
+controller.leftBumper().whileTrue(intake.reverseRollersCommand());
+
+climber.setDefaultCommand(Commands.run(
+    () -> climber.setVoltage(
+        MathUtil.applyDeadband((controller.getRightTriggerAxis() - controller.getLeftTriggerAxis()) * 4, 0.1)), 
+            climber));
+
+controller.povRight().onTrue(GlobalStates.INITIALIZED.enableCommand());
+
+controller.back().toggleOnTrue(
+        Commands.parallel(
+                elevator.setOverridenSpeedCommand(() -> -controller.getLeftY() * 0.25),
+                arm.setOverridenSpeedCommand(() -> -controller.getRightY() * 0.25),
+                Commands.run(drivetrain::stop, drivetrain))
+
+                .finallyDo(() -> {
+                    elevator.resetControllersCommand().schedule();
+                    arm.resetControllersCommand().schedule();
+                }));
+}
+
+public static void configureTestingControls(int port, Drivetrain drivetrain, Elevator elevator, Arm arm,
+    Intake intake,
+    Climber climber, LEDs leds) {
+
+CommandXboxController controller = new CommandXboxController(port);
+controller.b().toggleOnTrue(leds.requestStateCommand(LEDState.DEMO_RED));
+controller.y().toggleOnTrue(leds.requestStateCommand(LEDState.DEMO_GOLD));
+}
+*/
+
+// AI Attempt to adapt to the PS4 Controller:
+
+    new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+        .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
+    new JoystickButton(rightJoystick, PS4Controller.Button.kCircle.value)
+            .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
+    new JoystickButton(rightJoystick, PS4Controller.Button.kTriangle.value)
+            .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
+    new JoystickButton(rightJoystick, PS4Controller.Button.kCross.value)
+            .whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+    new JoystickButton(rightJoystick, PS4Controller.Button.kOptions.value)
+            .whileTrue(RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));
+
+    new Trigger(() -> rightJoystick.getPOV() == 0)
+            .whileTrue(RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
+    new Trigger(() -> rightJoystick.getPOV() == 180)
+            .whileTrue(RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
+
+    new Trigger(() -> rightJoystick.getPOV() == 270)
+            .whileTrue(RobotCommands.prepareAlgaeL2RemoveCommand(elevator, arm));
+    new Trigger(() -> rightJoystick.getPOV() == 90)
+            .whileTrue(RobotCommands.prepareAlgaeL3RemoveCommand(elevator, arm));
+    new JoystickButton(rightJoystick, PS4Controller.Button.kL3.value)
+            .whileTrue(RobotCommands.algaeRemoveCommand(m_robotDriveSDS, elevator, arm));
+
+    new JoystickButton(rightJoystick, PS4Controller.Button.kR1.value)
+            .whileTrue(intake.runRollersCommand());
+    new JoystickButton(rightJoystick, PS4Controller.Button.kL1.value)
+            .whileTrue(intake.reverseRollersCommand());
+
+    new JoystickButton(rightJoystick, PS4Controller.Button.kShare.value)
+            .onTrue(GlobalStates.INITIALIZED.enableCommand());
+
+    new JoystickButton(rightJoystick, PS4Controller.Button.kTouchpad.value)
+            .toggleOnTrue(
+                Commands.parallel(
+                    elevator.setOverridenSpeedCommand(() -> -rightJoystick.getLeftY() * 0.25),
+                    arm.setOverridenSpeedCommand(() -> -rightJoystick.getRightY() * 0.25),
+                    Commands.run(() -> m_robotDriveSDS.drive(0, 0, 0, true, true), m_robotDriveSDS))
+                .finallyDo(() -> {
+                    elevator.resetControllersCommand().schedule();
+                    arm.resetControllersCommand().schedule();
+                }));
+  }
+
+
   
   //elevtor preset position buttons borrowed from Rust Hounds
   //TODO make our own elevator preset buttons for our robot
@@ -279,8 +369,7 @@ public class RobotContainer {
     // DriveTrainReset 
 //    new JoystickButton(leftJoystick, PS4Controller.Button.kTriangle.value) 
 //    .onTrue(new RunCommand(()-> m_robotDriveSDS.zeroHeading()));
-  }
-
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
