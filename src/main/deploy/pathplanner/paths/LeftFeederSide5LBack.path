@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.78109756097561,
-        "y": 3.0669860627177687
+        "x": 3.629659090909091,
+        "y": 2.958039772727272
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1530352241133266,
-        "y": 2.31736977792415
+        "x": 3.001596754046808,
+        "y": 2.2084234879336533
       },
       "isLocked": false,
       "linkedName": "CoralLoad5L"
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 52.79762780764413
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 55.2003898009554
   },
   "useDefaultConstraints": true
 }
