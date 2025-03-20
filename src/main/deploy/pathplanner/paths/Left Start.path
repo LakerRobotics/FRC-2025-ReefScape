@@ -3,35 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6894886363636368,
-        "y": 5.13184659090909
+        "x": 7.219431818181818,
+        "y": 0.794204545454545
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.3443981460438605,
-        "y": 4.726726057968773
+        "x": 6.969784656914892,
+        "y": 0.780926937561343
       },
       "isLocked": false,
-      "linkedName": "CoralLoad1L"
+      "linkedName": "LeftStart"
     },
     {
       "anchor": {
-        "x": 0.648153409090909,
-        "y": 6.647528409090909
+        "x": 3.061278409090909,
+        "y": 3.9053409090909086
       },
       "prevControl": {
-        "x": 0.3786008461442487,
-        "y": 6.820024580355224
+        "x": -0.23931818181818132,
+        "y": 0.395340909090907
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightFeeder"
+      "linkedName": "CoralLoad6R"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareScoreL4",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -42,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.71312302279105
+    "rotation": -0.8184554616886363
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -58.15094868094475
+    "rotation": -179.69844605013168
   },
   "useDefaultConstraints": true
 }
