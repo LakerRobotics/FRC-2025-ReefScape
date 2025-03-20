@@ -83,7 +83,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     m_angleEncoder = angleEncoder;
     m_angleOffset = angleOffset;
 
-    m_driveMotor.setInverted(true);
+//    m_driveMotor.setInverted(true);
     //m_driveMotor.restoreFactoryDefaults();
     //RevUtils.setDriveMotorConfig(m_driveMotor);
     //m_driveMotor.  setIdleMode();   (SparkMax.IdleMode.kBrake);
@@ -116,7 +116,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     turnConfig.encoder.velocityConversionFactor(kTurnRotationsToDegrees / 60);
     // Add PID values for turning
     turnConfig.closedLoop.p(0.02);   // Using last year's proven value;
-    turnConfig.closedLoop.i(0.0);
+    turnConfig.closedLoop.i(0.00);
     turnConfig.closedLoop.d(0.0);
 //        .ff(0.0);
     
