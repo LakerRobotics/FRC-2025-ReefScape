@@ -219,8 +219,7 @@ public class RobotContainer {
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
           frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
-              false,
-              true
+              true,              true
           ),
         m_robotDriveSDS
       )
@@ -262,6 +261,9 @@ public class RobotContainer {
       () -> 
                  Math.abs(rightJoystick.getRightX()) > 0.03 )
                  .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
+
+     new JoystickButton(rightJoystick, PS4Controller.Button.kSquare.value)
+        .whileTrue(RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
   
   //elevtor preset position buttons borrowed from Rust Hounds
   //TODO make our own elevator preset buttons for our robot

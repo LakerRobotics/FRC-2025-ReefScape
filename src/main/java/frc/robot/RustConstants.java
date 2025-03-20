@@ -96,16 +96,16 @@ public class RustConstants {
         public static enum ElevatorPosition {
           
             BOTTOM(     0.02),//(0.0698),
-            INTAKE_PREP(0.276),//(0.55),
-            INTAKE(     0.172),//(0.355),
-            ALGAE_L2(   0.454),//(0.884),
-            ALGAE_L3(   0.64),//(1.234),
+            INTAKE_PREP(0.205),//(0.55),
+            INTAKE(     0.130),//(0.355),
+            ALGAE_L2(   0.334),//(0.884),
+            ALGAE_L3(   0.469),//(1.234),
 
-            L1( 0.155),//(0.323),
-            L2( 0.148),//(0.31),
-            L3( 0.356),//(0.70),
-            L4( 0.66),//(1.27),
-            TOP(0.82);//(1.57);
+            L1( 0.118),//(0.323),
+            L2( 0.113),//(0.31),
+            L3( 0.263),//(0.70),
+            L4( 0.482),//(1.27),
+            TOP(0.598);//(1.57);
 
             public final double value;
 
@@ -142,7 +142,7 @@ public class RustConstants {
         public static final double kA = 1.0; // TODO
         public static final double TOLERANCE = 0.02;
 
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 1.3; // TODO
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 1.3/2;//1.3; // TODO
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3; // TODO
         public static final TrapezoidProfile.Constraints MOVEMENT_CONSTRAINTS = new TrapezoidProfile.Constraints(
                 MAX_VELOCITY_METERS_PER_SECOND, MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);

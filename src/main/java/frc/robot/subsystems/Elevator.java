@@ -185,11 +185,11 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         voltage = MathUtil.clamp(voltage, -12, 12);
         voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
-        if (voltage < 0
+       /*  if (voltage < 0
                 && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT
                 && positionTracker.getArmAngle() < 0) {
             voltage = 0;
-        }
+        }*/
 
        // if (!GlobalStates.INITIALIZED.enabled()) {
           //  voltage = 0.0;
