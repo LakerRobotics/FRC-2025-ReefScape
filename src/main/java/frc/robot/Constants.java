@@ -75,7 +75,7 @@ public final class Constants {
     public static final SwerveDriveKinematics kSwerveKinematics =
         new SwerveDriveKinematics(kModuleTranslations);
 
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(10);
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(2);
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
     public static final double kTeleDriveAccelerationUnitsPerSecond = 0;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1;
@@ -97,7 +97,7 @@ public final class Constants {
     public static final class Module {
       public static final double kDriveMotorGearRatio = 6.75;
       public static final double kTurningMotorGearRatio = 18.75;
-      public static final boolean isDriveInverted=false;
+      public static final boolean isDriveInverted=true;
       public static final boolean isTurnMotorInverted=true;
       public static final double kWheelDiameterMeters = Units.inchesToMeters(3.94);
       public static final int kNeoCPR = 42;
@@ -114,11 +114,11 @@ public final class Constants {
               360.0 / kTurningMotorGearRatio;
       public static final double kTurningEncoderDistancePerPulse = 360.0 / kCANCoderCPR;
 
-      public static final double ksDriveVoltSecondsPerMeter = 0.02;//(0.667 / 12);
-      public static final double kvDriveVoltSecondsSquaredPerMeter = 0.4;//(2.44 / 12);
-      public static final double kaDriveVoltSecondsSquaredPerMeter =  0.02;//(0.27 / 12);
+      public static final double ksDriveVoltSecondsPerMeter = 0.16;//(0.667 / 12);
+      public static final double kvDriveVoltSecondsSquaredPerMeter = 3.2;//(2.44 / 12);
+      public static final double kaDriveVoltSecondsSquaredPerMeter =  0.16;//(0.27 / 12);
 
-      public static final double kvTurnVoltSecondsPerRadian = 0.01;//1.47; // originally 1.5
+      public static final double kvTurnVoltSecondsPerRadian = 0.1;//1.47; // originally 1.5
       public static final double kaTurnVoltSecondsSquaredPerRadian = 0.348; // originally 0.3
     }
     

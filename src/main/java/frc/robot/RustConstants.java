@@ -128,23 +128,18 @@ public class RustConstants {
         public static final double DRUM_CIRCUMFERENCE = 2.0 * Math.PI * DRUM_RADIUS_METERS;
         public static final double ENCODER_ROTATIONS_TO_METERS = DRUM_CIRCUMFERENCE / GEARING;
 
-<<<<<<< Updated upstream
-        public static final double MIN_HEIGHT_METERS = 0.002; // TODO
-        public static final double MAX_HEIGHT_METERS = 0.82; // TODO
-=======
         public static final double MIN_HEIGHT_METERS = -0.12 ; // TODO
         public static final double MAX_HEIGHT_METERS =  0.598; // TODO
->>>>>>> Stashed changes
 
         public static final int CURRENT_LIMIT = 60;
 
-        public static final double kP = 0;//50; // TODO
-        public static final double kI = 0;//10; // TODO
+        public static final double kP = 15;//50; // TODO
+        public static final double kI = 1;//10; // TODO
         public static final double kD = 0;//5; // TODO
-        public static final double kS = 0.095388; // TODO
-        public static final double kG = 0.54402; // TODO
-        public static final double kV = 7.43; // TODO
-        public static final double kA = 1.0; // TODO
+        public static final double kS = 0;//0.095388; // TODO
+        public static final double kG = 0;//0.54402; // TODO
+        public static final double kV = 0;//0.5;//7.43; // TODO
+        public static final double kA = 0;//0.25; // TODO
         public static final double TOLERANCE = 0.02;
 
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 1.3/2;//1.3; // TODO
@@ -156,21 +151,12 @@ public class RustConstants {
     public static final class Arm {
         public static enum ArmPosition {
             BOTTOM(0),      //(-Math.PI / 2.0 + Units.degreesToRadians(5)),
-<<<<<<< Updated upstream
-            HORIZONTAL(Math.PI/2),//(0),
-            L1(Math.PI/2),        //(0),
-            L2(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)), // reef angle
-            L3(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)),
-            L4(Math.PI/2+1.033),  //1.033),
-            TOP(Math.PI);         //(Math.PI / 2.0);
-=======
             HORIZONTAL(-Units.degreesToRadians(90)),//(0),
             L1(        -Units.degreesToRadians(90)),        //(0),
             L2(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)), // reef angle
             L3(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)),
             L4(        -Units.degreesToRadians(90+60)),  //1.033),
             TOP(       -Units.degreesToRadians(178));         //(Math.PI / 2.0);
->>>>>>> Stashed changes
 
             public final double value;
 
@@ -185,29 +171,19 @@ public class RustConstants {
         public static final int MOTOR_ID = 50;
         public static final boolean MOTOR_INVERTED = true;
 
-        public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);
-<<<<<<< Updated upstream
-        public static final double GEARING = 40.0; // TODO
-=======
-        public static final double GEARING = 20.0*(48/24); // 1.05 is so it will say it is a 
->>>>>>> Stashed changes
+        public static final double GEARING = 20.0*(48/24); // TODO
         public static final double MASS_KG = Units.lbsToKilograms(10); // TODO
         public static final double COM_DISTANCE_METERS = Units.inchesToMeters(6); // TODO
         public static final double MOI = SingleJointedArmSim.estimateMOI(COM_DISTANCE_METERS, MASS_KG);
         public static final double ENCODER_ROTATIONS_TO_METERS = 2 * Math.PI / GEARING;
 
-<<<<<<< Updated upstream
-        public static final double MIN_ANGLE_RADIANS = 0;//-Math.PI / 2.0;
-        public static final double MAX_ANGLE_RADIANS = Math.PI;//Math.PI / 2.0;
-=======
         public static final double MIN_ANGLE_RADIANS = -Units.degreesToRadians(178);//-Math.PI / 2.0;
         public static final double MAX_ANGLE_RADIANS = 0;//Math.PI / 2.0;
->>>>>>> Stashed changes
 
         public static final int CURRENT_LIMIT = 50;
 
-        public static final double kP = 0;//10; // TODO
-        public static final double kI = 0; // TODO
+        public static final double kP = 10;//10; // TODO
+        public static final double kI = 0.1; // TODO
         public static final double kD = 0; // TODO
         public static final double kS = 0.017964; // TODO
         public static final double kG = 0.321192; // TODO
@@ -215,8 +191,8 @@ public class RustConstants {
         public static final double kA = 0.206676;// TODO
         public static final double TOLERANCE = 0.02;
 
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 8; // TODO
-        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 4; // TODO
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 1;//8; // TODO
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 0.5;//4; // TODO
         public static final TrapezoidProfile.Constraints MOVEMENT_CONSTRAINTS = new TrapezoidProfile.Constraints(
                 MAX_VELOCITY_METERS_PER_SECOND, MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
     }
