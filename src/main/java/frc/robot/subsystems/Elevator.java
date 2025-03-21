@@ -106,7 +106,11 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         sysIdRoutine = new SysIdRoutine(
-                new SysIdRoutine.Config(Volts.of(1).per(Seconds), Volts.of(5), null, null),
+                new SysIdRoutine.Config(
+                    Volts.of(0.01).per(Seconds),
+                    Volts.of(0.2),
+                    Seconds.of(20.0),
+                    null),
                 new SysIdRoutine.Mechanism(
                         (Voltage volts) -> setVoltage(volts.magnitude()),
                         log -> {

@@ -216,8 +216,12 @@ public class RobotContainer {
             .withName("Hold Arm Position"));
     
     robotCommandsTab.add("Hold Elevator Position", 
+        Commands.run(() -> {
         elevator.moveToArbitraryPositionCommand(() -> elevatorPositionWidget.getDouble(0.0))
-            .withName("Hold Elevator Position"));
+        .asProxy()
+        .schedule();
+        })
+        .withName("Hold Elevator Position"));
     
     // Score preparation commands
     robotCommandsTab.add("Prepare Score L1", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
@@ -264,7 +268,7 @@ public class RobotContainer {
          m_robotDriveSDS.drive(
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
-          frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+          -frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,              true
           ),
         m_robotDriveSDS
@@ -302,11 +306,34 @@ public class RobotContainer {
     new Trigger( 
             () -> 
                  Math.abs(rightJoystick.getRightY()) > 0.03 )
-                 .onTrue(new RunCommand(() -> intake.setRollerVoltage(rightJoystick.getRightY()),intake));
-    new Trigger(
+                 .onTrue(new RunCommand(() -> 
+                 intake.setRollerVoltage(
+                        rightJoystick.getRightY()),
+                        intake));
+
+        new Trigger(
       () -> 
                  Math.abs(rightJoystick.getRightX()) > 0.03 )
                  .onTrue(new RunCommand(() -> arm.setVoltage(rightJoystick.getRightX()),arm)); 
+/*    new Trigger(
+      () -> 
+                 Math.abs(rightJoystick.getRightX()) > 0.001 )
+                 .onTrue(new RunCommand(() -> 
+                 arm.moveToArbitraryPositionCommand(
+                        () ->   
+                                ((RustConstants.Arm.MAX_ANGLE_RADIANS
+                          -RustConstants.Arm.MIN_ANGLE_RADIANS)/2)
+                        *
+                        rightJoystick.getRightX()
+                        +
+                        (RustConstants.Arm.MAX_ANGLE_RADIANS+RustConstants.Arm.MIN_ANGLE_RADIANS)/2
+                        )
+                        ,
+                        arm
+                 )
+                 ); 
+*/
+
 // From Rust Hounds
 /* 
 controller.a().whileTrue(RobotCommands.prepareCoralScoreCommand(ScoreLevel.L1, elevator, arm, coralSim));
@@ -432,4 +459,9 @@ controller.y().toggleOnTrue(leds.requestStateCommand(LEDState.DEMO_GOLD));
     this.autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
+
+public void periodic() {
+        SmartDashboard.putNumber("Elevator Periodic position", elevator.getPosition());    
+        SmartDashboard.putNumber("Elevator Periodic velocity", elevator.getVelocity());    
+}
 }
