@@ -232,6 +232,7 @@ public class RobotContainer {
     // Score command
     robotCommandsTab.add("Score Coral", RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));
     
+    robotCommandsTab.add("Unwind Climber", new RunCommand(() -> climber.setVoltage(0.05),climber));
     // Intake commands
     robotCommandsTab.add("Prepare Intake", RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
     robotCommandsTab.add("Intake Coral", RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
@@ -293,10 +294,15 @@ public class RobotContainer {
            Math.abs(rightJoystick.getLeftY()) > 0.03 )
            .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getLeftY()),climber)); */
           
-    /*new Trigger( 
+    new Trigger( 
       () -> 
-    Math.abs(rightJoystick.getLeftY()) > 0.03 )
-    .onTrue(new RunCommand(() -> climber.setVoltage(rightJoystick.getR2Axis()),climber));*/
+    (rightJoystick.getR2Axis()) > 0 )
+    .onTrue(new RunCommand(() -> climber.setVoltage(-rightJoystick.getR2Axis()),climber));
+
+    new Trigger( 
+      () -> 
+    (rightJoystick.getR2Axis()) < 0 )
+    .onTrue(new RunCommand(() -> climber.setVoltage(0),climber));
 
      new Trigger( 
       () -> 
