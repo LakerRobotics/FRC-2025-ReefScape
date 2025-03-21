@@ -75,12 +75,12 @@ public final class Constants {
     public static final SwerveDriveKinematics kSwerveKinematics =
         new SwerveDriveKinematics(kModuleTranslations);
 
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(2);
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(15);
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
     public static final double kTeleDriveAccelerationUnitsPerSecond = 0;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1;
 
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 4.0;
+    public static final double kMaxRotationRadiansPerSecond = 2*Math.PI * /*Rev per sec*/0.5 ; //// //Math.PI * 4.0;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 2.0;
 
     public static final double kP_X = 0.2;
