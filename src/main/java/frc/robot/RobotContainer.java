@@ -262,9 +262,15 @@ public class RobotContainer {
       new RunCommand(
         () ->
          m_robotDriveSDS.drive(
+<<<<<<< Updated upstream
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
           frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
           frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+=======
+          -frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
+          -frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
+          -frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
+>>>>>>> Stashed changes
               true,              true
           ),
         m_robotDriveSDS

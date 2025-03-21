@@ -95,16 +95,16 @@ public class RustConstants {
     public static final class Elevator {
         public static enum ElevatorPosition {
           
-            BOTTOM(     0.02),//(0.0698),
-            INTAKE_PREP(0.205),//(0.55),
-            INTAKE(     0.130),//(0.355),
-            ALGAE_L2(   0.334),//(0.884),
-            ALGAE_L3(   0.469),//(1.234),
+            BOTTOM(     -0.12),//(0.0698),
+            INTAKE_PREP(0.11),//(0.55),
+            INTAKE(     0.00),//(0.355),
+            ALGAE_L2(   0.27),//(0.884),
+            ALGAE_L3(   0.437),//(1.234),
 
-            L1( 0.118),//(0.323),
-            L2( 0.113),//(0.31),
-            L3( 0.263),//(0.70),
-            L4( 0.482),//(1.27),
+            L1( 0.00),//(0.323),
+            L2( 0.00),//(0.31),
+            L3( 0.182),//(0.70),
+            L4( 0.454),//(1.27),
             TOP(0.598);//(1.57);
 
             public final double value;
@@ -128,8 +128,13 @@ public class RustConstants {
         public static final double DRUM_CIRCUMFERENCE = 2.0 * Math.PI * DRUM_RADIUS_METERS;
         public static final double ENCODER_ROTATIONS_TO_METERS = DRUM_CIRCUMFERENCE / GEARING;
 
+<<<<<<< Updated upstream
         public static final double MIN_HEIGHT_METERS = 0.002; // TODO
         public static final double MAX_HEIGHT_METERS = 0.82; // TODO
+=======
+        public static final double MIN_HEIGHT_METERS = -0.12 ; // TODO
+        public static final double MAX_HEIGHT_METERS =  0.598; // TODO
+>>>>>>> Stashed changes
 
         public static final int CURRENT_LIMIT = 60;
 
@@ -151,12 +156,21 @@ public class RustConstants {
     public static final class Arm {
         public static enum ArmPosition {
             BOTTOM(0),      //(-Math.PI / 2.0 + Units.degreesToRadians(5)),
+<<<<<<< Updated upstream
             HORIZONTAL(Math.PI/2),//(0),
             L1(Math.PI/2),        //(0),
             L2(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)), // reef angle
             L3(Math.PI/2+Units.degreesToRadians(55)),//(Units.degreesToRadians(55)),
             L4(Math.PI/2+1.033),  //1.033),
             TOP(Math.PI);         //(Math.PI / 2.0);
+=======
+            HORIZONTAL(-Units.degreesToRadians(90)),//(0),
+            L1(        -Units.degreesToRadians(90)),        //(0),
+            L2(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)), // reef angle
+            L3(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)),
+            L4(        -Units.degreesToRadians(90+60)),  //1.033),
+            TOP(       -Units.degreesToRadians(178));         //(Math.PI / 2.0);
+>>>>>>> Stashed changes
 
             public final double value;
 
@@ -172,14 +186,23 @@ public class RustConstants {
         public static final boolean MOTOR_INVERTED = true;
 
         public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);
+<<<<<<< Updated upstream
         public static final double GEARING = 40.0; // TODO
+=======
+        public static final double GEARING = 20.0*(48/24); // 1.05 is so it will say it is a 
+>>>>>>> Stashed changes
         public static final double MASS_KG = Units.lbsToKilograms(10); // TODO
         public static final double COM_DISTANCE_METERS = Units.inchesToMeters(6); // TODO
         public static final double MOI = SingleJointedArmSim.estimateMOI(COM_DISTANCE_METERS, MASS_KG);
         public static final double ENCODER_ROTATIONS_TO_METERS = 2 * Math.PI / GEARING;
 
+<<<<<<< Updated upstream
         public static final double MIN_ANGLE_RADIANS = 0;//-Math.PI / 2.0;
         public static final double MAX_ANGLE_RADIANS = Math.PI;//Math.PI / 2.0;
+=======
+        public static final double MIN_ANGLE_RADIANS = -Units.degreesToRadians(178);//-Math.PI / 2.0;
+        public static final double MAX_ANGLE_RADIANS = 0;//Math.PI / 2.0;
+>>>>>>> Stashed changes
 
         public static final int CURRENT_LIMIT = 50;
 
