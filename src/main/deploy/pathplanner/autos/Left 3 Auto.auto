@@ -68,7 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftFeederSide6LBack"
+                  "pathName": "LeftFeederSide6L"
                 }
               },
               {
@@ -125,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftFeederSide6L"
+                  "pathName": "LeftFeederSide6LBack"
                 }
               },
               {
