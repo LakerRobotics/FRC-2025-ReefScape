@@ -61,12 +61,11 @@ public class RobotCommands {
     }
 
     public static Command holdPositions( Elevator elevator, Arm arm, CoralSim coralSim) {
-        return Commands.runOnce(() -> {
+        return Commands.runOnce(() -> 
 
                 Commands.parallel(
                         elevator.holdCurrentPositionCommand(),
-                        arm.holdCurrentPositionCommand()
-                                    .andThen(elevator.moveToPositionCommand(() -> elevatorPosition).asProxy())));
+                        arm.holdCurrentPositionCommand()).asProxy());
 }
         /**
      * Similar to prepareCoralScoreCommand but optimized for autonomous routines.
