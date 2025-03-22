@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.3443981460438605,
-        "y": 4.726726057968773
+        "x": 4.1277571558941135,
+        "y": 4.585781240269185
       },
       "isLocked": false,
       "linkedName": "CoralLoad1L"
     },
     {
       "anchor": {
-        "x": 0.648153409090909,
-        "y": 6.647528409090909
+        "x": 1.7948863636363637,
+        "y": 7.4951136363636355
       },
       "prevControl": {
-        "x": 0.3786008461442487,
-        "y": 6.820024580355224
+        "x": 1.5988563503962858,
+        "y": 7.741266233299921
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.71312302279105
+    "rotation": -52.52382043863859
   },
   "reversed": false,
   "folder": null,

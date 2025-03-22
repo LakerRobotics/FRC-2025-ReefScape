@@ -5,33 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "PrepareIntakeCoral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrepareScoreL4"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "2 Meter Path"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 3.0
+            "name": "PrepareIntakeCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepareScoreL4"
           }
         },
         {
@@ -43,7 +31,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PrepareIntakeCoral"
+            "name": "IntakeCoral"
           }
         }
       ]
