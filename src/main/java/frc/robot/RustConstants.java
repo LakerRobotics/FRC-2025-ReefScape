@@ -151,12 +151,12 @@ public class RustConstants {
     public static final class Arm {
         public static enum ArmPosition {
             BOTTOM(0),      //(-Math.PI / 2.0 + Units.degreesToRadians(5)),
-            HORIZONTAL(-Units.degreesToRadians(90)),//(0),
-            L1(        -Units.degreesToRadians(90)),        //(0),
-            L2(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)), // reef angle
-            L3(        -Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)),
-            L4(        -Units.degreesToRadians(90+60)),  //1.033),
-            TOP(       -Units.degreesToRadians(178));         //(Math.PI / 2.0);
+            HORIZONTAL(Units.degreesToRadians(90)),//(0),
+            L1(        Units.degreesToRadians(90)),        //(0),
+            L2(        Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)), // reef angle
+            L3(        Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)),
+            L4(        Units.degreesToRadians(90+60)),  //1.033),
+            TOP(       Units.degreesToRadians(178));         //(Math.PI / 2.0);
 
             public final double value;
 
@@ -170,7 +170,7 @@ public class RustConstants {
 
         public static final int MOTOR_ID = 50;
         public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);
-        public static final boolean MOTOR_INVERTED = true;
+        public static final boolean MOTOR_INVERTED = false;
 
         public static final double GEARING = 20.0*(48/24); // TODO
         public static final double MASS_KG = Units.lbsToKilograms(10); // TODO
@@ -178,8 +178,8 @@ public class RustConstants {
         public static final double MOI = SingleJointedArmSim.estimateMOI(COM_DISTANCE_METERS, MASS_KG);
         public static final double ENCODER_ROTATIONS_TO_METERS = 2 * Math.PI / GEARING;
 
-        public static final double MIN_ANGLE_RADIANS = -Units.degreesToRadians(178);//-Math.PI / 2.0;
-        public static final double MAX_ANGLE_RADIANS = 0;//Math.PI / 2.0;
+        public static final double MIN_ANGLE_RADIANS = 0;//-Math.PI / 2.0;
+        public static final double MAX_ANGLE_RADIANS = Units.degreesToRadians(178);//Math.PI / 2.0;
 
         public static final int CURRENT_LIMIT = 50;
 
