@@ -183,7 +183,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
     @Override
     public void setVoltage(double voltage) {
         //System.out.println("In elevator set voltage");
-        voltage= voltage*4;
+        voltage= voltage*5;
         SmartDashboard.putNumber("Elevator set voltage", voltage);
         SmartDashboard.putNumber("Elevator position", getPosition());
         voltage = MathUtil.clamp(voltage, -12, 12);

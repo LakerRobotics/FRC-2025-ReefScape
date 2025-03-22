@@ -228,6 +228,8 @@ public class RobotContainer {
     robotCommandsTab.add("Prepare Score L2", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L2, elevator, arm, coralSim));
     robotCommandsTab.add("Prepare Score L3", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L3, elevator, arm, coralSim));
     robotCommandsTab.add("Prepare Score L4", RobotCommands.prepareCoralScoreCommand(ScoreLevel.L4, elevator, arm, coralSim));
+
+    robotCommandsTab.add("HoldPosition", RobotCommands.holdPositions(elevator, arm, coralSim));
     
     // Score command
     robotCommandsTab.add("Score Coral", RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));

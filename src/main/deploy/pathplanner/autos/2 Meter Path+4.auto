@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "2 Meter Path"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "PrepareIntakeCoral"
@@ -20,6 +14,18 @@
           "type": "named",
           "data": {
             "name": "PrepareScoreL4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2 Meter Path"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         },
         {
