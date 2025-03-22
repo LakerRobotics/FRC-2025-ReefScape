@@ -46,35 +46,14 @@ public class Robot extends TimedRobot {
      */     
     @Override
     public void robotInit() {
-        // Initialize cameras
+        // Start first camera
+        CameraServer.startAutomaticCapture();
+        
+        // Try to start second camera
         try {
-            // First camera
-            camera1 = new UsbCamera("Camera 1", 0);
-            
-            // Second camera (if available)
-            try {
-                camera2 = new UsbCamera("Camera 2", 1);
-            } catch (Exception e) {
-                System.out.println("Camera 2 not available");
-            }
-            
-            // Third camera (if available)
-            try {
-                camera3 = new UsbCamera("Camera 3", 2);
-            } catch (Exception e) {
-                System.out.println("Camera 3 not available");
-            }
-            
-            // Add cameras to Shuffleboard for viewing
-            CameraServer.startAutomaticCapture(camera1);
-            if (camera2 != null) {
-                CameraServer.startAutomaticCapture(camera2);
-            }
-            if (camera3 != null) {
-                CameraServer.startAutomaticCapture(camera3);
-            }
+            CameraServer.startAutomaticCapture(1);
         } catch (Exception e) {
-            System.out.println("Error initializing cameras: " + e.getMessage());
+            System.out.println("Second camera not available");
         }
 
         m_robotContainer = new RobotContainer();
