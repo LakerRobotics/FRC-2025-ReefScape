@@ -192,8 +192,8 @@ public class RustConstants {
         public static final double kA = 0.206676;// TODO
         public static final double TOLERANCE = 0.02;
 
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 1;//8; // TODO
-        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 0.5;//4; // TODO
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 0.5;//8; // TODO
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 0.25;//4; // TODO
         public static final TrapezoidProfile.Constraints MOVEMENT_CONSTRAINTS = new TrapezoidProfile.Constraints(
                 MAX_VELOCITY_METERS_PER_SECOND, MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
     }

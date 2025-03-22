@@ -267,8 +267,8 @@ public class RobotContainer {
       new RunCommand(
         () ->
          m_robotDriveSDS.drive(
-          -frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
-          -frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
+          frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftY(), OIConstants.kDriveDeadband),
+          frc.robot.Constants.Swerve.kMaxSpeedMetersPerSecond*    GamepadUtils.squareInput(leftJoystick.getLeftX(), OIConstants.kDriveDeadband),
           -frc.robot.Constants.Swerve.kMaxRotationRadiansPerSecond*GamepadUtils.squareInput(leftJoystick.getRightX(), OIConstants.kDriveDeadband),
               true,              true
           ),
