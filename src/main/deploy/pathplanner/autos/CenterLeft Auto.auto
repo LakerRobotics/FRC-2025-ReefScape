@@ -15,9 +15,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "PrepareScoreL4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrepareScoreL4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "HoldPosition"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -91,6 +104,12 @@
                       "type": "named",
                       "data": {
                         "name": "PrepareScoreL4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "HoldPosition"
                       }
                     }
                   ]
@@ -167,6 +186,12 @@
                       "type": "named",
                       "data": {
                         "name": "PrepareScoreL4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "HoldPosition"
                       }
                     }
                   ]
