@@ -11,6 +11,7 @@ import frc.robot.subsystems.Arm;
 //import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDriveSDS;
+import frc.robot.subsystems.Climber;
 
 public class RobotCommands {
     // Tracks the last scoring level used for sequential commands
@@ -259,5 +260,44 @@ public class RobotCommands {
                 Commands.parallel(
                         drivetrain.moveVoltageTimeCommand(-2, 0.5),
                         elevator.movePositionDeltaCommand(() -> -0.06).asProxy()));
+    }
+
+    /**
+     * Deploys the climber by running the motors at a preset voltage for a set duration.
+     * 
+     * @param climber The climber subsystem
+     * @return A command that deploys the climber
+     */
+    public static Command deployClimberCommand(Climber climber) {
+        return climber.deployClimberCommand();
+    }
+
+    /**
+     * Deploys the climber to a specific number of revolutions from the starting position.
+     * 
+     * @param climber The climber subsystem
+     * @return A command that deploys the climber to 50 revolutions
+     */
+    public static Command deployClimberToPosition(Climber climber) {
+        return Commands.sequence(
+            Commands.runOnce(() -> {
+                // Reset position to 0 when starting
+                climber.resetPosition();
+            }),
+            Commands.run(
+                () -> {
+                    double targetPosition = 50.0; // 50 revolutions
+                    double currentPosition = climber.getPosition();
+                    
+                    if (currentPosition < targetPosition) {
+                        climber.setVoltage(0.75);
+                    } else {
+                        climber.setVoltage(0);
+                    }
+                },
+                climber
+            ).until(() -> climber.getPosition() >= 50.0),
+            Commands.runOnce(() -> climber.setVoltage(0))
+        ).withName("climber.deployToPosition");
     }
 }
