@@ -187,7 +187,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         SmartDashboard.putNumber("Elevator set voltage", voltage);
         SmartDashboard.putNumber("Elevator position", getPosition());
         voltage = MathUtil.clamp(voltage, -12, 12);
-        voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
+        //voltage = Utils.applySoftStops(voltage, getPosition(), MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
        /*  if (voltage < 0
                 && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT

@@ -181,13 +181,13 @@ public class Arm extends SubsystemBase implements BaseSingleJointedArm<ArmPositi
         voltage = voltage*2;
         SmartDashboard.putNumber("Arm Position", getPosition());
         voltage = MathUtil.clamp(voltage, -12, 12);
-        voltage = Utils.applySoftStops(voltage, getPosition(), MIN_ANGLE_RADIANS, MAX_ANGLE_RADIANS);
+        //voltage = Utils.applySoftStops(voltage, getPosition(), MIN_ANGLE_RADIANS, MAX_ANGLE_RADIANS);
 
-        if (voltage < 0
-                && getPosition() < 0
-                && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT) {
-            voltage = 0;
-        }
+        //if (voltage < 0
+          //      && getPosition() < 0
+           //     && positionTracker.getElevatorPosition() < RustConstants.Elevator.MOTION_LIMIT) {
+           // voltage = 0;
+        //}
 
        // if (!GlobalStates.INITIALIZED.enabled()) {
            // voltage = 0.0;
