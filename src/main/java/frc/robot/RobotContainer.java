@@ -432,6 +432,10 @@ controller.y().toggleOnTrue(leds.requestStateCommand(LEDState.DEMO_GOLD));
                     elevator.resetControllersCommand().schedule();
                     arm.resetControllersCommand().schedule();
                 }));
+
+    // Add deploy climber command binding
+    new JoystickButton(rightJoystick, PS4Controller.Button.kL2.value)
+            .whileTrue(RobotCommands.deployClimberToPosition(climber));
   }
 
 
