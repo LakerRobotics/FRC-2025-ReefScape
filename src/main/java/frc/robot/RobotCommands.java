@@ -58,7 +58,8 @@ public class RobotCommands {
                 .andThen(Commands.parallel(
                         arm.moveToPositionCommand(() -> armPosition).asProxy(),
                         Commands.waitSeconds(0.5)
-                                .andThen(elevator.moveToPositionCommand(() -> elevatorPosition).asProxy())));
+                                .andThen(elevator.moveToPositionCommand(() -> elevatorPosition).asProxy())
+                                ).andThen(holdPositions(elevator, arm, coralSim)));
     }
 
     public static Command holdPositions( Elevator elevator, Arm arm, CoralSim coralSim) {
@@ -268,9 +269,9 @@ public class RobotCommands {
      * @param climber The climber subsystem
      * @return A command that deploys the climber
      */
-    public static Command deployClimberCommand(Climber climber) {
-        return climber.deployClimberCommand();
-    }
+//    public static Command deployClimberCommand(Climber climber) {
+//        return climber.deployClimberCommand();
+//    }
 
     /**
      * Deploys the climber to a specific number of revolutions from the starting position.

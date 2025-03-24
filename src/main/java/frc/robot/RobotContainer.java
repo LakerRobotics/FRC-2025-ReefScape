@@ -311,13 +311,13 @@ public class RobotContainer {
             Math.abs(rightJoystick.getLeftX()) > 0.03 )
             .onTrue(new RunCommand(() -> elevator.setVoltage(rightJoystick.getLeftX()),elevator)); 
 
-    new Trigger( 
-            () -> 
-                 Math.abs(rightJoystick.getRightY()) > 0.03 )
-                 .onTrue(new RunCommand(() -> 
-                 intake.setRollerVoltage(
-                        rightJoystick.getRightY()),
-                        intake));
+    //new Trigger( 
+          //  () -> 
+              //   Math.abs(rightJoystick.getRightY()) > 0.03 )
+              //   .onTrue(new RunCommand(() -> 
+              //   intake.setRollerVoltage(
+              //          rightJoystick.getRightY()),
+             //           intake));
 
         new Trigger(
       () -> 

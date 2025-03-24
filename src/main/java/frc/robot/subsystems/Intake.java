@@ -35,14 +35,14 @@ public class Intake extends SubsystemBase implements BaseIntake {
 
     
     public void setRollerVoltage(double voltage) {
-        voltage = voltage*12;
+        voltage = voltage*1.5;
         motor.setVoltage(voltage);
     }
 
     @Override
     public Command runRollersCommand() {
         return Commands.startEnd(
-                () -> setRollerVoltage(3),
+                () -> setRollerVoltage(1.5),
                 () -> setRollerVoltage(0))
                 .withName("intake.runRollers");
     }
