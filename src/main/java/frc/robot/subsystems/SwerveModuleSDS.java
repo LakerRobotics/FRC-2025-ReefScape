@@ -115,7 +115,7 @@ public class SwerveModuleSDS extends SubsystemBase {
     turnConfig.encoder.positionConversionFactor(kTurnRotationsToDegrees);
     turnConfig.encoder.velocityConversionFactor(kTurnRotationsToDegrees / 60);
     // Add PID values for turning
-    turnConfig.closedLoop.p(0.02);   // Using last year's proven value;
+    turnConfig.closedLoop.p(0.05);   // Using last year's proven value;
     turnConfig.closedLoop.i(0.00);
     turnConfig.closedLoop.d(0.0);
 //        .ff(0.0);

@@ -116,7 +116,7 @@ public class RustConstants {
 
         public static final double MOTION_LIMIT = 0.3;
 
-        public static final double SCORING_MOVEMENT = -0.125;//-0.25;
+        public static final double SCORING_MOVEMENT = -0.25;//-0.25;
 
         public static final int MOTOR_ID = 52;
         public static final boolean MOTOR_INVERTED = false;
@@ -155,7 +155,7 @@ public class RustConstants {
             L1(        Units.degreesToRadians(90)),        //(0),
             L2(        Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)), // reef angle
             L3(        Units.degreesToRadians(90+55)),//(Units.degreesToRadians(55)),
-            L4(        Units.degreesToRadians(90+60)),  //1.033),
+            L4(        Units.degreesToRadians(90+50)),  //1.033),
             TOP(       Units.degreesToRadians(178));         //(Math.PI / 2.0);
 
             public final double value;
