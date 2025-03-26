@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Start"
+                  "pathName": "2 Meter Path"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GoRightFeederR"
+                  "pathName": "GoRightFeeder 2 Meter Path Continuation"
                 }
               },
               {
