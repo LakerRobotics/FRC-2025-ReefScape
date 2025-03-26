@@ -5,13 +5,19 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "PrepareIntakeCoral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2 Meter Path"
+                  "pathName": "2 Meter Path (LEFT START)"
                 }
               },
               {

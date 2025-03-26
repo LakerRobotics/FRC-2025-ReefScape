@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.002897727272727,
+        "x": 7.25,
         "y": 4.175
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.304442995529062,
-        "y": 6.076658671758568
+        "x": 5.224,
+        "y": 4.175
       },
       "isLocked": false,
-      "linkedName": "CoralLoad2R"
+      "linkedName": "CenterRightStart"
     },
     {
       "anchor": {
-        "x": 1.7948863636363637,
-        "y": 7.4951136363636355
+        "x": 6.002897727272727,
+        "y": 4.175
       },
       "prevControl": {
-        "x": 3.3404829545454544,
-        "y": 7.26078125
+        "x": 6.793835227272727,
+        "y": 4.1695880681818185
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightFeeder"
+      "linkedName": "CoralLoad2R"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 0.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.52382043863859
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
