@@ -125,7 +125,7 @@ public class Elevator extends SubsystemBase implements BaseLinearMechanism<Eleva
         this.ligament = ligament;
 
         positionTracker.setElevatorPositionSupplier(this::getPosition);
-        //setDefaultCommand(moveToCurrentGoalCommand());
+        setDefaultCommand(moveToCurrentGoalCommand());
        
     }
 

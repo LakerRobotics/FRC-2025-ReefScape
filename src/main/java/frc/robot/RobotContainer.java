@@ -427,7 +427,8 @@ controller.y().toggleOnTrue(leds.requestStateCommand(LEDState.DEMO_GOLD));
                 Commands.parallel(
                     elevator.setOverridenSpeedCommand(() -> -rightJoystick.getLeftY() * 0.25),
                     arm.setOverridenSpeedCommand(() -> -rightJoystick.getRightY() * 0.25),
-                    Commands.run(() -> m_robotDriveSDS.drive(0, 0, 0, true, true), m_robotDriveSDS))
+                    Commands.run(() -> m_robotDriveSDS.drive(0, 0, 0, 
+                    true, false), m_robotDriveSDS))
                 .finallyDo(() -> {
                     elevator.resetControllersCommand().schedule();
                     arm.resetControllersCommand().schedule();
