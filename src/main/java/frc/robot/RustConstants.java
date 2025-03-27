@@ -166,7 +166,7 @@ public class RustConstants {
         }
 
         public static final double MOTION_LIMIT = -0.7;
-        public static final double SCORING_MOVEMENT = -0.8;
+        public static final double SCORING_MOVEMENT = -Units.degreesToRadians(45);// -0.8;
 
         public static final int MOTOR_ID = 50;
         public static final DCMotor MOTOR_GEARBOX_REPR = DCMotor.getNEO(1);
