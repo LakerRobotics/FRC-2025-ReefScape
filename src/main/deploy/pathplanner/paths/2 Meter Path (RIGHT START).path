@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.193431818181818,
-        "y": 3.85
+        "y": 3.8500000000000005
       },
       "isLocked": false,
       "linkedName": "CenterLeftStart"
     },
     {
       "anchor": {
-        "x": 5.982954545454545,
-        "y": 3.85
+        "x": 6.003,
+        "y": 3.9
       },
       "prevControl": {
-        "x": 6.773892045454545,
-        "y": 3.8445880681818188
+        "x": 6.7939375,
+        "y": 3.8945880681818186
       },
       "nextControl": null,
       "isLocked": false,

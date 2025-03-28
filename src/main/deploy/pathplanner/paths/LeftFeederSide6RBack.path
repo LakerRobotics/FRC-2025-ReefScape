@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.061278409090909,
-        "y": 3.9053409090909086
+        "x": 3.6496022727272726,
+        "y": 2.9779829545454546
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5611064082179156,
-        "y": 4.3862024583685795
+        "x": 4.149430271854278,
+        "y": 3.4588445038231255
       },
       "isLocked": false,
       "linkedName": "CoralLoad6R"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 54.29330859939712
   },
   "useDefaultConstraints": false
 }

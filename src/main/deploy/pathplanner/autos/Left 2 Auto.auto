@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GoRightFeeder 2 Meter Path Continuation"
+                  "pathName": "GoRight.Feeder 2 Meter Path Continuation"
                 }
               },
               {
@@ -80,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightFeederSide1L"
+                  "pathName": "Left 2 Auto Straight"
                 }
               },
               {
