@@ -234,7 +234,7 @@ public class RobotContainer {
     // Score command
     robotCommandsTab.add("Score Coral", RobotCommands.scoreCoralCommand(m_robotDriveSDS, elevator, arm, coralSim));
     
-    robotCommandsTab.add("Unwind Climber", new RunCommand(() -> climber.setVoltage(0.05),climber));
+    robotCommandsTab.add("Unwind Climber", new RunCommand(() -> climber.setVoltage(0.10),climber));
     // Intake commands
     robotCommandsTab.add("Prepare Intake", RobotCommands.prepareIntakeCoralCommand(elevator, arm, coralSim));
     robotCommandsTab.add("Intake Coral", RobotCommands.intakeCoralCommand(elevator, arm, coralSim));
