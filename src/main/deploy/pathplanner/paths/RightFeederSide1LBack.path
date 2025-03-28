@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5997443181818185,
-        "y": 5.271448863636363
+        "x": 2.9715340909090906,
+        "y": 4.1546306818181815
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.038012837712295,
-        "y": 4.725383512996458
+        "x": 3.4098026104395673,
+        "y": 3.6085653311782764
       },
       "isLocked": false,
       "linkedName": "CoralLoad1L"
     },
     {
       "anchor": {
-        "x": 1.7948863636363637,
-        "y": 7.4951136363636355
+        "x": 1.7450284090909092,
+        "y": 0.6546022727272737
       },
       "prevControl": {
-        "x": 1.5988563503962858,
-        "y": 7.741266233299921
+        "x": 1.5489983958508313,
+        "y": 0.9007548696635589
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.52382043863859
+    "rotation": 53.74616226255526
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -58.15094868094475
+    "rotation": -1.4320961841646194
   },
   "useDefaultConstraints": true
 }

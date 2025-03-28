@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.304442995529062,
-        "y": 6.076658671758568
+        "x": 9.273579545454545,
+        "y": 3.117585227272727
       },
       "isLocked": false,
       "linkedName": "CoralLoad2R"
     },
     {
       "anchor": {
-        "x": 1.7948863636363637,
-        "y": 7.4951136363636355
+        "x": 1.7450284090909092,
+        "y": 0.6546022727272737
       },
       "prevControl": {
-        "x": 3.3404829545454544,
-        "y": 7.26078125
+        "x": 3.2906250000000012,
+        "y": 0.42026988636363816
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.52382043863859
+    "rotation": 53.74616226255526
   },
   "reversed": false,
   "folder": null,
