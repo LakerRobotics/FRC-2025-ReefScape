@@ -58,7 +58,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void setVoltage(double voltage) {
-        voltage= voltage*4;
+        voltage= voltage*12;
         voltage = MathUtil.clamp(voltage, -12, 12);
         System.out.print("reached climber voltage"+voltage);
         SmartDashboard.putNumber("Climber voltage", voltage);

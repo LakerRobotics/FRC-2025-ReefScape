@@ -8,27 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.388948863636363,
-        "y": 2.3996306818181816
+        "x": 9.233693181818182,
+        "y": 1.148196022727273
       },
       "isLocked": false,
       "linkedName": "CoralLoad2L"
-    },
-    {
-      "anchor": {
-        "x": 4.537,
-        "y": 1.0
-      },
-      "prevControl": {
-        "x": 4.957283484351759,
-        "y": 1.256420137103015
-      },
-      "nextControl": {
-        "x": 4.297755681818181,
-        "y": 0.8540340909090912
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
