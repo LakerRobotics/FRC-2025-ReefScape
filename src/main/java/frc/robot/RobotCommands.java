@@ -133,7 +133,9 @@ public class RobotCommands {
                 Map.entry(
                         ScoreLevel.L1, Commands.parallel(
                                 drivetrain.moveVoltageTimeCommand(4, 0.5),
-                                elevator.movePositionDeltaCommand(() -> RustConstants.Elevator.SCORING_MOVEMENT)
+                                elevator.movePositionDeltaCommand(() -> 
+                                    Math.max(RustConstants.Elevator.SCORING_MOVEMENT, 
+                                           RustConstants.Elevator.MIN_HEIGHT_METERS - elevator.getPosition()))
                                         .asProxy())),
                 Map.entry(
                         ScoreLevel.L2,
@@ -150,8 +152,9 @@ public class RobotCommands {
                                 Commands.waitSeconds(0.5)
                                         .andThen(
                                                 elevator.movePositionDeltaCommand(
-                                                        () -> RustConstants.Elevator.SCORING_MOVEMENT))
-                                        .asProxy())),
+                                                        () -> Math.max(RustConstants.Elevator.SCORING_MOVEMENT,
+                                                                     RustConstants.Elevator.MIN_HEIGHT_METERS - elevator.getPosition()))
+                                        .asProxy()))),
                 Map.entry(
                         ScoreLevel.None,
                         Commands.none()));
