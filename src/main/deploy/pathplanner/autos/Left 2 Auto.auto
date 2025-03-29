@@ -30,22 +30,21 @@
           }
         },
         {
-          "type": "race",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ScoreCoral"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              }
-            ]
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
           }
         },
         {
@@ -57,12 +56,6 @@
                 "data": {
                   "pathName": "GoRight.Feeder 2 Meter Path Continuation"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PrepareIntakeCoral"
-                }
               }
             ]
           }
@@ -70,11 +63,23 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
+          "data": {
+            "name": "PrepareIntakeCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepareScoreL4"
+          }
+        },
+        {
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -88,27 +93,27 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "IntakeCoral"
+                        "waitTime": 1.0
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "PrepareScoreL4"
+                        "name": "ScoreCoral"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeCoral"
                       }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoral"
           }
         }
       ]
